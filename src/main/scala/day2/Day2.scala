@@ -3,7 +3,7 @@ package day2
 import scala.io.Source
 
 object Day2 extends App {
-  val realData = Source.fromResource("day2/data.txt").getLines.toList
+  val realData = Source.fromResource("day2/data.txt.txt").getLines.toList
   val testData = Source.fromResource("day2/testdata.txt").getLines.toList
 
   part1(transformInput(testData))
