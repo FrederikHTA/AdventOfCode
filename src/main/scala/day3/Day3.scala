@@ -48,10 +48,8 @@ object Day3 extends App {
         else {
           val transposedInput = input.transpose
           val entriesCount = transposedInput(iteration).groupBy(identity).mapValues(_.size)
-
           val isEqualEntries = entriesCount.values.forall(_ == entriesCount.head._2)
           val leastCommon = if (isEqualEntries) 0 else entriesCount.minBy(_._2)._1
-
           val newList = input.filter(x => x(iteration) == leastCommon)
           (newList, iteration + 1)
         }
