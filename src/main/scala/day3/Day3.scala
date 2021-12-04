@@ -5,15 +5,14 @@ import day2.Day2.{part1, testData, transformInput}
 import scala.io.Source
 
 object Day3 extends App {
-  val testData = Source.fromResource("day3/testdata.txt").getLines.toList
-  val data = Source.fromResource("day3/data.txt").getLines.toList
+  val testData = Source.fromResource("day3/testdata.txt").getLines.toList.map(_.split("").map(_.toInt).toList)
+  val data = Source.fromResource("day3/data.txt").getLines.toList.map(_.split("").map(_.toInt).toList)
 
   part1(data)
   part2(data)
 
-  def part1(input: List[String]): Unit = println {
+  def part1(input: List[List[Int]]): Unit = println {
     val binary = input
-      .map(_.split("").map(_.toInt).toList)
       .transpose
       .map(x => x.groupBy(identity).mapValues(_.size).maxBy(_._2)._1)
 
@@ -30,21 +29,20 @@ object Day3 extends App {
     s"res1: ${test * test2}"
   }
 
-  def part2(input: List[String]): Unit = println{
-    val numbers = input
-      .map(_.split("").map(_.toInt).toList)
-
-    val oxygenGeneratorRatingBinary = numbers.transpose.foldLeft((numbers, 0))({
+  def part2(input: List[List[Int]]): Unit = println{
+    val oxygenGeneratorRatingBinary = input.transpose.foldLeft((input, 0))({
       case ((input, iteration), _) =>
-        val test = input.transpose
-        val mostCommon = test(iteration).groupBy(identity).mapValues(_.size).maxBy(_._2)._1
-        val newList = input.filter(x => x(iteration) == mostCommon)
-        (newList, iteration + 1)
+        if (input.length == 1) (input, 0) else {
+          val transposedInput = input.transpose
+          val entriesCount = transposedInput(iteration).groupBy(identity).mapValues(_.size)
+          val isEqualEntries = entriesCount.values.forall(_ == entriesCount.head._2)
+          val mostCommon = if (isEqualEntries) 1 else entriesCount.maxBy(_._2)._1
+          val newList = input.filter(x => x(iteration) == mostCommon)
+          (newList, iteration + 1)
+        }
     })._1.map(x => x.mkString("")).head
 
-    val oxygenGeneratorRating = Integer.parseInt(oxygenGeneratorRatingBinary, 2)
-
-    val co2ScrubberRatingBinary = numbers.transpose.foldLeft((numbers, 0))({
+    val co2ScrubberRatingBinary = input.transpose.foldLeft((input, 0))({
       case ((input, iteration), _) =>
         if (input.length == 1) (input, 0)
         else {
@@ -59,8 +57,9 @@ object Day3 extends App {
         }
     })._1.map(x => x.mkString("")).head
 
+    val oxygenGeneratorRating = Integer.parseInt(oxygenGeneratorRatingBinary, 2)
     val co2ScrubberRating = Integer.parseInt(co2ScrubberRatingBinary, 2)
 
-    oxygenGeneratorRating * co2ScrubberRating
+    s"res2: ${oxygenGeneratorRating * co2ScrubberRating}"
   }
 }
