@@ -1,5 +1,7 @@
 package day5
 
+import lib.IntegerExtensions.RangeOperations
+
 import scala.io.Source
 
 final case class Pos(x: Int, y: Int)
@@ -12,14 +14,13 @@ object Day5 {
       val (Pos(x1, y1), Pos(x2, y2)) = pair
 
       if (x1 == x2) {
-        createRangeWithDirection(y1, y2).map(Pos(x1, _))
+        (y1 createRangeWithDirection y2).map(Pos(x1, _))
       } else if (y1 == y2) {
-        createRangeWithDirection(x1, x2).map(Pos(_, y1))
+        (x1 createRangeWithDirection x2).map(Pos(_, y1))
       } else if (findDiagonal) {
-        val d1 = createRangeWithDirection(x1, x2)
-        val d2 = createRangeWithDirection(y1, y2)
-        val res = d1.zip(d2).map(x => Pos(x._1, x._2))
-        res
+        val d1 = x1 createRangeWithDirection x2
+        val d2 = y1 createRangeWithDirection y2
+        d1.zip(d2).map(x => Pos(x._1, x._2))
       } else {
         List()
       }
@@ -30,15 +31,11 @@ object Day5 {
       .groupBy(identity)
       .mapValues(_.length)
       .toList
-      .sortBy(x => (x._1.x, x._1.y))
       .count(_._2 > 1)
   }
 
-  def createRangeWithDirection(start: Int, end: Int): Range.Inclusive = {
-    Range.inclusive(start, end, if (start > end) -1 else 1)
-  }
-
   def parseData(input: String): Array[(Pos, Pos)] = {
+    // ew
     input
       .split("\n")
       .map(_.split("->"))
