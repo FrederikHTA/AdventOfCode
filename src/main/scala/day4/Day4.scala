@@ -23,10 +23,9 @@ object Day4 extends App {
     .toList
     .mkString("\n")
 
-//  val (inputNumbers, boards) = parseData(testData2)
   val (inputNumbers, boards) = parseData(realData)
 
-    part1(inputNumbers, boards)
+  part1(inputNumbers, boards)
   part2(inputNumbers, boards)
 
   def part1(inputNumbers: Array[Int], board: Array[Board]): Unit = {
@@ -70,7 +69,7 @@ object Day4 extends App {
         val (isAnyWinners, winnerBoards) = checkBoardsForWinners(newBoards)
 
         if (isAnyWinners) {
-          if(newBoards.length == 1) {
+          if (newBoards.length == 1) {
             (boards, winnerNumber, winnerBoard)
           } else {
             val newBoardsFiltered = newBoards.filter(board => !winnerBoards.contains(board))
