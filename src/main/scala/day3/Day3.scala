@@ -1,17 +1,10 @@
 package day3
 
-import day2.Day2.{part1, testData, transformInput}
-
 import scala.io.Source
 
-object Day3 extends App {
-  val testData = Source.fromResource("day3/testdata.txt").getLines.toList.map(_.split("").map(_.toInt).toList)
-  val data = Source.fromResource("day3/data.txt").getLines.toList.map(_.split("").map(_.toInt).toList)
-
-  part1(data)
-  part2(data)
-
-  def part1(input: List[List[Int]]): Unit = println {
+// TODO: Rewrite this trashcan to use booleans to represent binary number as they are easier to flip
+object Day3 {
+  def part1(input: List[List[Int]]): Int = {
     val binary = input
       .transpose
       .map(x => x.groupBy(identity).mapValues(_.size).maxBy(_._2)._1)
@@ -26,10 +19,10 @@ object Day3 extends App {
     val test = Integer.parseInt(res1, 2)
     val test2 = Integer.parseInt(res2, 2)
 
-    s"res1: ${test * test2}"
+    test * test2
   }
 
-  def part2(input: List[List[Int]]): Unit = println{
+  def part2(input: List[List[Int]]): Int = {
     val oxygenGeneratorRatingBinary = input.transpose.foldLeft((input, 0))({
       case ((input, iteration), _) =>
         if (input.length == 1) (input, 0) else {
@@ -58,6 +51,14 @@ object Day3 extends App {
     val oxygenGeneratorRating = Integer.parseInt(oxygenGeneratorRatingBinary, 2)
     val co2ScrubberRating = Integer.parseInt(co2ScrubberRatingBinary, 2)
 
-    s"res2: ${oxygenGeneratorRating * co2ScrubberRating}"
+    oxygenGeneratorRating * co2ScrubberRating
+  }
+
+  def main(args: Array[String]): Unit = {
+    val testData = Source.fromResource("day3/testdata.txt").getLines.toList.map(_.split("").map(_.toInt).toList)
+    val data = Source.fromResource("day3/data.txt").getLines.toList.map(_.split("").map(_.toInt).toList)
+
+    println(part1(data))
+    println(part2(data))
   }
 }

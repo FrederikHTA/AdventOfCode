@@ -2,42 +2,58 @@ package day2
 
 import scala.io.Source
 
-object Day2 extends App {
-  val realData = Source.fromResource("day2/data.txt").getLines.toList
-  val testData = Source.fromResource("day2/testdata.txt").getLines.toList
+sealed trait Command
 
-  part1(transformInput(testData))
-  part2(transformInput(testData))
+case class Forward(amount: Int) extends Command
 
-  def part1(input: List[(String, Int)]): Unit = println {
-    val (horizontal, depth) = input.foldLeft((0, 0)) {
+case class Down(amount: Int) extends Command
+
+case class Up(amount: Int) extends Command
+
+object Day2 {
+  def part1(input: List[Command]): Int = {
+    val (horizontal, depth) = input.foldLeft(0, 0) {
       case ((horizontal, depth), data) =>
         data match {
-          case ("forward", x) => (horizontal + x, depth)
-          case ("up", x) => (horizontal, depth - x)
-          case ("down", x) => (horizontal, depth + x)
+          case Forward(amount) => (horizontal + amount, depth)
+          case Down(amount) => (horizontal, depth + amount)
+          case Up(amount) => (horizontal, depth - amount)
         }
     }
 
     horizontal * depth
   }
 
-  def part2(input: List[(String, Int)]): Unit = println {
-    val (horizontal, depth, _) = input.foldLeft((0, 0, 0)) {
+  def part2(input: List[Command]): Int = {
+    val (horizontal, depth, _) = input.foldLeft(0, 0, 0) {
       case ((horizontal, depth, aim), data) =>
         data match {
-          case ("forward", x) => (horizontal + x, depth + (aim * x), aim)
-          case ("up", x) => (horizontal, depth, aim - x)
-          case ("down", x) => (horizontal, depth, aim + x)
+          case Forward(amount) => (horizontal + amount, depth + (aim * amount), aim)
+          case Down(amount) => (horizontal, depth, aim + amount)
+          case Up(amount) => (horizontal, depth, aim - amount)
         }
     }
 
     horizontal * depth
   }
 
-  def transformInput(input: List[String]): List[(String, Int)] = {
+  def transformInput(input: List[String]): List[Command] = {
     input
       .map(x => x.split(" "))
-      .map { case Array(direction, integer) => (direction, integer.toInt) }
+      .map { case Array(direction, integer) =>
+        direction match {
+          case "forward" => Forward(integer.toInt)
+          case "up" => Up(integer.toInt)
+          case "down" => Down(integer.toInt)
+        }
+      }
+  }
+
+  def main(args: Array[String]): Unit = {
+    val realData = Source.fromResource("day2/data.txt").getLines.toList
+    val testData = Source.fromResource("day2/testdata.txt").getLines.toList
+
+    println(part1(transformInput(realData)))
+    println(part2(transformInput(realData)))
   }
 }

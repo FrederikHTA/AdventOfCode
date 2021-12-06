@@ -1,53 +1,31 @@
 package day4
 
-import java.io
 import scala.io.Source
 
 final case class Board(rows: Array[Row])
 
 final case class Row(row: Array[(Int, Boolean)])
 
-object Day4 extends App {
-  val testData = Source.fromResource("day4/testdata.txt")
-    .getLines()
-    .toList
-    .mkString("\n")
+object Day4 {
+  def part1(inputNumbers: Array[Int], boards: Array[Board]): Unit = {
 
-  val testData2 = Source.fromResource("day4/testdata2.txt")
-    .getLines()
-    .toList
-    .mkString("\n")
-
-  val realData = Source.fromResource("day4/data.txt")
-    .getLines()
-    .toList
-    .mkString("\n")
-
-  val (inputNumbers, boards) = parseData(realData)
-
-  part1(inputNumbers, boards)
-  part2(inputNumbers, boards)
-
-  def part1(inputNumbers: Array[Int], board: Array[Board]): Unit = {
-
-    val (_, winnerNumber, winnerBoard) = findWinningBoard(inputNumbers)
+    val (_, winnerNumber, winnerBoard) = findWinningBoard(inputNumbers, boards)
 
     val result = calculateWinnerScore(winnerNumber, winnerBoard.head)
 
     println(s"Part 1: $result")
-    //    println(s"Part 1: WinningNumber: $winnerNumber \n${winnerBoard.rows.map(_.row.map(_._1).mkString(" ")).mkString("\n")}")
   }
 
-  def part2(inputNumbers: Array[Int], board: Array[Board]): Unit = {
+  def part2(inputNumbers: Array[Int], boards: Array[Board]): Unit = {
 
-    val (_, winnerNumber, winnerBoard) = findLastWinningBoard(inputNumbers)
+    val (_, winnerNumber, winnerBoard) = findLastWinningBoard(inputNumbers, boards)
 
     val result = calculateWinnerScore(winnerNumber, winnerBoard)
 
     println(s"Part 2: $result")
   }
 
-  def findLastWinningBoard(inputNumbers: Array[Int]) = {
+  def findLastWinningBoard(inputNumbers: Array[Int], boards: Array[Board]): (Array[Board], Int, Board) = {
     val emptyBoard = Board(Array(Row(Array((0, false)))))
 
     inputNumbers.foldLeft((boards, 0, emptyBoard)) {
@@ -81,7 +59,7 @@ object Day4 extends App {
     }
   }
 
-  def findWinningBoard(inputNumbers: Array[Int]) = {
+  def findWinningBoard(inputNumbers: Array[Int], boards: Array[Board]): (Array[Board], Int, Array[Board]) = {
     val emptyBoard = Board(Array(Row(Array((0, false)))))
 
     inputNumbers.foldLeft((boards, 0, Array(emptyBoard))) {
@@ -135,7 +113,7 @@ object Day4 extends App {
     else (false, Array(Board(Array(Row(Array((0, false)))))))
   }
 
-  def transposeBoards(boards: Array[Board]) = {
+  def transposeBoards(boards: Array[Board]): Array[Board] = {
     boards.map(board => {
       val mappedRows = board.rows.map(rows => {
         rows.row.map(cell => {
@@ -171,5 +149,27 @@ object Day4 extends App {
       })
 
     (inputNumbers, boards)
+  }
+
+  def main(args: Array[String]): Unit = {
+    val testData = Source.fromResource("day4/testdata.txt")
+      .getLines()
+      .toList
+      .mkString("\n")
+
+    val testData2 = Source.fromResource("day4/testdata2.txt")
+      .getLines()
+      .toList
+      .mkString("\n")
+
+    val realData = Source.fromResource("day4/data.txt")
+      .getLines()
+      .toList
+      .mkString("\n")
+
+    val (inputNumbers, boards) = parseData(realData)
+
+    part1(inputNumbers, boards)
+    part2(inputNumbers, boards)
   }
 }
