@@ -3,3 +3,4 @@
 *.xml
 *$.class
 *.idea
+/target/scala-2.12*
