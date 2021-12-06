@@ -1,5 +1,7 @@
 package day6
 
+import scala.io.Source
+
 object Day6 {
   // Inspired heavily by sim642 on reddit.
 
@@ -21,7 +23,7 @@ object Day6 {
   }
 
   def main(args: Array[String]): Unit = {
-    lazy val input = io.Source.fromInputStream(getClass.getResourceAsStream("data.txt"))
+    lazy val input = Source.fromInputStream(getClass.getResourceAsStream("data.txt"))
       .mkString
       .trim
       .split(",")
