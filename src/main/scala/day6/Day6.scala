@@ -2,7 +2,8 @@ package day6
 
 object Day6 {
   // Inspired heavily by sim642 on reddit.
-  def part1(input: Seq[Int], days: Int): Long = {
+
+  def part1(input: Vector[Long], days: Int): Long = {
 
     // iterate number of days
     val state = Vector.tabulate(9)(i => input.count(_ == i).toLong)
@@ -24,8 +25,8 @@ object Day6 {
       .mkString
       .trim
       .split(",")
-      .toSeq
-      .map(_.toInt)
+      .toVector
+      .map(_.toLong)
 
     println(part1(input, 80))
     println(part1(input, 256))
