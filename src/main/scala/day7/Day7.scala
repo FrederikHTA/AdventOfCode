@@ -3,17 +3,16 @@ package day7
 import scala.io.Source
 
 object Day7 {
-  def part1(input: Seq[Int]): Int = {
-    // get most frequent element
+  def part1(implicit input: Seq[Int]): Int = {
     val i = input.sorted.apply(input.size / 2)
-    calculateDistance(input, i).sum
+    calculateDistance(i).sum
   }
 
-  def part2(input: Seq[Int]): Int = {
-    (input.min to input.max).map(i => calculateDistance(input, i).map(calculateStepIncreases).sum).min
+  def part2(implicit  input: Seq[Int]): Int = {
+    (input.min to input.max).map(i => calculateDistance(i).map(calculateStepIncreases).sum).min
   }
 
-  def calculateDistance(input: Seq[Int], n: Int): Seq[Int] = {
+  def calculateDistance(n: Int)(implicit input: Seq[Int]): Seq[Int] = {
     input.map(x => (x - n).abs)
   }
 
