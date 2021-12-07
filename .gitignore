@@ -5,3 +5,7 @@
 *.idea
 /target/scala-2.12*
 *.iml
+*.cache
+*.jar
+*/streams/*
+*.sbt-idea*
