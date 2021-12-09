@@ -1,10 +1,9 @@
 package day5
 
 import lib.IntegerExtensions.RangeOperations
+import lib.Pos
 
 import scala.io.Source
-
-final case class Pos(x: Int, y: Int)
 
 object Day5 {
   def part1(input: String, findDiagonal: Boolean = false): Int = {

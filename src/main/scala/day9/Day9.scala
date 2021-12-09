@@ -1,38 +1,28 @@
 package day9
 
+import lib.{Grid, Pos}
+import lib.GridExtensions._
 
 import scala.io.Source
 
 object Day9 {
-  def part1(input: Vector[Vector[Int]]): Int = {
-    val points = for {
-      (row, x) <- input.view.zipWithIndex
-      (cell, y) <- row.view.zipWithIndex
-    } yield (cell, x, y)
+  def part1(input: Grid[Int]): Int = {
+    val lowPoints = for {
+      (row, x) <- input.zipWithIndex
+      (cell, y) <- row.zipWithIndex
+      pos = Pos(x, y)
+      adjacent = pos.getAdjacent.filter(input.containsPos)
+      if adjacent.forall(pos => input(pos) > cell)
+    } yield pos
 
-    val result = points.map(p => {
-      val (cell, x, y) = p
-
-      val adjacent = points.filter(p => {
-        val (_, x2, y2) = p
-        (x2 == x && y2 == y + 1) ||
-        (x2 == x && y2 == y - 1) ||
-        (x2 == x + 1 && y2 == y) ||
-        (x2 == x - 1 && y2 == y)
-      })
-      val adjacentValues = adjacent.map(_._1)
-      if (adjacentValues.forall(_ > cell)) cell + 1 else 0
-    })
-
-    result.sum
+    lowPoints.map(pos => input(pos) + 1).sum
   }
 
-  def parseInput(input: String): Vector[Vector[Int]] = {
+  def parseInput(input: String): Grid[Int] =
     input.linesIterator.map(_.split("").toVector.map(_.toInt)).toVector
-  }
 
   def main(args: Array[String]): Unit = {
-    lazy val input = Source
+    val input = Source
       .fromInputStream(getClass.getResourceAsStream("data.txt"))
       .mkString
       .trim
