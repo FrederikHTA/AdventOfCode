@@ -13,7 +13,11 @@ case class Pos(x: Int, y: Int) {
 
   def max(that: Pos): Pos = Pos(x max that.x, y max that.y)
 
-  def getAdjacent: Seq[Pos] = List(Pos(x + 1, y), Pos(x - 1, y), Pos(x, y + 1), Pos(x, y - 1))
+  def getAxisOffsets: Seq[Pos] = List(Pos(x + 1, y), Pos(x - 1, y), Pos(x, y + 1), Pos(x, y - 1))
+
+  def getDiagonalOffsets: Seq[Pos] = List(Pos(x + 1, y + 1), Pos(x + 1, y - 1), Pos(x - 1, y + 1), Pos(x - 1, y - 1))
+
+  def getAllOffsets: Seq[Pos] = getAxisOffsets ++ getDiagonalOffsets
 }
 
 object Pos {

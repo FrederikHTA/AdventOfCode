@@ -24,7 +24,7 @@ object Day9 {
 
   private def findAllAdjacent(pos: Pos, input: Grid[Int], basin: Seq[Pos]): Seq[Pos] = {
     val newPos = pos
-      .getAdjacent
+      .getAxisOffsets
       .filter(input.containsPos)
       .filter(!basin.contains(_))
       .filter(x => input(x) < 9)
@@ -41,7 +41,7 @@ object Day9 {
       (row, x) <- input.zipWithIndex
       (cell, y) <- row.zipWithIndex
       pos = Pos(x, y)
-      adjacent = pos.getAdjacent.filter(input.containsPos)
+      adjacent = pos.getAxisOffsets.filter(input.containsPos)
       if adjacent.forall(pos => input(pos) > cell)
     } yield pos
   }

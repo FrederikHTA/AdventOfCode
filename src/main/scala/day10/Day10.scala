@@ -4,19 +4,8 @@ package day10
 import scala.annotation.tailrec
 import scala.io.Source
 
+// this is garbage
 object Day10 {
-
-  //  [({(<(())[]>[[{[]{<()<>>
-  //  [(()[<>])]({[<{<<[]>>(
-  //  {([(<{}[<>[]}>{[]{[(<()>    // corrupt - 13 }
-  //  (((({<>}<{<{<>}{[]{[]{}
-  //  [[<[([]))<([[{}[[()]]]      // corrupt
-  //  [{[{({}]{}}([{[{{{}}([]     // corrupt
-  //  {<[[]]>}<{[{[{[]{()[[[]
-  //  [<(<(<(<{}))><([]([]()      // corrupt
-  //  <{([([[(<>()){}]>(<<{{      // corrupt
-  //  <{([{{}}[<[[[<>{}]]]>[]]
-
   def part1(input: Vector[List[String]]): Int = {
     val result = input.map(line => {
       (findLastCorrupt(line, "", ""), line)
@@ -52,6 +41,7 @@ object Day10 {
         case (acc, "]") => (5 * acc) + 2
         case (acc, "}") => (5 * acc) + 3
         case (acc, ">") => (5 * acc) + 4
+        case _ => 0
       }
     })
 
