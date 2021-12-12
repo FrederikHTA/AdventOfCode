@@ -22,7 +22,6 @@ object Day9 {
     res.sortBy(_.size).reverse.take(3).map(_.size).product
   }
 
-
   private def findAllAdjacent(pos: Pos, input: Grid[Int], basin: Seq[Pos]): Seq[Pos] = {
     val newPos = pos
       .getAdjacent
@@ -36,7 +35,6 @@ object Day9 {
       newPos.foldLeft(newBasin)((newBasin, pos) => findAllAdjacent(pos, input, newBasin))
     } else newBasin
   }
-
 
   private def findLowPoints(input: Grid[Int]): Vector[Pos] = {
     for {
