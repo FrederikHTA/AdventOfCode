@@ -43,16 +43,20 @@ object Day11 {
       (row, x) <- grid.zipWithIndex
       (cell, y) <- row.zipWithIndex
       pos = Pos(x, y)
-      if cell == 10 // greater than 9 and has not flashed before
+      // some problems with this: <-----------------------------------------------------
+      if cell > 9 && cell < 9999 // greater than 9 and has not flashed before
     } yield pos
 
-    val res = positions.foldLeft(grid) { (g1, p) =>
-      val allOffsets = p.getAllOffsets
-      val filteredOffsets = allOffsets.filter(g1.containsPos) :+ p
+    val res = positions.foldLeft(grid) { (g1, p1) =>
+      val allOffsets = p1.getAllOffsets
+      val filteredOffsets = allOffsets.filter(g1.containsPos)
 
-      filteredOffsets.foldLeft(g1) { (g2, p2) =>
+      val newGrid = filteredOffsets.foldLeft(g1) { (g2, p2) =>
         g2.updateGrid(p2, g2(p2) + 1)
       }
+
+      // in relation to this: <-----------------------------------------------------
+      newGrid.updateGrid(p1, newGrid(p1) + 9999)
     }
 
     println("\n -------------- \n")
@@ -77,7 +81,7 @@ object Day11 {
 
   def main(args: Array[String]): Unit = {
     val input = Source
-      .fromInputStream(getClass.getResourceAsStream("testdata2.txt"))
+      .fromInputStream(getClass.getResourceAsStream("testdata.txt"))
       .mkString
       .trim
 
