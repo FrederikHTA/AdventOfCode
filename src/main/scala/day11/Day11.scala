@@ -8,33 +8,40 @@ import scala.annotation.tailrec
 import scala.io.Source
 
 object Day11 {
-
-  def getAmountOfFlashes(input: Grid[Int]): Int = {
-    input.map(_.count(_ > 9)).sum
-  }
-
-  def part1(grid: Grid[Int], n: Int): Unit = {
-    grid.foreach(row => println(row.mkString("")))
-
-    val (resultGrid, flashCount) = (1 to n).foldLeft((grid, 0)) {
+  def part1(grid: Grid[Int], n: Int): Int = {
+    val (_, flashCount) = (1 to n).foldLeft((grid, 0)) {
       case ((grid, prevFlashCount), iteration) =>
         val allIncreasedBy1 = increaseAllBy1(grid)
-        // TODO: Something wrong with recursive step 2 thing here
         val allRecursivelyIncreased = increaseAllAbove9recursively(allIncreasedBy1)
         val flashesThisIteration = getAmountOfFlashes(allRecursivelyIncreased)
         val updatedGrid = resetFlashedOctopuses(allRecursivelyIncreased)
 
-        println("\n -------------- \n")
-        println(s"Iteration: $iteration - flashCount: ${prevFlashCount + flashesThisIteration}")
-        updatedGrid.foreach(row => println(row.mkString("")))
-
         (updatedGrid, prevFlashCount + flashesThisIteration)
     }
 
-    println("\n -------------- \n")
-    println("flashCount: " + flashCount)
-    resultGrid.foreach(row => println(row.mkString("")))
     flashCount
+  }
+
+  // TODO: Fix
+  def part2(grid: Grid[Int]): Int = {
+    // idk how to solve this properly, so I'm just going to brute force it
+    val (_, flashCount) = (1 to 400).foldLeft((grid, 0)) {
+      case ((grid, allFlashIteration), iteration) =>
+        val allIncreasedBy1 = increaseAllBy1(grid)
+        val allRecursivelyIncreased = increaseAllAbove9recursively(allIncreasedBy1)
+        val flashesThisIteration = getAmountOfFlashes(allRecursivelyIncreased)
+        val updatedGrid = resetFlashedOctopuses(allRecursivelyIncreased)
+
+        val hasAllFlashed = (flashesThisIteration == grid.size * grid.size)
+        (updatedGrid, if(hasAllFlashed && allFlashIteration == 0) iteration else allFlashIteration)
+    }
+
+    val result = flashCount
+    result
+  }
+
+  def getAmountOfFlashes(input: Grid[Int]): Int = {
+    input.map(_.count(_ < 0)).sum
   }
 
   @tailrec
@@ -43,29 +50,19 @@ object Day11 {
       (row, x) <- grid.zipWithIndex
       (cell, y) <- row.zipWithIndex
       pos = Pos(x, y)
-      // some problems with this: <-----------------------------------------------------
-      if cell > 9 && cell < 9999 // greater than 9 and has not flashed before
+      if cell > 9 // greater than 9 and has not flashed before
     } yield pos
 
-    val res = positions.foldLeft(grid) { (g1, p1) =>
-      val allOffsets = p1.getAllOffsets
-      val filteredOffsets = allOffsets.filter(g1.containsPos)
+    val result = positions.foldLeft(grid) { (grid, pos) =>
+      val allOffsets = pos.getAllOffsets.filter(grid.containsPos)
 
-      val newGrid = filteredOffsets.foldLeft(g1) { (g2, p2) =>
-        g2.updateGrid(p2, g2(p2) + 1)
-      }
+      val newGrid = allOffsets.foldLeft(grid)((grid, pos) => grid.updateGrid(pos, grid(pos) + 1))
 
-      // in relation to this: <-----------------------------------------------------
-      newGrid.updateGrid(p1, newGrid(p1) + 9999)
+      newGrid.updateGrid(pos, -10000)
     }
 
-    println("\n -------------- \n")
-    grid.foreach(row => println(row.mkString(" ")))
-
-    if(grid.count(x => x.contains(10)) > 0)
-      increaseAllAbove9recursively(res)
-    else
-      res
+    val isAnyAbove9 = result.exists(_.exists(_ > 9))
+    if (isAnyAbove9) increaseAllAbove9recursively(result) else result
   }
 
   private def increaseAllBy1(input: Grid[Int]): Grid[Int] = {
@@ -73,7 +70,7 @@ object Day11 {
   }
 
   private def resetFlashedOctopuses(input: Grid[Int]): Grid[Int] = {
-    input.map(_.map(x => if (x > 9) 0 else x))
+    input.map(_.map(x => if (x < 0) 0 else x))
   }
 
   private def parseInput(input: String): Grid[Int] =
@@ -81,10 +78,11 @@ object Day11 {
 
   def main(args: Array[String]): Unit = {
     val input = Source
-      .fromInputStream(getClass.getResourceAsStream("testdata.txt"))
+      .fromInputStream(getClass.getResourceAsStream("data.txt"))
       .mkString
       .trim
 
-    println(part1(parseInput(input), 101))
+    println(part1(parseInput(input), 100))
+    println(part2(parseInput(input)))
   }
 }
