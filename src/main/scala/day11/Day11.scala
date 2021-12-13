@@ -10,7 +10,7 @@ import scala.io.Source
 object Day11 {
   def part1(grid: Grid[Int], n: Int): Int = {
     val (_, flashCount) = (1 to n).foldLeft((grid, 0)) {
-      case ((grid, prevFlashCount), iteration) =>
+      case ((grid, prevFlashCount), _) =>
         val allIncreasedBy1 = increaseAllBy1(grid)
         val allRecursivelyIncreased = increaseAllAbove9recursively(allIncreasedBy1)
         val flashesThisIteration = getAmountOfFlashes(allRecursivelyIncreased)
@@ -32,12 +32,11 @@ object Day11 {
         val flashesThisIteration = getAmountOfFlashes(allRecursivelyIncreased)
         val updatedGrid = resetFlashedOctopuses(allRecursivelyIncreased)
 
-        val hasAllFlashed = (flashesThisIteration == grid.size * grid.size)
-        (updatedGrid, if(hasAllFlashed && allFlashIteration == 0) iteration else allFlashIteration)
+        val hasAllFlashed = (flashesThisIteration == grid.size * grid(0).size)
+        (updatedGrid, if (hasAllFlashed && allFlashIteration == 0) iteration else allFlashIteration)
     }
 
-    val result = flashCount
-    result
+    flashCount
   }
 
   def getAmountOfFlashes(input: Grid[Int]): Int = {
