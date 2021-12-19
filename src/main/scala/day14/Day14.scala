@@ -2,19 +2,26 @@ package day14
 
 import scala.io.Source
 
-final case class Input(polymer: Polymer, rules: Map[(Char, Char), Char])
 
-final case class Polymer(elements: Map[Char, Long], pairs: Map[(Char, Char), Long])
 
 object Day14 {
-  def findNewPairs(polymer: Polymer, rules: Map[(Char, Char), Char]): Polymer = {
+  final case class Polymer(elements: Map[Char, Long], pairs: Map[Pair, Long])
+  final case class Input(polymer: Polymer, rules: Map[Pair, Char])
+  final case class PairCount(pair: Pair, count: Long)
+
+  type Pair = (Char, Char)
+  type Rules = Map[Pair, Char]
+
+  def findNewPairs(polymer: Polymer, rules: Map[Pair, Char]): Polymer = {
     val newPairs = polymer.pairs.iterator.flatMap {
       case (pair, count) =>
         val insertChar = rules(pair)
-        val pair1 = (pair._1, insertChar) -> count
-        val pair2 = (insertChar, pair._2) -> count
+        val pair1 = PairCount((pair._1, insertChar), count)
+        val pair2 = PairCount((insertChar, pair._2), count)
         Iterator(pair1, pair2)
-    }.toSeq.groupBy(_._1).mapValues(_.map(_._2).sum)
+    }.toSeq
+      .groupBy(_.pair)
+      .mapValues(_.map(_.count).sum)
 
     val newElements = polymer.pairs.foldLeft(polymer.elements) {
       case (elements, (pair, count)) =>
@@ -40,7 +47,6 @@ object Day14 {
 
   def parsePolymer(polymer: String): Polymer = {
     val elements = polymer.groupBy(identity).mapValues(_.length.toLong)
-
     val pairs = polymer.zip(polymer.tail).groupBy(identity).mapValues(_.length.toLong)
     Polymer(elements, pairs)
   }
