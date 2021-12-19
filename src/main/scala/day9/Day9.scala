@@ -1,7 +1,7 @@
 package day9
 
 import lib.{Grid, Pos}
-import lib.GridExtensions._
+import lib.GridImplicits._
 
 import scala.io.Source
 

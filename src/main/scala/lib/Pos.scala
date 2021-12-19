@@ -22,7 +22,6 @@ case class Pos(x: Int, y: Int) {
 
 object Pos {
   val zero: Pos = Pos(0, 0)
-
   val axisOffsets: Seq[Pos] = Seq(Pos(0, 1), Pos(-1, 0), Pos(1, 0), Pos(0, -1))
   val diagonalOffsets: Seq[Pos] = Seq(Pos(-1, 1), Pos(1, 1), Pos(-1, -1), Pos(1, -1))
   val allOffsets: Seq[Pos] = axisOffsets ++ diagonalOffsets

@@ -1,6 +1,6 @@
 package day5
 
-import lib.IntegerExtensions.RangeOperations
+import lib.IntegerImplicits.RangeOperations
 import lib.Pos
 
 import scala.io.Source
@@ -28,6 +28,7 @@ object Day5 {
     resultNumbers
       .flatten
       .groupBy(identity)
+      .view
       .mapValues(_.length)
       .toList
       .count(_._2 > 1)

@@ -5,7 +5,7 @@ import lib.{Grid, Pos}
 import scala.io.Source
 import scala.util.matching.Regex
 
-import lib.GridExtensions._
+import lib.GridImplicits._
 
 sealed trait Fold {
   def apply(positions: Set[Pos]): Set[Pos]

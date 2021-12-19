@@ -1,7 +1,7 @@
 package day11
 
 import lib._
-import lib.GridExtensions._
+import lib.GridImplicits._
 import lib.Pos._
 
 import scala.annotation.tailrec
@@ -32,7 +32,7 @@ object Day11 {
         val flashesThisIteration = getAmountOfFlashes(allRecursivelyIncreased)
         val updatedGrid = resetFlashedOctopuses(allRecursivelyIncreased)
 
-        val hasAllFlashed = (flashesThisIteration == grid.size * grid(0).size)
+        val hasAllFlashed = flashesThisIteration == grid.size * grid(0).size
         (updatedGrid, if (hasAllFlashed && allFlashIteration == 0) iteration else allFlashIteration)
     }
 
