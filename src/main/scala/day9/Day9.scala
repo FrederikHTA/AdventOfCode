@@ -50,6 +50,10 @@ object Day9 {
     input.linesIterator.map(_.split("").toVector.map(_.toInt)).toVector
 
   def main(args: Array[String]): Unit = {
+    val fisk = List(1,2,3,4,5)
+    fisk.zip(fisk.tail).foreach(println)
+
+
     val input = Source
       .fromInputStream(getClass.getResourceAsStream("data.txt"))
       .mkString
