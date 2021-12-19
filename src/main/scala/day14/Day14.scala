@@ -16,7 +16,6 @@ object Day14 {
         Iterator(pair1, pair2)
     }.toSeq.groupBy(_._1).mapValues(_.map(_._2).sum)
 
-    // todo: handle duplicate pairs as 1 pair with counter to decrease list size
     val newElements = polymer.pairs.foldLeft(polymer.elements) {
       case (elements, (pair, count)) =>
         val insertChar = rules(pair)
