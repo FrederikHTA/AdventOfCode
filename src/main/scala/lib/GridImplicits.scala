@@ -3,6 +3,7 @@ package lib
 object GridImplicits {
 
   implicit class PosGridOps[A](grid: Grid[A]) {
+    // TODO: Should be grid(pos.y)(pos.x)??
     def apply(pos: Pos): A = grid(pos.x)(pos.y)
 
     def containsPos(pos: Pos): Boolean = {

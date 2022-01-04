@@ -48,7 +48,7 @@ object Day15 {
       .mkString
       .trim
 
-//    println(part1(parseInput(input)))
+    println(part1(parseInput(input)))
     println(part2(parseInput(input)))
   }
 }
