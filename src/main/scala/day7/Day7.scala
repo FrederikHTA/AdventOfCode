@@ -22,7 +22,7 @@ object Day7 {
   }
 
   def main(args: Array[String]): Unit = {
-    lazy val input = Source.fromInputStream(getClass.getResourceAsStream("testdata.txt"))
+    lazy val input = Source.fromInputStream(getClass.getResourceAsStream("testdata1.txt"))
       .mkString
       .trim
       .split(",")

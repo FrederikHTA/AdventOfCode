@@ -6,7 +6,7 @@ import scala.io.Source
 object Day8 {
   def main(args: Array[String]): Unit = {
     val input = Source
-      .fromInputStream(getClass.getResourceAsStream("testdata.txt"))
+      .fromInputStream(getClass.getResourceAsStream("testdata1.txt"))
       .mkString
       .trim
 
