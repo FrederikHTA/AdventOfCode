@@ -15,12 +15,14 @@ case class LiteralPacket(packetVersion: Int, packetTypeId: Int, packetValue: Int
 
 object Day16 {
 
-  def part1(input: String): Unit = {
+  def part1(input: String): Int = {
     val result = parsePacket(input)
     val sum = sumVersions(result._1)
 
     println(s"Part 1 result: $result")
     println(s"Part 1 version sum result: $sum")
+
+    sum
   }
 
   def sumVersions(packet: Packet): Int = {
@@ -37,7 +39,7 @@ object Day16 {
     packetTypeId.binaryToInteger() match {
       case 4 =>
         val (literalValue, tail) = parseLiteralValue(tail2)
-        (LiteralPacket(packetVersion.binaryToInteger(), packetTypeId.binaryToInteger(), literalValue.binaryToInteger()), tail)
+        (LiteralPacket(packetVersion.binaryToInteger(), packetTypeId.binaryToInteger(), 0), tail)
       case _ =>
         val (packetLengthTypeId, tail3) = tail2.splitAt(1)
 
@@ -112,14 +114,15 @@ object Day16 {
     input.split("").map(x => hexToBinaryMap(x)).mkString
   }
 
-  def main(args: Array[String]): Unit = {
+  def main(arwgs: Array[String]): Unit = {
     val input = Source
       .fromInputStream(getClass.getResourceAsStream("data.txt"))
       .mkString
       .trim
 
+    assert(part1(parseHex(input)) == 886)
 
-    input.linesIterator.foreach(x => println(part1(parseHex(x))))
+    input.linesIterator.foreach(x => part1(parseHex(x)))
 
     //    tests()
     //    println(part1(input))
