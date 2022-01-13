@@ -3,78 +3,114 @@ package day16
 import scala.io.Source
 import lib.StringImplicits._
 
-final case class PacketResult(packetVersion: Int, packetTypeId: Int, packetValue: Int)
-
 sealed trait Packet {
-  def packetVersion: Int
+  def packetVersion: BigInt
+
+  def packetTypeId: BigInt
 }
 
-case class OperatorPacket(packetVersion: Int, packetTypeId: Int, subPackets: List[Packet]) extends Packet
+case class OperatorPacket(packetVersion: BigInt, packetTypeId: BigInt, subPackets: List[Packet]) extends Packet
 
-case class LiteralPacket(packetVersion: Int, packetTypeId: Int, packetValue: Int) extends Packet
+case class LiteralPacket(packetVersion: BigInt, packetTypeId: BigInt, packetValue: BigInt) extends Packet
 
 object Day16 {
 
-  def part1(input: String): Int = {
-    val result = parsePacket(input)
+  def part1(input: String): BigInt = {
+    val result = parsePacketString(input)
     val sum = sumVersions(result._1)
 
-    println(s"Part 1 result: $result")
     println(s"Part 1 version sum result: $sum")
 
     sum
   }
 
-  def sumVersions(packet: Packet): Int = {
+  def part2(input: String): BigInt = {
+    val result = parsePacketString(input)
+    val packetValue = applyRules(result._1)
+
+    println(s"Part 2 packet value: $packetValue")
+
+    packetValue
+  }
+
+  def applyRules(packet: Packet): BigInt = packet match {
+    case LiteralPacket(_, _, packetValue) => packetValue
+    case OperatorPacket(_, packetTypeId, subPackets) =>
+      packetTypeId.toInt match {
+        case 0 => subPackets.map(applyRules).sum
+        case 1 => subPackets.map(applyRules).product
+        case 2 => subPackets.map(applyRules).min
+        case 3 => subPackets.map(applyRules).max
+        case 5 =>
+          val head = getPacketValue(subPackets.head)
+          val last = getPacketValue(subPackets.last)
+          if (head > last) 1 else 0
+        case 6 =>
+          val head = getPacketValue(subPackets.head)
+          val last = getPacketValue(subPackets.last)
+          if (head < last) 1 else 0
+        case 7 =>
+          val head = getPacketValue(subPackets.head)
+          val last = getPacketValue(subPackets.last)
+          if (head == last) 1 else 0
+      }
+  }
+
+  def getPacketValue(packet: Packet): BigInt = packet match {
+    case OperatorPacket(_, _, subPackets) => subPackets.map(getPacketValue).sum
+    case LiteralPacket(_, _, packetValue) => packetValue
+  }
+
+  def sumVersions(packet: Packet): BigInt = {
     packet match {
       case OperatorPacket(packetVersion, _, subPackets) => packetVersion + subPackets.map(sumVersions).sum
       case LiteralPacket(packetVersion, _, _) => packetVersion
     }
   }
 
-  def parsePacket(input: String): (Packet, String) = {
+  def parsePacketString(input: String): (Packet, String) = {
     val (packetVersion, tail) = input.splitAt(3)
     val (packetTypeId, tail2) = tail.splitAt(3)
 
-    packetTypeId.binaryToInteger() match {
+    packetTypeId.binaryToBigInt().toInt match {
       case 4 =>
         val (literalValue, tail) = parseLiteralValue(tail2)
-        (LiteralPacket(packetVersion.binaryToInteger(), packetTypeId.binaryToInteger(), 0), tail)
+        (LiteralPacket(packetVersion.binaryToBigInt(), packetTypeId.binaryToBigInt(), literalValue.binaryToBigInt()), tail)
       case _ =>
         val (packetLengthTypeId, tail3) = tail2.splitAt(1)
 
         packetLengthTypeId match {
           case "0" =>
             val (bits, tail4) = tail3.splitAt(15)
-            val length = bits.binaryToInteger()
-            val (subPacketBits, tail5) = tail4.splitAt(length)
-            val subPackets = parseSubPackets(subPacketBits)
-            (OperatorPacket(packetVersion.binaryToInteger(), packetTypeId.binaryToInteger(), subPackets), tail5)
+            val length = bits.binaryToBigInt()
+            val (subPacketBits, tail5) = tail4.splitAt(length.toInt)
+            val subPackets = parseSubPacketsLength(subPacketBits)
+            (OperatorPacket(packetVersion.binaryToBigInt(), packetTypeId.binaryToBigInt(), subPackets), tail5)
           case _ =>
             val (bits, tail4) = tail3.splitAt(11)
-            val number = bits.binaryToInteger()
-            val (subPackets, tail5) = parseSubPacketsNumber(tail4, number)
-            (OperatorPacket(packetVersion.binaryToInteger(), packetTypeId.binaryToInteger(), subPackets), tail5)
+            val number = bits.binaryToBigInt()
+            val (subPackets, tail5) = parseNSubPackets(tail4, number)
+            (OperatorPacket(packetVersion.binaryToBigInt(), packetTypeId.binaryToBigInt(), subPackets), tail5)
         }
     }
   }
 
-  def parseSubPacketsNumber(binaryString: String, number: Int): (List[Packet], String) = {
+  def parseNSubPackets(binaryString: String, number: BigInt): (List[Packet], String) = {
     if (number == 0) {
       (Nil, binaryString)
     } else {
-      val (packet, tail) = parsePacket(binaryString)
-      val (subPackets, tail2) = parseSubPacketsNumber(tail, number - 1)
+      val (packet, tail) = parsePacketString(binaryString)
+      val (subPackets, tail2) = parseNSubPackets(tail, number - 1)
       (packet :: subPackets, tail2)
     }
   }
 
-  def parseSubPackets(binaryString: String): List[Packet] = {
+  def parseSubPacketsLength(binaryString: String): List[Packet] = {
     binaryString match {
       case "" => List()
       case _ =>
-        val (packet, tail) = parsePacket(binaryString)
-        val subPackets = parseSubPackets(tail)
+        val (packet, tail) = parsePacketString(binaryString)
+        val subPackets = parseSubPacketsLength(tail)
         packet :: subPackets
     }
   }
@@ -114,44 +150,13 @@ object Day16 {
     input.split("").map(x => hexToBinaryMap(x)).mkString
   }
 
-  def main(arwgs: Array[String]): Unit = {
+  def main(args: Array[String]): Unit = {
     val input = Source
       .fromInputStream(getClass.getResourceAsStream("data.txt"))
       .mkString
       .trim
 
     assert(part1(parseHex(input)) == 886)
-
-    input.linesIterator.foreach(x => part1(parseHex(x)))
-
-    //    tests()
-    //    println(part1(input))
-  }
-
-  def tests(): Unit = {
-    val test = Source
-      .fromInputStream(getClass.getResourceAsStream("testdata.txt"))
-      .mkString
-      .trim
-
-    val test1 = Source
-      .fromInputStream(getClass.getResourceAsStream("testdata1.txt"))
-      .mkString
-      .trim
-
-    val test2 = Source
-      .fromInputStream(getClass.getResourceAsStream("testdata2.txt"))
-      .mkString
-      .trim
-
-    val test3 = Source
-      .fromInputStream(getClass.getResourceAsStream("testdata3.txt"))
-      .mkString
-      .trim
-
-    assert(test == "6")
-    assert(test1 == "9")
-    assert(test2 == "14")
-    //    assert(test3 == "7")
+    assert(part2(parseHex(input)) == 184487454837L)
   }
 }

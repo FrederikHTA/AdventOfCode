@@ -2,8 +2,8 @@ package lib
 
 object StringImplicits {
   implicit class BinaryOperations(binary: String) {
-    def binaryToInteger(): Int = {
-      Integer.parseInt(binary, 2)
+    def binaryToBigInt(): BigInt = {
+      BigInt.apply(binary, 2)
     }
   }
 }
