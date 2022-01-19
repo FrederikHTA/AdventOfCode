@@ -1,78 +1,46 @@
 package day21
 
 import scala.annotation.tailrec
-
-final case class Player(playerName: String, position: Int, score: Int = 0)
-
-final case class PlayerList(player1: Player, player2: Player) {
-  def getPlayer(playerTurn: Int): Player = {
-    if ((playerTurn % 2) == 0) player1 else player2
-  }
-
-  def getOtherPlayer(playerTurn: Int): Player = {
-    if ((playerTurn % 2) == 0) player2 else player1
-  }
-
-  def updatePlayers(turn: Int, player: Player): PlayerList = {
-    if (turn % 2 == 0) {
-      copy(player1 = player)
-    } else {
-      copy(player2 = player)
-    }
-  }
-}
-
-final case class Die(rollCount: Int, value: Int) {
-  def increaseRollCount(): Die = {
-    copy(rollCount = rollCount + 3)
-  }
-
-  def setValue(newValue: Int): Die = {
-    copy(value = newValue)
-  }
-
-  def rollDie(): Die = {
-    val dieValue = (1 to 3).map(_ + rollCount).sum
-
-    setValue(dieValue).increaseRollCount()
-  }
-}
+import lib.LazyListImplicits._
 
 object Day21 {
-  def calculatePlayerPosition(position: Int, moves: Int): Int = {
-    if ((position + moves) % 10 == 0) 10 else (position + moves) % 10
+  final case class DeterministicDie(rolls: Int = 0, values: LazyList[Int] = LazyList.from(1).take(100).cycle) {
+    def roll: (DeterministicDie, Int) = {
+      val (roll, newValueList) = values.splitAt(3)
+      (DeterministicDie(rolls + 3, newValueList), roll.sum)
+    }
   }
 
-  def calculatePlayerScore(moves: Int, player: Player): Player = {
-    val playerMoves = moves % 10
-    val playerPosition = calculatePlayerPosition(player.position, playerMoves)
-
-    Player(player.playerName, playerPosition, player.score + playerPosition)
+  case class Player(position: Int, score: Int = 0) {
+    def move(amount: Int): Player = {
+      val playerPosition = (position + amount - 1) % 10 + 1
+      Player(playerPosition, score + playerPosition)
+    }
   }
 
+  type Players = (Player, Player)
+  
   @tailrec
-  def playGame(turn: Int, die: Die, playerList: PlayerList): (Player, Die) = {
-    val playerInTurn = playerList.getPlayer(turn)
+  def play(p1: Player, p2: Player, die: DeterministicDie): (Player, DeterministicDie) = {
+    val (newDie, roll) = die.roll
+    val newP1 = p1.move(roll)
 
-    val newDie = die.rollDie()
-    val newPlayer = calculatePlayerScore(newDie.value, playerInTurn)
-
-    if (newPlayer.score >= 1000) {
-      (playerList.getOtherPlayer(turn), newDie)
+    if (newP1.score >= 1000) {
+      (p2, newDie)
     } else {
-      playGame(turn + 1, newDie, playerList.updatePlayers(turn, newPlayer))
+      play(p2, newP1, newDie)
     }
   }
 
 
-  def part1(playerList: PlayerList): Int = {
-    val gameResult = playGame(0, Die(0, 1), playerList)
-    gameResult._1.score * gameResult._2.rollCount
+  def part1(players: Players): Int = {
+    val (player, die) = play(players._1, players._2, DeterministicDie())
+    player.score * die.rolls
   }
 
   def main(args: Array[String]): Unit = {
-    val example = PlayerList(Player("Player1", 4), Player("Player2", 8))
-    val data = PlayerList(Player("Player1", 5), Player("Player2", 6))
+    val example: Players = (Player(4), Player(8))
+    val data: Players = (Player(5), Player(6))
 
     println(s"Example: ${part1(example)}")
     println(s"Part1: ${part1(data)}")
