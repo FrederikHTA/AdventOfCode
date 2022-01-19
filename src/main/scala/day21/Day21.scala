@@ -4,6 +4,8 @@ import scala.annotation.tailrec
 import lib.LazyListImplicits._
 
 object Day21 {
+  final case class Players(p1: Player, p2: Player)
+
   final case class DeterministicDie(rolls: Int = 0, values: LazyList[Int] = LazyList.from(1).take(100).cycle) {
     def roll: (DeterministicDie, Int) = {
       val (roll, newValueList) = values.splitAt(3)
@@ -18,8 +20,6 @@ object Day21 {
     }
   }
 
-  type Players = (Player, Player)
-  
   @tailrec
   def play(p1: Player, p2: Player, die: DeterministicDie): (Player, DeterministicDie) = {
     val (newDie, roll) = die.roll
@@ -34,13 +34,13 @@ object Day21 {
 
 
   def part1(players: Players): Int = {
-    val (player, die) = play(players._1, players._2, DeterministicDie())
+    val (player, die) = play(players.p1, players.p2, DeterministicDie())
     player.score * die.rolls
   }
 
   def main(args: Array[String]): Unit = {
-    val example: Players = (Player(4), Player(8))
-    val data: Players = (Player(5), Player(6))
+    val example: Players = Players(Player(4), Player(8))
+    val data: Players = Players(Player(5), Player(6))
 
     println(s"Example: ${part1(example)}")
     println(s"Part1: ${part1(data)}")
