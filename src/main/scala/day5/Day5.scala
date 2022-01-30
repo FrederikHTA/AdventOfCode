@@ -1,7 +1,7 @@
 package day5
 
 import lib.IntegerImplicits.RangeOperations
-import lib.Pos
+import lib.pos.Pos
 
 import scala.io.Source
 

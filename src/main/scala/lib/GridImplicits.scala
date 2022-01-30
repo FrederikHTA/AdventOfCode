@@ -1,5 +1,7 @@
 package lib
 
+import lib.pos.Pos
+
 object GridImplicits {
 
   implicit class PosGridOps[A](grid: Grid[A]) {

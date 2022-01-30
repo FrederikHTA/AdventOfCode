@@ -1,8 +1,9 @@
 package day15
 
 import lib.Graph.{Dijkstra, GraphSearch, TargetNode}
-import lib.{Grid, Pos, Utils}
+import lib.{Grid, Utils}
 import lib.GridImplicits._
+import lib.pos.Pos
 
 import scala.io.Source
 

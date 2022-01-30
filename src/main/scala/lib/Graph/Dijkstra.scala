@@ -1,7 +1,9 @@
 package lib.Graph
 
-import lib.{Grid, Pos}
+import lib.Grid
 import lib.GridImplicits._
+import lib.pos.Pos
+
 import scala.collection.mutable
 
 object Dijkstra {
