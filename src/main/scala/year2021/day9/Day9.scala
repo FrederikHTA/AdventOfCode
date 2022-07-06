@@ -3,9 +3,9 @@ package year2021.day9
 import lib.Grid
 import lib.GridImplicits._
 import lib.Pos.Pos
+import org.scalatest.Assertions.assertResult
 
 import scala.io.Source
-import org.scalatest.Assertions._
 
 object Day9 {
   def part1(input: Grid[Int]): Int = {
