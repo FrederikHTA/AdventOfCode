@@ -1,4 +1,4 @@
-import day15.Day15.getClass
+import year2021.day15.Day15.getClass
 
 import scala.io.Source
 
