@@ -81,10 +81,18 @@ object Day21 {
     val example: Players = Players(Player(4), Player(8))
     val data: Players = Players(Player(5), Player(6))
 
-    assert(part1(example) == 739785)
-    assert(part1(data) == 1002474)
+//    assert(part1(example) == 739785)
+//    assert(part1(data) == 1002474)
+//
+//    assert(part2(example) == (444356092776315L, 341960390180808L))
+//    assert(part2(data) == (919758187195363L, 635572886949720L))
 
-    assert(part2(example) == (444356092776315L, 341960390180808L))
-    assert(part2(data) == (919758187195363L, 635572886949720L))
+    val part1Result = part1(data)
+    println(part1Result)
+    assert(part1Result == 1002474)
+
+    val part2Result = part2(data)
+    println(part2Result)
+    assert(part2Result == (919758187195363L, 635572886949720L))
   }
 }

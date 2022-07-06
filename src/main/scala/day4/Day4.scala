@@ -7,22 +7,18 @@ final case class Board(rows: Array[Row])
 final case class Row(row: Array[(Int, Boolean)])
 
 object Day4 {
-  def part1(inputNumbers: Array[Int], boards: Array[Board]): Unit = {
+  def part1(inputNumbers: Array[Int], boards: Array[Board]): Int = {
 
     val (_, winnerNumber, winnerBoard) = findWinningBoard(inputNumbers, boards)
 
-    val result = calculateWinnerScore(winnerNumber, winnerBoard.head)
-
-    println(s"Part 1: $result")
+    calculateWinnerScore(winnerNumber, winnerBoard.head)
   }
 
-  def part2(inputNumbers: Array[Int], boards: Array[Board]): Unit = {
+  def part2(inputNumbers: Array[Int], boards: Array[Board]): Int = {
 
     val (_, winnerNumber, winnerBoard) = findLastWinningBoard(inputNumbers, boards)
 
-    val result = calculateWinnerScore(winnerNumber, winnerBoard)
-
-    println(s"Part 2: $result")
+    calculateWinnerScore(winnerNumber, winnerBoard)
   }
 
   def findLastWinningBoard(inputNumbers: Array[Int], boards: Array[Board]): (Array[Board], Int, Board) = {
@@ -169,7 +165,12 @@ object Day4 {
 
     val (inputNumbers, boards) = parseData(realData)
 
-    part1(inputNumbers, boards)
-    part2(inputNumbers, boards)
+    val part1Result = part1(inputNumbers, boards)
+    println(part1Result)
+    assert(part1Result == 38913)
+
+    val part2Result = part2(inputNumbers, boards)
+    println(part2Result)
+    assert(part2Result == 16836)
   }
 }

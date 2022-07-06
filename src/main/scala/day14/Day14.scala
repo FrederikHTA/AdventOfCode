@@ -66,7 +66,12 @@ object Day14 {
       .mkString
       .trim
 
-    println(part1(parseInput(input)))
-    println(part1(parseInput(input), 40))
+    val part1Result = part1(parseInput(input))
+    println(part1Result)
+    assert(part1Result == 2988)
+
+    val part2Result = part1(parseInput(input), 40)
+    println(part2Result)
+    assert(part2Result == 3572761917024L)
   }
 }

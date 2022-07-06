@@ -55,7 +55,10 @@ object Day22 {
       .mkString
       .trim
 
-//    println(part2(parseInput(input)))
     assert(part1(parseInput(data)) == 601104)
+
+    val part1Result = part1(parseInput(data))
+    println(part1Result)
+    assert(part1Result == 601104)
   }
 }

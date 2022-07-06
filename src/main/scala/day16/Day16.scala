@@ -156,7 +156,12 @@ object Day16 {
       .mkString
       .trim
 
-    assert(part1(parseHex(input)) == 886)
-    assert(part2(parseHex(input)) == 184487454837L)
+    val part1Result = part1(parseHex(input))
+    println(part1Result)
+    assert(part1Result == 886)
+
+    val part2Result = part2(parseHex(input))
+    println(part2Result)
+    assert(part2Result == 184487454837L)
   }
 }

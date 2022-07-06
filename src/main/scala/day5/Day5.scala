@@ -57,5 +57,13 @@ object Day5 {
 
     println(s"Part 1: ${part1(testData)}")
     println(s"Part 2: ${part1(testData, findDiagonal = true)}")
+
+    val part1Result = part1(testData)
+    println(part1Result)
+    assert(part1Result == 5576)
+
+    val part2Result = part1(testData, findDiagonal = true)
+    println(part2Result)
+    assert(part2Result == 18144)
   }
 }

@@ -53,7 +53,12 @@ object Day2 {
     val realData = Source.fromResource("day2/data.txt").getLines.toList
     val testData = Source.fromResource("day2/testdata.txt").getLines.toList
 
-    println(part1(transformInput(realData)))
-    println(part2(transformInput(realData)))
+    val part1Result = part1(transformInput(realData))
+    println(part1Result)
+    assert(part1Result == 1250395)
+
+    val part2Result = part2(transformInput(realData))
+    println(part2Result)
+    assert(part2Result == 1451210346)
   }
 }

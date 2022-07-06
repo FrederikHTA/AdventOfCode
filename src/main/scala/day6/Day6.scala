@@ -30,7 +30,12 @@ object Day6 {
       .toVector
       .map(_.toLong)
 
-    println(part1(input, 80))
-    println(part1(input, 256))
+    val part1Result = part1(input, 80)
+    println(part1Result)
+    assert(part1Result == 373378)
+
+    val part2Result = part1(input, 256)
+    println(part2Result)
+    assert(part2Result == 1682576647495L)
   }
 }

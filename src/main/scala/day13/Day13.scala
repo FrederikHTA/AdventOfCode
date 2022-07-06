@@ -76,7 +76,11 @@ object Day13 {
       .mkString
       .trim
 
-    println(part1(parseInput(input)))
-    println(part2(parseInput(input)))
+    val part1Result = part1(parseInput(input))
+    println(part1Result)
+    assert(part1Result == 716)
+
+    val part2Result = part2(parseInput(input))
+    println(part2Result)
   }
 }

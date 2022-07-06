@@ -60,5 +60,13 @@ object Day3 {
 
     println(part1(data))
     println(part2(data))
+
+    val part1Result = part1(data)
+    println(part1Result)
+    assert(part1Result == 4139586)
+
+    val part2Result = part2(data)
+    println(part2Result)
+    assert(part2Result == 1800151)
   }
 }

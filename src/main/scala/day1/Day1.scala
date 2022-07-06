@@ -16,7 +16,12 @@ object Day1 {
     val realData = Source.fromResource("day1/data.txt").getLines.toList.map(_.toInt)
     val testData = Source.fromResource("day1/testdata.txt").getLines.toList.map(_.toInt)
 
-    println(part1(realData))
-    println(part2(realData))
+    val part1Result = part1(realData)
+    println(part1Result)
+    assert(part1Result == 1266)
+
+    val part2Result = part2(realData)
+    println(part2Result)
+    assert(part2Result == 1217)
   }
 }
