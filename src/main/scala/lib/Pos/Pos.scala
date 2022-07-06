@@ -1,23 +1,32 @@
 package lib.Pos
 
 case class Pos(x: Int, y: Int) extends BoxPosOps[Pos] {
-  def +(that: Pos): Pos = Pos(x + that.x, y + that.y)
+  def +(that: Pos): Pos =
+    Pos(x + that.x, y + that.y)
 
-  def *:(k: Int): Pos = Pos(k * x, k * y)
+  def *:(k: Int): Pos =
+    Pos(k * x, k * y)
 
-  def manhattanDistance(that: Pos): Int = (x - that.x).abs + (y - that.y).abs
+  def manhattanDistance(that: Pos): Int =
+    (x - that.x).abs + (y - that.y).abs
 
-  def <=(that: Pos): Boolean = x <= that.x && y <= that.y
+  def <=(that: Pos): Boolean =
+    x <= that.x && y <= that.y
 
-  def min(that: Pos): Pos = Pos(x min that.x, y min that.y)
+  def min(that: Pos): Pos =
+    Pos(x min that.x, y min that.y)
 
-  def max(that: Pos): Pos = Pos(x max that.x, y max that.y)
+  def max(that: Pos): Pos =
+    Pos(x max that.x, y max that.y)
 
-  def getAxisOffsets: Seq[Pos] = List(Pos(x + 1, y), Pos(x - 1, y), Pos(x, y + 1), Pos(x, y - 1))
+  def getAxisOffsets: Seq[Pos] =
+    List(Pos(x + 1, y), Pos(x - 1, y), Pos(x, y + 1), Pos(x, y - 1))
 
-  def getDiagonalOffsets: Seq[Pos] = List(Pos(x + 1, y + 1), Pos(x + 1, y - 1), Pos(x - 1, y + 1), Pos(x - 1, y - 1))
+  def getDiagonalOffsets: Seq[Pos] =
+    List(Pos(x + 1, y + 1), Pos(x + 1, y - 1), Pos(x - 1, y + 1), Pos(x - 1, y - 1))
 
-  def getAllOffsets: Seq[Pos] = getAxisOffsets ++ getDiagonalOffsets
+  def getAllOffsets: Seq[Pos] =
+    getAxisOffsets ++ getDiagonalOffsets
 }
 
 object Pos extends PosFactory[Pos] {

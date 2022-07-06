@@ -7,7 +7,7 @@ object Day3 {
   def part1(input: List[List[Int]]): Int = {
     val binary = input
       .transpose
-      .map(x => x.groupBy(identity).mapValues(_.size).maxBy(_._2)._1)
+      .map(x => x.groupBy(identity).view.mapValues(_.size).maxBy(_._2)._1)
 
     val res1 = binary.mkString("")
 
@@ -27,7 +27,7 @@ object Day3 {
       case ((input, iteration), _) =>
         if (input.length == 1) (input, 0) else {
           val transposedInput = input.transpose
-          val entriesCount = transposedInput(iteration).groupBy(identity).mapValues(_.size)
+          val entriesCount = transposedInput(iteration).groupBy(identity).view.mapValues(_.size)
           val isEqualEntries = entriesCount.values.forall(_ == entriesCount.head._2)
           val mostCommon = if (isEqualEntries) 1 else entriesCount.maxBy(_._2)._1
           val newList = input.filter(x => x(iteration) == mostCommon)
@@ -40,7 +40,7 @@ object Day3 {
         if (input.length == 1) (input, 0)
         else {
           val transposedInput = input.transpose
-          val entriesCount = transposedInput(iteration).groupBy(identity).mapValues(_.size)
+          val entriesCount = transposedInput(iteration).groupBy(identity).view.mapValues(_.size)
           val isEqualEntries = entriesCount.values.forall(_ == entriesCount.head._2)
           val leastCommon = if (isEqualEntries) 0 else entriesCount.minBy(_._2)._1
           val newList = input.filter(x => x(iteration) == leastCommon)
@@ -55,11 +55,15 @@ object Day3 {
   }
 
   def main(args: Array[String]): Unit = {
-    val testData = Source.fromResource("day3/testdata.txt").getLines.toList.map(_.split("").map(_.toInt).toList)
-    val data = Source.fromResource("day3/data.txt").getLines.toList.map(_.split("").map(_.toInt).toList)
+    val testData = Source.fromInputStream(getClass.getResourceAsStream("testdata.txt"))
+      .getLines
+      .toList
+      .map(_.split("").map(_.toInt).toList)
 
-    println(part1(data))
-    println(part2(data))
+    val data = Source.fromInputStream(getClass.getResourceAsStream("data.txt"))
+      .getLines
+      .toList
+      .map(_.split("").map(_.toInt).toList)
 
     val part1Result = part1(data)
     println(part1Result)

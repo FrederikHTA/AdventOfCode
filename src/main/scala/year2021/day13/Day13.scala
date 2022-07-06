@@ -38,12 +38,11 @@ object Day13 {
     // TODO: could be better lmao
     val xLength = foldedPosition.map(_.x).max + 1
     val yLength = foldedPosition.map(_.y).max + 1
-    val visualization: Grid[String] = Vector.fill(xLength)(Vector.fill(yLength)(" "))
+    val visualization: Grid[String] = Vector.fill(yLength)(Vector.fill(xLength)(" "))
 
     // good luck reading this shit
     foldedPosition
       .foldLeft(visualization)((grid, pos) => grid.updateGrid(pos, "X"))
-      .transpose
       .map(x => x.mkString(""))
       .mkString("\n")
   }

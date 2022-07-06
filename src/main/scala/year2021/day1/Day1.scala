@@ -13,8 +13,15 @@ object Day1 {
   }
 
   def main(args: Array[String]): Unit = {
-    val realData = Source.fromResource("day1/data.txt").getLines.toList.map(_.toInt)
-    val testData = Source.fromResource("day1/testdata.txt").getLines.toList.map(_.toInt)
+    val realData = Source.fromInputStream(getClass.getResourceAsStream("data.txt"))
+      .getLines
+      .toList
+      .map(_.toInt)
+
+    val testData = Source.fromInputStream(getClass.getResourceAsStream("testdata.txt"))
+      .getLines
+      .toList
+      .map(_.toInt)
 
     val part1Result = part1(realData)
     println(part1Result)

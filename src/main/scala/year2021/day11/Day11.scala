@@ -46,8 +46,8 @@ object Day11 {
   @tailrec
   def increaseAllAbove9recursively(grid: Grid[Int]): Grid[Int] = {
     val positions = for {
-      (row, x) <- grid.zipWithIndex
-      (cell, y) <- row.zipWithIndex
+      (row, y) <- grid.zipWithIndex
+      (cell, x) <- row.zipWithIndex
       pos = Pos(x, y)
       if cell > 9 // greater than 9 and has not flashed before
     } yield pos

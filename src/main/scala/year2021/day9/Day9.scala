@@ -5,6 +5,7 @@ import lib.GridImplicits._
 import lib.Pos.Pos
 
 import scala.io.Source
+import org.scalatest.Assertions._
 
 object Day9 {
   def part1(input: Grid[Int]): Int = {
@@ -39,8 +40,8 @@ object Day9 {
 
   private def findLowPoints(input: Grid[Int]): Vector[Pos] = {
     for {
-      (row, x) <- input.zipWithIndex
-      (cell, y) <- row.zipWithIndex
+      (row, y) <- input.zipWithIndex
+      (cell, x) <- row.zipWithIndex
       pos = Pos(x, y)
       adjacent = pos.getAxisOffsets.filter(input.containsPos)
       if adjacent.forall(pos => input(pos) > cell)
@@ -51,24 +52,17 @@ object Day9 {
     input.linesIterator.map(_.split("").toVector.map(_.toInt)).toVector
 
   def main(args: Array[String]): Unit = {
-    val fisk = List(1,2,3,4,5)
-    fisk.zip(fisk.tail).foreach(println)
-
-
     val input = Source
       .fromInputStream(getClass.getResourceAsStream("data.txt"))
       .mkString
       .trim
 
-    println(part1(parseInput(input)))
-    println(part2(parseInput(input)))
-
     val part1Result = part1(parseInput(input))
     println(part1Result)
-    assert(part1Result == 498)
+    assertResult(498)(part1Result)
 
     val part2Result = part2(parseInput(input))
     println(part2Result)
-    assert(part2Result == 1071000)
+    assertResult(1071000)(part2Result)
   }
 }

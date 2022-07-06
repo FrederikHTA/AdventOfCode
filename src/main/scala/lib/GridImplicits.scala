@@ -5,16 +5,14 @@ import lib.Pos.Pos
 object GridImplicits {
 
   implicit class PosGridOps[A](grid: Grid[A]) {
-    // TODO: Should be grid(pos.y)(pos.x)??
-    def apply(pos: Pos): A = grid(pos.x)(pos.y)
+    def apply(pos: Pos): A = grid(pos.y)(pos.x)
 
     def containsPos(pos: Pos): Boolean = {
-      val exists = 0 <= pos.x && 0 <= pos.y && pos.x < grid.size && pos.y < grid(pos.x).size
-      exists
+      0 <= pos.x && 0 <= pos.y && pos.y < grid.size && pos.x < grid(pos.y).size
     }
 
     def updateGrid(pos: Pos, value: A): Grid[A] = {
-      grid.updated(pos.x, grid(pos.x).updated(pos.y, value))
+      grid.updated(pos.y, grid(pos.y).updated(pos.x, value))
     }
 
     def width(): Int = {

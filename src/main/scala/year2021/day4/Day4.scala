@@ -148,17 +148,17 @@ object Day4 {
   }
 
   def main(args: Array[String]): Unit = {
-    val testData = Source.fromResource("day4/testdata.txt")
+    val testData = Source.fromInputStream(getClass.getResourceAsStream("testdata.txt"))
       .getLines()
       .toList
       .mkString("\n")
 
-    val testData2 = Source.fromResource("day4/testdata2.txt")
+    val testData2 = Source.fromInputStream(getClass.getResourceAsStream("testdata2.txt"))
       .getLines()
       .toList
       .mkString("\n")
 
-    val realData = Source.fromResource("day4/data.txt")
+    val realData = Source.fromInputStream(getClass.getResourceAsStream("data.txt"))
       .getLines()
       .toList
       .mkString("\n")

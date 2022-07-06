@@ -49,14 +49,11 @@ object Day5 {
   }
 
   def main(args: Array[String]): Unit = {
-    val testData = Source.fromResource("day5/data.txt")
+    val testData = Source.fromInputStream(getClass.getResourceAsStream("data.txt"))
       .getLines()
       .toList
       .mkString("\n")
       .trim
-
-    println(s"Part 1: ${part1(testData)}")
-    println(s"Part 2: ${part1(testData, findDiagonal = true)}")
 
     val part1Result = part1(testData)
     println(part1Result)

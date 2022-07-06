@@ -50,8 +50,8 @@ object Day2 {
   }
 
   def main(args: Array[String]): Unit = {
-    val realData = Source.fromResource("day2/data.txt").getLines.toList
-    val testData = Source.fromResource("day2/testdata.txt").getLines.toList
+    val realData = Source.fromInputStream(getClass.getResourceAsStream("data.txt")).getLines.toList
+    val testData = Source.fromInputStream(getClass.getResourceAsStream("testdata.txt")).getLines.toList
 
     val part1Result = part1(transformInput(realData))
     println(part1Result)

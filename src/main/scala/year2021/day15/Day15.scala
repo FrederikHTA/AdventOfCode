@@ -1,9 +1,10 @@
 package year2021.day15
 
 import lib.Graph.{Dijkstra, GraphSearch, TargetNode}
-import lib.{Grid, Utils}
+import lib.Grid
 import lib.GridImplicits._
 import lib.Pos.Pos
+import lib.StringImplicits.StringOperations
 
 import scala.io.Source
 
@@ -40,7 +41,7 @@ object Day15 {
   }
 
   def parseInput(input: String): Grid[Int] = {
-    Utils.parseStringToGrid(input)
+    input.toGrid
   }
 
   def main(args: Array[String]): Unit = {
