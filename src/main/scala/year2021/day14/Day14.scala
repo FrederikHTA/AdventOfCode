@@ -52,7 +52,7 @@ object Day14 {
   }
 
   def parseInput(input: String): Input = {
-    val Seq(p, r) = input.split("\n\n", 2).toSeq
+    val Seq(p, r) = input.split("\r\n\r\n", 2).toSeq
 
     val polymer = parsePolymer(p)
     val rules = r.linesIterator.map(parseRules).toMap
