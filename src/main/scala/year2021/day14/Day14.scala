@@ -5,15 +5,13 @@ import scala.io.Source
 
 object Day14 {
   final case class Polymer(elements: Map[Char, Long], pairs: Map[Pair, Long])
-
-  final case class Input(polymer: Polymer, rules: Map[Pair, Char])
-
+  final case class Input(polymer: Polymer, rules: Rules)
   final case class PairCount(pair: Pair, count: Long)
 
   type Pair = (Char, Char)
   type Rules = Map[Pair, Char]
 
-  def findNewPairs(polymer: Polymer, rules: Map[Pair, Char]): Polymer = {
+  def findNewPairs(polymer: Polymer, rules: Rules): Polymer = {
     val newPairs = polymer.pairs.iterator.flatMap {
       case (pair, count) =>
         val insertChar = rules(pair)
@@ -46,8 +44,19 @@ object Day14 {
   }
 
   def parsePolymer(polymer: String): Polymer = {
-    val elements = polymer.groupBy(identity).view.mapValues(_.length.toLong).toMap
-    val pairs = polymer.zip(polymer.tail).groupBy(identity).view.mapValues(_.length.toLong).toMap
+    val elements = polymer
+      .groupBy(identity)
+      .view
+      .mapValues(_.length.toLong)
+      .toMap
+
+    val pairs = polymer
+      .zip(polymer.tail)
+      .groupBy(identity)
+      .view
+      .mapValues(_.length.toLong)
+      .toMap
+
     Polymer(elements, pairs)
   }
 
