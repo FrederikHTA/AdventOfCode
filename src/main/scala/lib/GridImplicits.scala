@@ -1,6 +1,6 @@
 package lib
 
-import lib.pos.Pos
+import lib.Pos.Pos
 
 object GridImplicits {
 

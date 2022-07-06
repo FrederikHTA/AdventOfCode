@@ -1,7 +1,7 @@
 package day22
 
-import lib.box.Box3
-import lib.pos.Pos3
+import lib.Box.Box3
+import lib.Pos.Pos3
 
 import scala.io.Source
 import scala.util.matching.Regex

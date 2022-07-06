@@ -2,7 +2,7 @@ package day9
 
 import lib.Grid
 import lib.GridImplicits._
-import lib.pos.Pos
+import lib.Pos.Pos
 
 import scala.io.Source
 

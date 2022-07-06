@@ -3,7 +3,7 @@ package day15
 import lib.Graph.{Dijkstra, GraphSearch, TargetNode}
 import lib.{Grid, Utils}
 import lib.GridImplicits._
-import lib.pos.Pos
+import lib.Pos.Pos
 
 import scala.io.Source
 

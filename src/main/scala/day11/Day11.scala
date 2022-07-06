@@ -2,7 +2,7 @@ package day11
 
 import lib._
 import lib.GridImplicits._
-import lib.pos.Pos
+import lib.Pos.Pos
 
 import scala.annotation.tailrec
 import scala.io.Source

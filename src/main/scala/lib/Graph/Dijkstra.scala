@@ -2,7 +2,7 @@ package lib.Graph
 
 import lib.Grid
 import lib.GridImplicits._
-import lib.pos.Pos
+import lib.Pos.Pos
 
 import scala.collection.mutable
 
