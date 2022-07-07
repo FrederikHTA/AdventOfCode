@@ -20,10 +20,10 @@ case class Pos(x: Int, y: Int) extends BoxPosOps[Pos] {
     Pos(x max that.x, y max that.y)
 
   def getAxisOffsets: Seq[Pos] =
-    List(Pos(x + 1, y), Pos(x - 1, y), Pos(x, y + 1), Pos(x, y - 1))
+    Pos.axisOffsets.map(_ + Pos(x, y))
 
   def getDiagonalOffsets: Seq[Pos] =
-    List(Pos(x + 1, y + 1), Pos(x + 1, y - 1), Pos(x - 1, y + 1), Pos(x - 1, y - 1))
+    Pos.diagonalOffsets.map(_ + Pos(x, y))
 
   def getAllOffsets: Seq[Pos] =
     getAxisOffsets ++ getDiagonalOffsets
