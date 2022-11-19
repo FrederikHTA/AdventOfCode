@@ -22,9 +22,8 @@ case class Pos(x: Int, y: Int) extends BoxPosOps[Pos] {
   def getAxisOffsets: Seq[Pos] =
     Pos.axisOffsets.map(_ + Pos(x, y))
 
-  def getDiagonalOffsets: Seq[Pos] = {
+  def getDiagonalOffsets: Seq[Pos] =
     Pos.diagonalOffsets.map(_ + Pos(x, y))
-  }
 
   def getAllOffsets: Seq[Pos] =
     getAxisOffsets ++ getDiagonalOffsets
