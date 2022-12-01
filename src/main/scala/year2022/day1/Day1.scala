@@ -1,24 +1,30 @@
 package year2022.day1
 
-import year2021.day15.Day15.getClass
-
 import scala.io.Source
 
 object Day1 {
-  def part1(): Unit = {
-    
+  def part1(input: List[Array[Int]]): Int = {
+    val list = input.map(_.sum).sorted.reverse
+    val result = list.head
+    result
   }
 
-  def parseInput(input: String): Unit = {
-
+  def part2(input: List[Array[Int]]): Int = {
+    val list = input.map(_.sum).sorted.reverse
+    val result = list.take(3).sum
+    result
   }
+
 
   def main(args: Array[String]): Unit = {
     val input = Source
       .fromInputStream(getClass.getResourceAsStream("data.txt"))
       .mkString
-      .trim
+      .split("\r\n\r\n")
+      .toList
+      .map(_.split("\r\n").map(_.toInt))
 
-    //    println(part1(parseInput(input)))
+    println(part1(input))
+    println(part2(input))
   }
 }
