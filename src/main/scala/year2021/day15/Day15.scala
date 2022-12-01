@@ -4,7 +4,7 @@ import lib.Graph.{Dijkstra, GraphSearch, TargetNode}
 import lib.Grid
 import lib.GridImplicits._
 import lib.Pos.Pos
-import lib.StringImplicits.StringOperations
+import lib.StringImplicits._
 
 import scala.io.Source
 

@@ -1,6 +1,6 @@
 package year2021.day5
 
-import lib.IntegerImplicits.RangeOperations
+import lib.IntegerImplicits._
 import lib.Pos.Pos
 
 import scala.io.Source
@@ -13,12 +13,12 @@ object Day5 {
       val (Pos(x1, y1), Pos(x2, y2)) = pair
 
       if (x1 == x2) {
-        (y1 createRangeWithDirection y2).map(Pos(x1, _))
+        (y1 rangeWithDirection y2).map(Pos(x1, _))
       } else if (y1 == y2) {
-        (x1 createRangeWithDirection x2).map(Pos(_, y1))
+        (x1 rangeWithDirection x2).map(Pos(_, y1))
       } else if (findDiagonal) {
-        val d1 = x1 createRangeWithDirection x2
-        val d2 = y1 createRangeWithDirection y2
+        val d1 = x1 rangeWithDirection x2
+        val d2 = y1 rangeWithDirection y2
         d1.zip(d2).map(x => Pos(x._1, x._2))
       } else {
         List()

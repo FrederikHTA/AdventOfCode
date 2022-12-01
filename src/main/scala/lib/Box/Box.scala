@@ -2,7 +2,7 @@ package lib.Box
 
 import lib.Pos.Pos
 
-case class Box(min: Pos, max: Pos) extends BoxOps[Pos, Box] {
+final case class Box(min: Pos, max: Pos) extends BoxOps[Pos, Box] {
   override def factory: BoxFactory[Pos, Box] = Box
 
   override def iterator: Iterator[Pos] = {

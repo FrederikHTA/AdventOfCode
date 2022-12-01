@@ -1,6 +1,6 @@
 package lib.Pos
 
-case class Pos3(x: Int, y: Int, z: Int) extends BoxPosOps[Pos3] {
+final case class Pos3(x: Int, y: Int, z: Int) extends BoxPosOps[Pos3] {
   override def +(that: Pos3): Pos3 =
     Pos3(x + that.x, y + that.y, z + that.z)
 
