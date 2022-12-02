@@ -24,7 +24,10 @@ object Day1 {
       .toList
       .map(_.split("\r\n").map(_.toInt))
 
-    println(part1(input))
-    println(part2(input))
+    val part1Result = part1(input)
+    assert(part1Result == 66616)
+
+    val part2Result = part2(input)
+    assert(part2Result == 199172)
   }
 }
