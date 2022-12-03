@@ -23,7 +23,7 @@ object Day3 {
     left.intersect(right).head
   }
 
-  def findCommonCharPart2(input: Seq[String]) = input.reduce((a, b) => a.intersect(b))
+  def findCommonCharPart2(input: Seq[String]): String = input.reduce((a, b) => a.intersect(b))
 
   def parsePart1Input(input: Seq[String]): Seq[Compartment] =
     input.map(x => x.splitAt(x.length / 2)).map(x => Compartment(x._1, x._2))
