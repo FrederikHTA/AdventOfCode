@@ -5,32 +5,28 @@ import year2021.day15.Day15.getClass
 import scala.io.Source
 
 object Day3 {
-  final case class Compartment(Left: String, Right: String)
+  type Compartment = Seq[String]
 
-  def part1(compartments: Seq[Compartment]): Int = {
-    val range = Seq('-') ++ ('a' to 'z') ++ ('A' to 'Z')
-    compartments.map(findCommonCharPart1).map(range.indexOf).sum
-  }
+  private val range = Seq('-') ++ ('a' to 'z') ++ ('A' to 'Z')
 
-  def part2(input: Seq[Seq[String]]): Int = {
-    val range = Seq('-') ++ ('a' to 'z') ++ ('A' to 'Z')
-    input.map(findCommonCharPart2).map(_.head).map(range.indexOf).sum
-  }
+  def part1(compartments: Seq[Compartment]): Int =
+    compartments
+      .map(findCommonChar)
+      .map(_.head)
+      .map(range.indexOf)
+      .sum
 
-  def findCommonCharPart1(compartment: Compartment): Char = {
-    val left = compartment.Left
-    val right = compartment.Right
-    left.intersect(right).head
-  }
+  def part2(input: Seq[Seq[String]]): Int =
+    input.map(findCommonChar).map(_.head).map(range.indexOf).sum
 
-  def findCommonCharPart2(input: Seq[String]): String = input.reduce((a, b) => a.intersect(b))
+  def findCommonChar(input: Seq[String]) =
+    input.map(_.toSet).reduce((a, b) => a.intersect(b))
 
   def parsePart1Input(input: Seq[String]): Seq[Compartment] =
-    input.map(x => x.splitAt(x.length / 2)).map(x => Compartment(x._1, x._2))
+    input.map(x => x.splitAt(x.length / 2)).map((x => Seq(x._1, x._2)))
 
   def parsePart2Input(input: Seq[String]): Seq[Seq[String]] =
     input.sliding(3, 3).map(x => x).toSeq
-
 
   def main(args: Array[String]): Unit = {
     val input = Source
@@ -44,6 +40,6 @@ object Day3 {
 
     val part2Res = part2(parsePart2Input(input))
     println(part2Res)
-    assert(part1Res == 2616)
+    assert(part2Res == 2616)
   }
 }
