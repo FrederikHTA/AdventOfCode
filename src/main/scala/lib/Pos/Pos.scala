@@ -27,6 +27,12 @@ final case class Pos(x: Int, y: Int) extends BoxPosOps[Pos] {
 
   def getAllOffsets: Seq[Pos] =
     getAxisOffsets ++ getDiagonalOffsets
+
+  def contains(that: Pos): Boolean =
+    x <= that.x && that.y <= y
+
+  def overlaps(that: Pos): Boolean =
+    x <= that.y && that.x <= y
 }
 
 object Pos extends PosFactory[Pos] {

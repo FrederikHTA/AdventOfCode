@@ -4,7 +4,7 @@ import year2022.day2.Day2.{parseInput, part1}
 import scala.io.Source
 
 object Template {
-  def part1(input: String): Unit = {
+  def part1(input: String) = {
 
   }
 
@@ -18,7 +18,8 @@ object Template {
       .mkString
       .trim
 
-    val part1Res = part1(parseInput(input))
+    val parsedInput = parseInput(input)
+    val part1Res = part1(parsedInput)
     println(part1Res)
 //    assert(part1Res == )
   }
