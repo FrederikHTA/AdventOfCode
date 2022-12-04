@@ -24,12 +24,12 @@ object Day4 {
   }
 
   def parseInput(input: Seq[String]): Seq[ElfPair] = {
-    input
-      .map(_.split(","))
-      .map(x => x.map(_.split("-"))
-        .map(_.map(_.toInt))
-        .map(y => Pos(y.head, y.last)))
-      .map(x => ElfPair(x.head, x.last))
+    val regex = """(\d+)-(\d+),(\d+)-(\d+)""".r
+
+    input.map(line => line match {
+      case regex(min1, max1, min2, max2) =>
+        ElfPair(Pos(min1.toInt, max1.toInt), Pos(min2.toInt, max2.toInt))
+    })
   }
 
   def main(args: Array[String]): Unit = {
