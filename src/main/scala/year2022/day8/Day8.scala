@@ -7,72 +7,81 @@ import year2022.day2.Day2.{parseInput, part1}
 
 import scala.io.Source
 
-final case class Tree(isVisible: Boolean, height: Int)
+final case class Tree(isVisible: Boolean, height: Int, pos: Pos)
 
 object Day8 {
-  def part1(grid: Grid[Int]) = {
-    val trees = buildTrees(grid)
-    val pos = buildPos(grid)
+  def part1(grid: Grid[Int]): Int = {
+    val gridTranspose = grid.transpose
 
-    val sorted = pos.sortBy(x => x.x)
-    val updatedTrees = pos.foldLeft(trees)(findVisible)
+    val left   = grid.map(_.scanLeft(-1)(_ max _))
+    val right  = grid.map(_.scanRight(-1)(_ max _))
+    val top    = gridTranspose.map(_.scanLeft(-1)(_ max _))
+    val bottom = gridTranspose.map(_.scanRight(-1)(_ max _))
 
-    val visibleTrees = updatedTrees.flatten.map(_.isVisible).count(x => x)
+    val res = for {
+      (row, y)        <- grid.zipWithIndex
+      (treeHeight, x) <- row.zipWithIndex
+      if treeHeight > left(y)(x)
+        || treeHeight > right(y)(x + 1)
+        || treeHeight > top(x)(y)
+        || treeHeight > bottom(x)(y + 1)
+    } yield ()
 
-    val len = trees.length * 2
-    val hei = grid.length * 2
-    val res = visibleTrees - (len + hei)
-    res
+    res.length
   }
 
-  def findVisible(trees: Grid[Tree], pos: Pos): Grid[Tree] = {
-    import lib.GridImplicits._
-    val offsets = pos.getAxisOffsets.map(offsetPos => trees.apply(offsetPos))
-    val currentTree = trees.apply(pos)
+  def part2(grid: Grid[Int]) = {
+    val res = for {
+      (row, y)  <- grid.zipWithIndex
+      (tree, x) <- row.zipWithIndex
+      pos = Pos(x, y)
+    } yield calculateScenicScore(pos, grid)
 
-    val isVisible = offsets.exists(tree => tree.height <= currentTree.height && tree.isVisible)
-
-    trees.updateGrid(pos, Tree(isVisible, currentTree.height))
+    res.max
   }
 
-  def buildPos(grid: Grid[Int]): Vector[Pos] = {
-    for {
-      (row, rowIndex) <- grid.zipWithIndex
-      (_, cellIndex) <- row.zipWithIndex
-      pos = Pos(cellIndex + 1, rowIndex + 1)
-    } yield pos
+  extension (i: Int) {
+    def orDefault(default: Int) = if (i < 0) default else i
   }
 
-  def buildTrees(grid: Grid[Int]): Grid[Tree] = {
-    val edgeTrees = (0 to grid.length + 1).map(_ => Tree(true, 0)).toVector
+  def calculateScenicScore(pos: Pos, grid: Grid[Int]): Int = {
+    val transposed = grid.transpose
 
-    val trees = for {
-      (row, rowIndex) <- grid.zipWithIndex
-      trees = row.map(height => Tree(false, height))
-    } yield Tree(true, 0) +: trees :+ Tree(true, 0)
+    val row  = grid(pos.y)
+    val col  = transposed(pos.x)
+    val cell = row(pos.x)
 
-    val res = edgeTrees +: trees :+ edgeTrees
-    res
+    val lookLeft  = pos.x - row.lastIndexWhere(_ >= cell, pos.x - 1).orDefault(0)
+    val lookRight = row.indexWhere(_ >= cell, pos.x + 1).orDefault(row.size - 1) - pos.x
+    val lookUp    = pos.y - col.lastIndexWhere(_ >= cell, pos.y - 1).orDefault(0)
+    val lookDown  = col.indexWhere(_ >= cell, pos.y + 1).orDefault(row.size - 1) - pos.y
+
+    lookUp * lookDown * lookLeft * lookRight
   }
 
   def parseInput(input: String): Grid[Int] = {
-    input
-      .linesIterator
-      .map(_.split("")
-        .toVector
-        .map(x => x.toInt))
+    input.linesIterator
+      .map(
+        _.split("").toVector
+          .map(x => x.toInt)
+      )
       .toVector
   }
 
   def main(args: Array[String]): Unit = {
     val input = Source
-      .fromInputStream(getClass.getResourceAsStream("testdata.txt"))
+      .fromInputStream(getClass.getResourceAsStream("data.txt"))
       .mkString
       .trim
 
     val parsedInput = parseInput(input)
+
     val part1Res = part1(parsedInput)
     println(part1Res)
-    //    assert(part1Res == )
+    assert(part1Res == 1851)
+
+    val part2Res = part2(parsedInput)
+    println(part2Res)
+    assert(part2Res == 574080)
   }
 }

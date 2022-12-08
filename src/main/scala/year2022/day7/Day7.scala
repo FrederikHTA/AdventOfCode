@@ -47,23 +47,24 @@ object Day7 {
   }
 
   def buildTree(context: DirectoryContext, inputString: String): DirectoryContext = {
+    val delimiter = "$"
     val DirectoryContext(contextName, contextParent, contextNodes) = context
 
     inputString match {
       case cdSlash() => context
       case ls() => context
       case dir(name) =>
-        val updatesNodes = contextNodes + (s"${contextName}_$name" -> Directory())
+        val updatesNodes = contextNodes + (s"$contextName$delimiter$name" -> Directory())
         DirectoryContext(contextName, contextParent, updatesNodes)
       case file(size, name) =>
-        val updatesNodes = contextNodes + (s"${contextName}_$name" -> File(size.toInt))
+        val updatesNodes = contextNodes + (s"$contextName$delimiter$name" -> File(size.toInt))
         DirectoryContext(contextName, contextParent, updatesNodes)
       case cd(name) =>
-        val newName = s"${contextName}_$name"
+        val newName = s"$contextName$delimiter$name"
         val newCurrent = contextNodes(newName)
         DirectoryContext(newName, contextName, contextNodes)
       case cdOut() =>
-        val last_index = contextName.lastIndexOf("_")
+        val last_index = contextName.lastIndexOf(delimiter)
         val parentName = contextName.splitAt(last_index)._1
         DirectoryContext(parentName, "", contextNodes)
     }
