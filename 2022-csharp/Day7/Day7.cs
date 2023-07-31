@@ -52,12 +52,6 @@ static class Day7
         var rootSize = CalculateDirectorySize(directories.First(x => x.Name == "root"));
 
         var spaceRemaining = totalSpace - rootSize;
-
-        var directorySizes = directories
-            .Select(x => new { Directory = x, Size = CalculateDirectorySize(x) })
-            .OrderByDescending(x => spaceRemaining + x.Size >= requiredSpace)
-            .ThenBy(x => x.Size)
-            .First();
         
         var result = directories
             .Select(x => new { Directory = x, Size = CalculateDirectorySize(x) })
