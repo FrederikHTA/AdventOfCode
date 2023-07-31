@@ -9,11 +9,11 @@ public record Directory(string Name, Directory? Parent)
     public string Name { get; } = Name;
     public Directory? Parent { get; } = Parent;
     public List<Directory> SubDirectories { get; } = new();
-    public List<SystemFile> Files { get; } = new();
+    public List<File> Files { get; } = new();
     public int Size { get; set; }
 }
 
-public record SystemFile(string Name, long Size);
+public record File(string Name, long Size);
 
 static class Day7
 {
@@ -32,11 +32,10 @@ static class Day7
 
         var directories = BuildTree(lines);
 
-        var sizes = directories
+        var res = directories
             .Select(CalculateDirectorySize)
-            .Where(dirSize => dirSize <= 100000);
-
-        var res = sizes.Sum();
+            .Where(dirSize => dirSize <= 100000)
+            .Sum();
 
         res.Should().Be(1297683);
         Console.WriteLine(res);
@@ -44,7 +43,29 @@ static class Day7
 
     public static void Part2()
     {
-        Console.WriteLine("Test");
+        var totalSpace = 70000000;
+        var requiredSpace = 30000000;
+
+        var lines = Utilities.GetLines("/Day7/Data.txt");
+
+        var directories = BuildTree(lines);
+        var rootSize = CalculateDirectorySize(directories.First(x => x.Name == "root"));
+
+        var spaceRemaining = totalSpace - rootSize;
+
+        var directorySizes = directories
+            .Select(x => new { Directory = x, Size = CalculateDirectorySize(x) })
+            .OrderByDescending(x => spaceRemaining + x.Size >= requiredSpace)
+            .ThenBy(x => x.Size)
+            .First();
+        
+        var result = directories
+            .Select(x => new { Directory = x, Size = CalculateDirectorySize(x) })
+            .Where(x => spaceRemaining + x.Size >= requiredSpace)
+            .OrderBy(x => x.Size)
+            .First();
+
+        Console.WriteLine(result.Size);
     }
 
     private static int CalculateDirectorySize(Directory directory)
@@ -75,7 +96,7 @@ static class Day7
                 var size = int.Parse(split[0]);
                 var name = split[1];
 
-                currentDirectory.Files.Add(new SystemFile(name, size));
+                currentDirectory.Files.Add(new File(name, size));
                 currentDirectory.Size += size;
             }
             else if (cd.IsMatch(line))
