@@ -23,11 +23,8 @@ static class Day7
     private static Regex cdSlash = new(@"\$ cd \/");
     private static Regex cdOut = new(@"\$ cd \.\.");
 
-    // private static Regex ls = new(@"\$ ls");
-
     public static void Part1()
     {
-        // var lines = Utilities.GetLines("/Day7/Test2.txt");
         var lines = Utilities.GetLines("/Day7/Data.txt");
 
         var directories = BuildTree(lines);
