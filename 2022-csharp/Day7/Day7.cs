@@ -29,13 +29,13 @@ static class Day7
 
         var directories = BuildTree(lines);
 
-        var res = directories
+        var result = directories
             .Select(CalculateDirectorySize)
             .Where(dirSize => dirSize <= 100000)
             .Sum();
 
-        res.Should().Be(1297683);
-        Console.WriteLine(res);
+        result.Should().Be(1297683);
+        Console.WriteLine(result);
     }
 
     public static void Part2()
@@ -56,6 +56,7 @@ static class Day7
             .OrderBy(x => x.Size)
             .First();
 
+        result.Should().Be(5756764);
         Console.WriteLine(result.Size);
     }
 
