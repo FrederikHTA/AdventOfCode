@@ -57,7 +57,7 @@ class Monkey
     private int RunOperation()
     {
         var operation = Operation.Split(" ");
-        var left = operation[0] == "old" ? _worryLevel : int.Parse(operation[0]);
+        var left = _worryLevel;
         var right = operation[2] == "old" ? _worryLevel : int.Parse(operation[2]);
 
         var result = operation[1] == "+"
@@ -72,11 +72,11 @@ static class Day11
 {
     public static void Part1()
     {
-        var monkeys = ParseToMonkey();
+        var monkeys = ParseToMonkeys();
 
         Enumerable.Range(1, 20).ForEach(_ =>
         {
-            foreach (var monkey in monkeys)
+            monkeys.ForEach(monkey =>
             {
                 var count = monkey.Items.Count;
                 for (var i = 0; i < count; i++)
@@ -84,7 +84,7 @@ static class Day11
                     var (worryLevel, newMonkey) = monkey.Inspect1();
                     monkeys[newMonkey].Items.Add(worryLevel);
                 }
-            }
+            });
         });
 
         var monkeyBusiness = CalculateMonkeyBusiness(monkeys);
@@ -95,7 +95,7 @@ static class Day11
 
     public static void Part2()
     {
-        var monkeys = ParseToMonkey();
+        var monkeys = ParseToMonkeys();
 
         Enumerable.Range(1, 10000).ForEach(roundNumber =>
         {
@@ -108,14 +108,10 @@ static class Day11
                     monkeys[newMonkey].Items.Add(worryLevel);
                 }
             }
-            var round = roundNumber;
-
         });
 
         var monkeyBusiness = CalculateMonkeyBusiness(monkeys);
-
-        // 2088394607 -- too low
-        // monkeyBusiness.Should().Be(56120);
+        
         Console.WriteLine("Result: " + monkeyBusiness);
     }
 
@@ -128,7 +124,7 @@ static class Day11
             .Aggregate((x, y) => x * y);
     }
 
-    private static List<Monkey> ParseToMonkey()
+    private static List<Monkey> ParseToMonkeys()
     {
         return Utilities.GetLines("/Day11/Data.txt")
             .Where(x => !string.IsNullOrEmpty(x))
