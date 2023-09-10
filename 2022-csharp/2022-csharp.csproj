@@ -33,10 +33,17 @@
     <None Update="Day12\TestData.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Day13\TestData.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Day13\Data.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="FluentAssertions" Version="6.11.0" />
   </ItemGroup>
+
 
 </Project>
