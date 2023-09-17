@@ -18,9 +18,13 @@ static class Day13
             .ToList();
 
         var result = packetPairs
-            .Select((x, i) => (ComparePackets(x.Left, x.Right), i + 1))
-            .Where(x => x.Item1 < 0)
-            .Sum(y => y.Item2);
+            .Select((packetPair, index) => new
+            {
+                ComparisonValue = ComparePackets(packetPair.Left, packetPair.Right),
+                Index = index + 1
+            })
+            .Where(x => x.ComparisonValue < 0)
+            .Sum(y => y.Index);
 
         result.Should().Be(6240);
     }
@@ -44,7 +48,6 @@ static class Day13
         var result = divider1 * divider2;
 
         result.Should().Be(23142);
-        Console.WriteLine("Result: " + result);
     }
 
     private static int ComparePackets(JsonElement left, JsonElement right)
@@ -80,7 +83,7 @@ static class Day13
         return left.GetArrayLength() - right.GetArrayLength();
     }
 
-    private static List<string[]> ParseInput(string input)
+    private static IEnumerable<string[]> ParseInput(string input)
     {
         return input
             .Split("\r\n\r\n")
