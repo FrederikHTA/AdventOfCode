@@ -137,7 +137,7 @@ public static class Day14
         {
             for (var i = xMin-1; i <= xMax+1; i++)
             {
-                if (walls.TryGetValue(new Pos(i, j), out Pos pos))
+                if (walls.TryGetValue(new Pos(i, j), out Pos _))
                 {
                     Console.Write("#");
                     continue;
