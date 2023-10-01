@@ -37,7 +37,9 @@ static class Day9
         var commands = ParseToCommands("/Day8/Data.txt");
         var tPosVisited = new HashSet<Pos> { new(0, 0) };
 
-        var knots = Enumerable.Range(0, numberOfKnots).Select(x => new Pos(0,0)).ToList();
+        var knots = Enumerable.Range(0, numberOfKnots)
+            .Select(_ => new Pos(0,0))
+            .ToList();
 
         commands.ForEach(command =>
         {
