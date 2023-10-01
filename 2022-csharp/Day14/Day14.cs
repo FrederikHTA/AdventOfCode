@@ -1,21 +1,8 @@
 using System.Net;
+using _2022_csharp.Lib.Pos;
 using FluentAssertions;
 
 namespace _2022_csharp.Day14;
-
-internal record Pos(int X, int Y)
-{
-    public List<Pos> GetStoppingPositions() => new()
-    {
-        Down(),
-        DownLeft(),
-        DownRight()
-    };
-
-    public Pos Down() => this with { Y = Y - 1 };
-    public Pos DownLeft() => new(X - 1, Y - 1);
-    public Pos DownRight() => new(X + 1, Y - 1);
-}
 
 public static class Day14
 {
@@ -76,8 +63,8 @@ public static class Day14
         var minY = walls.Min(x => x.Y);
         var (minX, maxX) = (walls.Min(x => x.X), walls.Max(x => x.X));
 
-        var min = minX - 150;
-        var max = maxX - min + 150;
+        var min = minX - 200;
+        var max = maxX - min + 200;
         var range = Enumerable
             .Range(min, max)
             .Select(x => new Pos(x, minY - 2))
@@ -135,7 +122,7 @@ public static class Day14
         Console.WriteLine($"Iteration: {iteration}");
         for (var j = 0; j >= yMin; j--)
         {
-            for (var i = xMin-1; i <= xMax+1; i++)
+            for (var i = xMin - 1; i <= xMax + 1; i++)
             {
                 if (walls.TryGetValue(new Pos(i, j), out Pos _))
                 {
@@ -204,4 +191,8 @@ public static class Day14
                 }).ToList())
             .ToList();
     }
+    
+    private static Pos Down(this Pos pos) => new Pos(pos.X, pos.Y - 1);
+    private static Pos DownLeft(this Pos pos) => new(pos.X - 1, pos.Y - 1);
+    private static Pos DownRight(this Pos pos) => new(pos.X + 1, pos.Y - 1);
 }

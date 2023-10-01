@@ -24,10 +24,10 @@ public record Pos(int X, int Y)
         Math.Abs(X - that.X) + Math.Abs(Y - that.Y);
 
     public IEnumerable<Pos> GetAxisOffsets() =>
-        AxisOffsets.Select(_ => _ + new Pos(X, Y));
+        AxisOffsets.Select(pos => pos + new Pos(X, Y));
 
     public IEnumerable<Pos> GetDiagonalOffsets() =>
-        DiagonalOffsets.Select(_ => _ + new Pos(X, Y));
+        DiagonalOffsets.Select(pos => pos + new Pos(X, Y));
 
     public IEnumerable<Pos> GetAllOffsets() =>
         GetAxisOffsets().Concat(GetDiagonalOffsets());
