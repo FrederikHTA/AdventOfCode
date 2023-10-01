@@ -2,7 +2,7 @@ using _2022_csharp.Lib;
 using _2022_csharp.Lib.Pos;
 using FluentAssertions;
 
-namespace _2022_csharp.Day8;
+namespace _2022_csharp.Day9;
 
 enum Direction
 {
@@ -14,7 +14,7 @@ enum Direction
 
 record Command(Direction Direction, int steps);
 
-static class Day8
+static class Day9
 {
     public static void Part1()
     {

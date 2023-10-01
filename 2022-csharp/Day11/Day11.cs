@@ -1,6 +1,7 @@
-using System.Text.RegularExpressions;
 using _2022_csharp.Lib;
 using FluentAssertions;
+
+namespace _2022_csharp.Day11;
 
 class Monkey
 {
