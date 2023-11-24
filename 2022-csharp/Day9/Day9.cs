@@ -34,7 +34,7 @@ static class Day9
 
     private static HashSet<Pos> CalculateVisited(int numberOfKnots)
     {
-        var commands = ParseToCommands("/Day8/Data.txt");
+        var commands = ParseToCommands("/Day9/Data.txt");
         var tPosVisited = new HashSet<Pos> { new(0, 0) };
 
         var knots = Enumerable.Range(0, numberOfKnots)
@@ -62,7 +62,7 @@ static class Day9
 
                     var xDist = knots[i - 1].X - knots[i].X;
                     var yDist = knots[i - 1].Y - knots[i].Y;
-
+                    
                     knots[i] += new Pos(Math.Sign(xDist), Math.Sign(yDist));
                 }
 
