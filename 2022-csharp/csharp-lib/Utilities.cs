@@ -1,4 +1,4 @@
-namespace _2022_csharp.Lib;
+namespace _2022_csharp.csharp_lib;
 
 public static class Utilities
 {

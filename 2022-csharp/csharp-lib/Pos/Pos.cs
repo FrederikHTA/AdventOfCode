@@ -1,4 +1,4 @@
-namespace _2022_csharp.Lib.Pos;
+namespace _2022_csharp.csharp_lib.Pos;
 
 public record Pos(int X, int Y)
 {

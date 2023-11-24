@@ -1,6 +1,6 @@
-using _2022_csharp.Lib;
-using _2022_csharp.Lib.Graph;
-using _2022_csharp.Lib.Pos;
+using _2022_csharp.csharp_lib;
+using _2022_csharp.csharp_lib.Graph;
+using _2022_csharp.csharp_lib.Pos;
 using FluentAssertions;
 
 namespace _2022_csharp.Day12;
@@ -19,7 +19,7 @@ static class Day12
 
         var heightmap = CreateHeightMap(mapHeight, mapWidth, input);
 
-        var result = Dijkstra.GetShortestPath(heightmap, start.First(), end.First());
+        var result = Dijkstra.GetShortestPath(heightmap, start[0], end[0]);
 
         result.Should().Be(504);
         Console.WriteLine("Result: " + result);
@@ -38,7 +38,7 @@ static class Day12
         var heightmap = CreateHeightMap(mapHeight, mapWidth, input);
 
         var result = start
-            .Select(startPosition => Dijkstra.GetShortestPath(heightmap, startPosition, end.First()))
+            .Select(startPosition => Dijkstra.GetShortestPath(heightmap, startPosition, end[0]))
             .Where(x => x > 0)
             .Min();
         
@@ -46,7 +46,7 @@ static class Day12
         Console.WriteLine("Result: " + result);
     }
 
-    private static int[,] CreateHeightMap(int mapHeight, int mapWidth, string[] input)
+    private static int[,] CreateHeightMap(int mapHeight, int mapWidth, IReadOnlyList<string> input)
     {
         var heightmap = new int[mapHeight, mapWidth];
         for (var x = 0; x < mapHeight; x++)
@@ -65,10 +65,10 @@ static class Day12
         return heightmap;
     }
 
-    private static List<Pos> FindIndex(string[] input, char charToFind)
+    private static List<Pos> FindIndex(IReadOnlyList<string> input, char charToFind)
     {
         var positions = new List<Pos>();
-        for (var row = 0; row < input.Length; row++)
+        for (var row = 0; row < input.Count; row++)
         {
             for (var column = 0; column < input[0].Length; column++)
             {

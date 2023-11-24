@@ -1,5 +1,5 @@
-using _2022_csharp.Lib;
-using _2022_csharp.Lib.Pos;
+using _2022_csharp.csharp_lib;
+using _2022_csharp.csharp_lib.Pos;
 using FluentAssertions;
 
 namespace _2022_csharp.Day9;
@@ -51,7 +51,7 @@ static class Day9
                     Direction.D => knots[0] + new Pos(0, -1),
                     Direction.L => knots[0] + new Pos(-1, 0),
                     Direction.R => knots[0] + new Pos(1, 0),
-                    _ => throw new ArgumentOutOfRangeException("i died")
+                    _ => throw new ArgumentOutOfRangeException(nameof(command),"i died")
                 };
 
                 for (var i = 1; i < knots.Count; i++)

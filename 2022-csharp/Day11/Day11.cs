@@ -1,4 +1,4 @@
-using _2022_csharp.Lib;
+using _2022_csharp.csharp_lib;
 using FluentAssertions;
 
 namespace _2022_csharp.Day11;
@@ -98,21 +98,22 @@ static class Day11
     {
         var monkeys = ParseToMonkeys();
 
-        Enumerable.Range(1, 10000).ForEach(roundNumber =>
-        {
-            foreach (var monkey in monkeys)
+        Enumerable.Range(1, 10000)
+            .ForEach(roundNumber =>
             {
-                var count = monkey.Items.Count;
-                for (var i = 0; i < count; i++)
+                foreach (var monkey in monkeys)
                 {
-                    var (worryLevel, newMonkey) = monkey.Inspect2();
-                    monkeys[newMonkey].Items.Add(worryLevel);
+                    var count = monkey.Items.Count;
+                    for (var i = 0; i < count; i++)
+                    {
+                        var (worryLevel, newMonkey) = monkey.Inspect2();
+                        monkeys[newMonkey].Items.Add(worryLevel);
+                    }
                 }
-            }
-        });
+            });
 
         var monkeyBusiness = CalculateMonkeyBusiness(monkeys);
-        
+
         Console.WriteLine("Result: " + monkeyBusiness);
     }
 

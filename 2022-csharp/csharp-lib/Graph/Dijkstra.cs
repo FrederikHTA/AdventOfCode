@@ -1,4 +1,4 @@
-namespace _2022_csharp.Lib.Graph;
+namespace _2022_csharp.csharp_lib.Graph;
 
 public static class Dijkstra
 {

@@ -1,4 +1,4 @@
-using _2022_csharp.Lib;
+using _2022_csharp.csharp_lib;
 
 namespace _2022_csharp;
 

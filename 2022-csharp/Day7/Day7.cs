@@ -1,5 +1,5 @@
 ﻿using System.Text.RegularExpressions;
-using _2022_csharp.Lib;
+using _2022_csharp.csharp_lib;
 using FluentAssertions;
 
 namespace _2022_csharp.Day7;
