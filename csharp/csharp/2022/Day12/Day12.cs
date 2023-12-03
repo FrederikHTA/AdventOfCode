@@ -1,15 +1,15 @@
-using _2022_csharp.csharp_lib;
-using _2022_csharp.csharp_lib.Graph;
-using _2022_csharp.csharp_lib.Pos;
+using csharp.csharp_lib;
+using csharp.csharp_lib.Graph;
+using csharp.csharp_lib.Pos;
 using FluentAssertions;
 
-namespace _2022_csharp.Day12;
+namespace csharp._2022.Day12;
 
 static class Day12
 {
     public static void Part1()
     {
-        var input = Utilities.GetLines("/Day12/Data.txt").ToArray();
+        var input = Utilities.GetLines("2022/Day12/Data.txt").ToArray();
 
         var mapHeight = input.Length;
         var mapWidth = input[0].Trim().Length;
@@ -27,7 +27,7 @@ static class Day12
     
     public static void Part2()
     {
-        var input = Utilities.GetLines("/Day12/Data.txt").ToArray();
+        var input = Utilities.GetLines("2022/Day12/Data.txt").ToArray();
 
         var mapHeight = input.Length;
         var mapWidth = input[0].Trim().Length;

@@ -1,14 +1,13 @@
-using System.Net;
-using _2022_csharp.csharp_lib.Pos;
+using csharp.csharp_lib.Pos;
 using FluentAssertions;
 
-namespace _2022_csharp.Day14;
+namespace csharp._2022.Day14;
 
 public static class Day14
 {
     public static void Part1()
     {
-        var positionList = ParseInput("./Day14/Data.txt");
+        var positionList = ParseInput("2022/Day14/Data.txt");
 
         var walls = BuildCaveWalls(positionList);
         var sandRestCount = 0;
@@ -56,7 +55,7 @@ public static class Day14
 
     public static void Part2()
     {
-        var positionList = ParseInput("./Day14/Data.txt");
+        var positionList = ParseInput("2022/Day14/Data.txt");
 
         var walls = BuildCaveWalls(positionList);
 

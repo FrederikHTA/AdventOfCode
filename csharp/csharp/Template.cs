@@ -1,6 +1,6 @@
-using _2022_csharp.csharp_lib;
+using csharp.csharp_lib;
 
-namespace _2022_csharp;
+namespace csharp;
 
 static class Template
 {

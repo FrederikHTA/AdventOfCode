@@ -1,8 +1,8 @@
 ﻿using System.Text.RegularExpressions;
-using _2022_csharp.csharp_lib;
+using csharp.csharp_lib;
 using FluentAssertions;
 
-namespace _2022_csharp.Day7;
+namespace csharp._2022.Day7;
 
 public record Directory(string Name, Directory? Parent)
 {
@@ -25,7 +25,7 @@ static class Day7
 
     public static void Part1()
     {
-        var lines = Utilities.GetLines("/Day7/Data.txt");
+        var lines = Utilities.GetLines("2022/Day7/Data.txt");
 
         var directories = BuildTree(lines);
 
@@ -43,7 +43,7 @@ static class Day7
         var totalSpace = 70000000;
         var requiredSpace = 30000000;
 
-        var lines = Utilities.GetLines("/Day7/Data.txt");
+        var lines = Utilities.GetLines("2022/Day7/Data.txt");
 
         var directories = BuildTree(lines);
         var rootSize = CalculateDirectorySize(directories.First(x => x.Name == "root"));

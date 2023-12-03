@@ -1,4 +1,4 @@
-namespace _2022_csharp.csharp_lib;
+namespace csharp.csharp_lib;
 
 public static class EnumerableExtensions
 {

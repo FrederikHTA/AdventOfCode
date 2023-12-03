@@ -1,8 +1,8 @@
-using _2022_csharp.csharp_lib;
-using _2022_csharp.csharp_lib.Pos;
+using csharp.csharp_lib;
+using csharp.csharp_lib.Pos;
 using FluentAssertions;
 
-namespace _2022_csharp.Day9;
+namespace csharp._2022.Day9;
 
 enum Direction
 {
@@ -34,7 +34,7 @@ static class Day9
 
     private static HashSet<Pos> CalculateVisited(int numberOfKnots)
     {
-        var commands = ParseToCommands("/Day9/Data.txt");
+        var commands = ParseToCommands("2022/Day9/Data.txt");
         var tPosVisited = new HashSet<Pos> { new(0, 0) };
 
         var knots = Enumerable.Range(0, numberOfKnots)

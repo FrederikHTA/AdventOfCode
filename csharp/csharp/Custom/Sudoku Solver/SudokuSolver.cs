@@ -1,4 +1,4 @@
-namespace _2022_csharp.Sudoku_Solver;
+namespace csharp.Custom.Sudoku_Solver;
 
 public static class SudokuSolver
 {

@@ -1,7 +1,7 @@
-using _2022_csharp.csharp_lib;
+using csharp.csharp_lib;
 using FluentAssertions;
 
-namespace _2022_csharp.Day11;
+namespace csharp._2022.Day11;
 
 class Monkey
 {
@@ -128,7 +128,7 @@ static class Day11
 
     private static List<Monkey> ParseToMonkeys()
     {
-        return Utilities.GetLines("/Day11/Data.txt")
+        return Utilities.GetLines("2022/Day11/Data.txt")
             .Where(x => !string.IsNullOrEmpty(x))
             .Select(x => x.Trim())
             .Chunk(6)

@@ -1,7 +1,7 @@
 using System.Text.Json;
 using FluentAssertions;
 
-namespace _2022_csharp.Day13;
+namespace csharp._2022.Day13;
 
 record PacketPair(JsonElement Left, JsonElement Right);
 
@@ -9,7 +9,7 @@ static class Day13
 {
     public static void Part1()
     {
-        var input = File.ReadAllText("./Day13/Data.txt");
+        var input = File.ReadAllText("2022/Day13/Data.txt");
 
         var packetPairs = ParseInput(input)
             .Select(x => new PacketPair(
@@ -31,7 +31,7 @@ static class Day13
 
     public static void Part2()
     {
-        var input = File.ReadAllText("./Day13/Data.txt");
+        var input = File.ReadAllText("2022/Day13/Data.txt");
 
         var dividerPackets = new List<string> { "[[2]]", "[[6]]" };
         var packetPairs = ParseInput(input)
