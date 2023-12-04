@@ -38,7 +38,7 @@ static class Day2
         minimumRequiredCubes.Should().Be(83435);
     }
 
-    public static List<(int game, IEnumerable<Dictionary<string, int>> cubes)> ParseInput()
+    private static IEnumerable<(int game, IEnumerable<Dictionary<string, int>> cubes)> ParseInput()
     {
         var lines = Utilities.GetLines("/2023/Day2/Data.txt");
         var games = lines.Select(x => x.Split(":"));
