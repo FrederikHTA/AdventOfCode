@@ -42,7 +42,7 @@ static class Day2
     {
         var lines = Utilities.GetLines("/2023/Day2/Data.txt");
         var games = lines.Select(x => x.Split(":"));
-        var res = games.Select(x =>
+        return games.Select(x =>
         {
             var game = int.Parse(x[0]
                 .Replace(":", "")
@@ -62,6 +62,5 @@ static class Day2
 
             return (game, cubes);
         }).ToList();
-        return res;
     }
 }

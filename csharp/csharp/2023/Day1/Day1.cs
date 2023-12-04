@@ -21,37 +21,31 @@ static class Day1
 
     public static void Part2()
     {
-        var regex = new Regex(@"\d|one|two|three|four|five|six|seven|eight|nine");
+        var regex = new Regex(@"\d");
         var input = Utilities.GetLines("/2023/Day1/Data.txt");
-        var result2 = input.Select(line => regex.Matches(line));
-        var res3 = result2.Select(x =>
-            {
-                var c = GetNumber(x.First().Value) + GetNumber(x.Last().Value);
-                return c;
-            })
-            .Select(int.Parse);
+        var res = input
+            .Select(ReplaceWordsWithLetters);
 
-        var result = res3.Sum();
+        var res2 = res.Select(line => regex.Matches(line))
+                .Select(matches => matches.First().Value + matches.Last().Value)
+                .Select(int.Parse);
 
+        var result = res2.Sum();
+        result.Should().Be(55686);
         Console.WriteLine(result);
-
-        var stop = 0;
     }
 
-    private static string GetNumber(string input)
+    private static string ReplaceWordsWithLetters(string input)
     {
-        return input switch
-        {
-            "one" => "1",
-            "two" => "2",
-            "three" => "3",
-            "four" => "4",
-            "five" => "5",
-            "six" => "6",
-            "seven" => "7",
-            "eight" => "8",
-            "nine" => "9",
-            _ => input
-        };
+        return input
+            .Replace("one", "o1e")
+            .Replace("two", "t2o")
+            .Replace("three", "th3e")
+            .Replace("four", "4")
+            .Replace("five", "5e")
+            .Replace("six", "6")
+            .Replace("seven", "7n")
+            .Replace("eight", "e8t")
+            .Replace("nine", "n9e");
     }
 }
