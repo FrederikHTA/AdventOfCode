@@ -21,7 +21,7 @@ internal record GameCard(int CardNumber, int[] WinningNumbers, int[] MyNumbers)
 
         return new GameCard(cardNumber, winningNumbersArray, myNumbersArray);
     }
-    
+
     public int GetScore()
     {
         return WinningNumbers.Intersect(MyNumbers).Count();
@@ -42,7 +42,7 @@ static class Day4
                 regexMiddle.Match(x).Value,
                 regexRight.Match(x).Value))
             .ToList();
-        
+
         var result = gameCards
             .Select(x => x.GetScore())
             .Where(x => x > 0)
@@ -54,6 +54,5 @@ static class Day4
 
     public static void Part2()
     {
-        
     }
 }
