@@ -38,7 +38,6 @@ static class Day6
             winsPerGame.Add(waysToWin);
         }
 
-        var stop = "";
         var result = winsPerGame.Aggregate((a, b) => a * b);
         result.Should().Be(1159152);
     }
@@ -64,7 +63,6 @@ static class Day6
                 }
             }
 
-        var stop = "";
         waysToWin.Should().Be(41513103);
     }
 }
