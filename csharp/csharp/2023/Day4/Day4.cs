@@ -4,11 +4,10 @@ using FluentAssertions;
 
 namespace csharp._2023.Day4;
 
-internal record GameCard(int CardNumber, int[] WinningNumbers, int[] MyNumbers)
+internal record GameCard(int[] WinningNumbers, int[] MyNumbers)
 {
     public static GameCard ParseCard(string gameCard, string winningNumbers, string myNumbers)
     {
-        var cardNumber = int.Parse(gameCard);
         var winningNumbersArray = winningNumbers.Split(" ")
             .Where(x => !string.IsNullOrEmpty(x))
             .Select(int.Parse)
@@ -19,7 +18,7 @@ internal record GameCard(int CardNumber, int[] WinningNumbers, int[] MyNumbers)
             .Select(int.Parse)
             .ToArray();
 
-        return new GameCard(cardNumber, winningNumbersArray, myNumbersArray);
+        return new GameCard(winningNumbersArray, myNumbersArray);
     }
 
     public int GetScore()
