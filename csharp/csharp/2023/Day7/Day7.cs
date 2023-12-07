@@ -1,14 +1,14 @@
 using csharp.csharp_lib;
 
-namespace csharp;
+namespace csharp._2023.Day7;
 
-static class Template
+static class Day7
 {
     public static void Part1()
     {
-        var input = Utilities.GetLines("/YEARNAME/DAYNAME/TestData.txt");
+        var input = Utilities.GetLines("/2023/Day7/TestData.txt");
 
-        // result.Should().HaveCount(6314);
+        // result.Should().Be(6314);
         // Console.WriteLine("Result: " + result);
     }
     
