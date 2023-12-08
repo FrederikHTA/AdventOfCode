@@ -8,8 +8,7 @@ static class Template
     {
         var input = Utilities.GetLines("/YEARNAME/DAYNAME/TestData.txt");
 
-        // result.Should().HaveCount(6314);
-        // Console.WriteLine("Result: " + result);
+        var stop = 0;
     }
 
     public static void Part2()
