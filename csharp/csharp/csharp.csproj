@@ -59,9 +59,6 @@
       <None Update="2023\Day7\TestData.txt">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
-      <None Update="2023\Day7\TestData2.txt">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </None>
     </ItemGroup>
     
     

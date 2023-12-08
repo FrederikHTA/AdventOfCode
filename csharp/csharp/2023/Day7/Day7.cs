@@ -21,43 +21,29 @@ static class Day7
     public static void Part1()
     {
         var lines = Utilities.GetLines("/2023/Day7/Data.txt");
-        var handTypes = GetHandTypes(lines)
+        var result = GetHandTypes(lines)
             .GroupBy(x => x.handType)
-            .Select(SortHands)
-            .OrderBy(x => x.First().Item1)
+            .Select(x => SortHands(x, false))
+            .OrderBy(x => x[0].Item1)
             .SelectMany(x => x)
-            .ToList();
-
-        long result = 0;
-        for (var i = 1; i <= handTypes.Count; i++)
-        {
-            var bid = handTypes[i - 1].Item2.Bid;
-            result += bid * i;
-        }
-
-        Console.WriteLine(result);
+            .Select((handType, index) => handType.Item2.Bid * (index + 1))
+            .Sum();
+        
         result.Should().Be(251545216);
     }
 
     public static void Part2()
     {
         var lines = Utilities.GetLines("/2023/Day7/Data.txt");
-        var handTypes = GetHandTypes2(lines)
+        var result = GetHandTypesPart2(lines)
             .GroupBy(x => x.handType)
-            .Select(SortHands)
-            .OrderBy(x => x.First().Item1)
+            .Select(x => SortHands(x, true))
+            .OrderBy(x => x[0].Item1)
             .SelectMany(x => x)
-            .ToList();
+            .Select((handType, index) => handType.Item2.Bid * (index + 1))
+            .Sum();
 
-        long result = 0;
-        for (var i = 1; i <= handTypes.Count; i++)
-        {
-            var bid = handTypes[i - 1].Item2.Bid;
-            result += bid * i;
-        }
-
-        Console.WriteLine(result);
-        // result.Should().Be(251545216);
+        result.Should().Be(250384185);
     }
 
     private static List<(HandType handType, HandAndBid handAndBid)> GetHandTypes(IEnumerable<string> lines)
@@ -89,7 +75,7 @@ static class Day7
         return handTypes;
     }
 
-    private static List<(HandType handType, HandAndBid handAndBid)> GetHandTypes2(IEnumerable<string> lines)
+    private static List<(HandType handType, HandAndBid handAndBid)> GetHandTypesPart2(IEnumerable<string> lines)
     {
         var handTypes = lines.Select(x =>
         {
@@ -125,20 +111,26 @@ static class Day7
         return handTypes;
     }
 
-    private static List<(HandType, HandAndBid)> SortHands(IGrouping<HandType, (HandType, HandAndBid)> grouping)
+    private static List<(HandType, HandAndBid)> SortHands(
+        IGrouping<HandType, (HandType, HandAndBid)> grouping,
+        bool isPart2)
     {
-        var test = grouping.Select(x => (x.Item2.Hand, ReplaceCharacters(x.Item2.Hand))).ToList();
-        var res = grouping.OrderBy(x => ReplaceCharacters(x.Item2.Hand)).ToList();
-        return res;
+        return grouping.OrderBy(x => ReplaceCharacters(x.Item2.Hand, isPart2)).ToList();
     }
 
-    private static string ReplaceCharacters(string card)
+    private static string ReplaceCharacters(string card, bool isPart2)
     {
-        var newCard = card.Replace("T", "B")
-            .Replace("J", "C")
-            .Replace("Q", "D")
-            .Replace("K", "E")
-            .Replace("A", "F");
-        return newCard;
+        var newCard = card.ToCharArray().Select(x => x switch
+        {
+            'T' => "10",
+            'J' when isPart2 => "00",
+            'J' => "11",
+            'Q' => "12",
+            'K' => "13",
+            'A' => "14",
+            _ => "0" + x,
+        });
+
+        return string.Join("", newCard);
     }
 }
