@@ -11,7 +11,7 @@ static class Template
         // result.Should().HaveCount(6314);
         // Console.WriteLine("Result: " + result);
     }
-    
+
     public static void Part2()
     {
     }
