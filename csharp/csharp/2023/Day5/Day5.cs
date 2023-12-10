@@ -20,43 +20,20 @@ static class Day5
             .Select(long.Parse)
             .ToList();
 
-        var maps = lines.Skip(1)
-            .Select(group => group.Skip(1)
-                .Select(x =>
-                {
-                    var mapValues = x.Split(" ").Where(y => y != "").Select(long.Parse).ToList();
-                    return new Map(mapValues[0], mapValues[1], mapValues[2]);
-                }).ToList()).ToList();
+        var maps = GetMaps(lines);
 
-        var lowestLocation = new List<long>();
-        var lowestLocation2 = long.MaxValue;
-        foreach (var t in seeds)
+        var lowestLocation = long.MaxValue;
+        foreach (var i in seeds)
         {
-            var currentValue = t;
-            foreach (var currentMap in maps)
+            var currentValue = GetCurrentValue(i, maps);
+
+            if (currentValue < lowestLocation)
             {
-                foreach (var row in currentMap)
-                {
-                    var upperLimit = row.Source + row.Distance;
-                    if (row.Source > currentValue || currentValue > upperLimit)
-                    {
-                        continue;
-                    }
-
-                    var diff = row.Destination - row.Source;
-                    var res = diff + currentValue;
-                    currentValue = res;
-                    break;
-                }
+                lowestLocation = currentValue;
             }
-
-
-            lowestLocation.Add(currentValue);
         }
 
-        var result = lowestLocation.Min();
-        result.Should().Be(157211394);
-        Console.WriteLine(lowestLocation2);
+        lowestLocation.Should().Be(157211394);
     }
 
     public static void Part2()
@@ -70,17 +47,10 @@ static class Day5
             .Split(" ")
             .Where(x => x != "")
             .Select(long.Parse)
-            .ToList()
             .Chunk(2)
             .ToList();
 
-        var maps = lines.Skip(1)
-            .Select(group => group.Skip(1)
-                .Select(x =>
-                {
-                    var mapValues = x.Split(" ").Where(y => y != "").Select(long.Parse).ToList();
-                    return new Map(mapValues[0], mapValues[1], mapValues[2]);
-                }).ToList()).ToList();
+        var maps = GetMaps(lines);
 
         var lowestLocation = long.MaxValue;
         Console.WriteLine(seeds.Count);
@@ -90,23 +60,7 @@ static class Day5
             var t = seeds[seedIndex];
             for (var i = t[0]; i < t[0] + t[1]; i++)
             {
-                var currentValue = i;
-                foreach (var currentMap in maps)
-                {
-                    foreach (var row in currentMap)
-                    {
-                        var upperLimit = row.Source + row.Distance;
-                        if (row.Source > currentValue || currentValue > upperLimit)
-                        {
-                            continue;
-                        }
-
-                        var diff = row.Destination - row.Source;
-                        var res = diff + currentValue;
-                        currentValue = res;
-                        break;
-                    }
-                }
+                var currentValue = GetCurrentValue(i, maps);
 
                 if (currentValue < lowestLocation)
                 {
@@ -117,6 +71,40 @@ static class Day5
             Console.WriteLine($"Finished with seed group {seedIndex} out of {seeds.Count}");
         }
 
-        Console.WriteLine(lowestLocation);
+        lowestLocation.Should().Be(50855035);
+    }
+
+    private static long GetCurrentValue(long i, List<List<Map>> maps)
+    {
+        var currentValue = i;
+        foreach (var currentMap in maps)
+        {
+            foreach (var row in currentMap)
+            {
+                var upperLimit = row.Source + row.Distance;
+                if (row.Source > currentValue || currentValue > upperLimit)
+                {
+                    continue;
+                }
+
+                var diff = row.Destination - row.Source;
+                var res = diff + currentValue;
+                currentValue = res;
+                break;
+            }
+        }
+
+        return currentValue;
+    }
+
+    private static List<List<Map>> GetMaps(List<string[]> lines)
+    {
+        return lines.Skip(1)
+            .Select(group => group.Skip(1)
+                .Select(x =>
+                {
+                    var mapValues = x.Split(" ").Where(y => y != "").Select(long.Parse).ToList();
+                    return new Map(mapValues[0], mapValues[1], mapValues[2]);
+                }).ToList()).ToList();
     }
 }
