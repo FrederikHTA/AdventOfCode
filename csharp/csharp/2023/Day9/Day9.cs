@@ -1,4 +1,5 @@
 using csharp.csharp_lib;
+using FluentAssertions;
 
 namespace csharp._2023.Day9;
 
@@ -9,42 +10,49 @@ static class Day9
         var input = Utilities.GetLines("/2023/Day9/Data.txt");
         var histories = input.Select(line => line.Split().Select(int.Parse).ToList()).ToList();
 
-        var sum = SumOfExtrapolatedValues(histories);
+        var result = SumOfExtrapolatedValues(histories);
 
-        Console.WriteLine($"Sum of extrapolated values: {sum}");
+        result.Sum().Should().Be(1584748274);
     }
 
     public static void Part2()
     {
-        var input = Utilities.GetLines("/2023/Day9/TestData2.txt");
+        var input = Utilities.GetLines("/2023/Day9/Data.txt");
         var histories = input.Select(line => line.Split().Select(int.Parse).ToList()).ToList();
 
-        var sum = SumOfExtrapolatedValues(histories);
+        var result = SumOfExtrapolatedValues2(histories);
 
-        Console.WriteLine($"Sum of extrapolated values: {sum}");
+        result.Sum().Should().Be(1026);
     }
 
-    private static int SumOfExtrapolatedValues(List<List<int>> histories)
+    private static IEnumerable<int> SumOfExtrapolatedValues2(List<List<int>> histories)
     {
-        var sum = 0;
-
-        foreach (var history in histories)
+        return histories.Select(history =>
         {
-            var sequences = new List<List<int>> { history };
-            var sequence = GetDifferenceSequence(history);
-            sequences.Add(sequence);
+            var sequences = CreateSequences(history, out var sequence);
 
-            while (sequence.Any(diff => diff != 0))
+            sequences.ForEach(x => x.Reverse());
+            sequences.ForEach(x => x.Add(int.MaxValue));
+            sequence[^1] = 0;
+
+            for (var i = sequences.Count - 1; i > 0; i--)
             {
-                sequence = GetDifferenceSequence(sequence);
-                sequences.Add(sequence);
+                var below = sequences[i][^1];
+                var left = sequences[i - 1][^2];
+                sequences[i - 1][^1] = left - below;
             }
 
-            foreach (var s in sequences)
-            {
-                s.Add(int.MaxValue);
-            }
+            return sequences[0][^1];
+        });
+    }
 
+
+    private static IEnumerable<int> SumOfExtrapolatedValues(List<List<int>> histories)
+    {
+        return histories.Select(history =>
+        {
+            var sequences = CreateSequences(history, out var sequence);
+            sequences.ForEach(x => x.Add(int.MaxValue));
             sequence[^1] = 0;
 
             for (var i = sequences.Count - 1; i > 0; i--)
@@ -54,21 +62,29 @@ static class Day9
                 sequences[i - 1][^1] = left + below;
             }
 
-            sum += sequences[0][^1];
-        }
-
-        return sum;
+            return sequences[0][^1];
+        });
     }
 
-    private static List<int> GetDifferenceSequence(List<int> input)
+    private static List<List<int>> CreateSequences(List<int> history, out List<int> sequence)
     {
-        var result = new List<int>();
+        var sequences = new List<List<int>> { history };
+        sequence = GetDifferenceSequence(history);
+        sequences.Add(sequence);
 
-        for (var i = 1; i < input.Count; i++)
+        while (sequence.Any(diff => diff != 0))
         {
-            result.Add(input[i] - input[i - 1]);
+            sequence = GetDifferenceSequence(sequence);
+            sequences.Add(sequence);
         }
 
-        return result;
+        return sequences;
+    }
+
+    private static List<int> GetDifferenceSequence(IReadOnlyList<int> input)
+    {
+        return Enumerable.Range(1, input.Count - 1)
+            .Select(i => input[i] - input[i - 1])
+            .ToList();
     }
 }
