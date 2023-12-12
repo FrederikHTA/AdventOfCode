@@ -1,6 +1,5 @@
 using csharp.csharp_lib;
 using csharp.csharp_lib.Grid;
-using csharp.csharp_lib.Pos;
 using FluentAssertions;
 
 namespace csharp._2023.Day11;
@@ -26,6 +25,26 @@ static class Day11
             .Sum()
             .Should()
             .Be(10077850);
+    }
+
+    public static void Part2()
+    {
+        const int distance = 1000000;
+        var lines = Utilities.GetLines("/2023/Day11/Data.txt");
+        var linesAsCharArray = lines.Select(x => x.ToCharArray().ToList()).ToList();
+        var grid = new Grid<char>(linesAsCharArray);
+
+        var galaxyPositions = FindGalaxyPositions(grid);
+
+        AddX(grid, galaxyPositions, distance);
+        AddY(grid, galaxyPositions, distance);
+
+        var pairs = GenerateUniquePairs(galaxyPositions);
+
+        pairs
+            .Sum(x => Math.Abs(x.Pos1.Item1 - x.Pos2.Item1) + Math.Abs(x.Pos1.Item2 - x.Pos2.Item2))
+            .Should()
+            .Be(504715068438);
     }
 
     private static void AddY(Grid<char> grid, List<(long, long)> galaxyPositions, int distance)
@@ -60,26 +79,6 @@ static class Day11
                 }
             }
         }
-    }
-
-    public static void Part2()
-    {
-        const int distance = 1000000;
-        var lines = Utilities.GetLines("/2023/Day11/Data.txt");
-        var linesAsCharArray = lines.Select(x => x.ToCharArray().ToList()).ToList();
-        var grid = new Grid<char>(linesAsCharArray);
-
-        var galaxyPositions = FindGalaxyPositions(grid);
-
-        AddX(grid, galaxyPositions, distance);
-        AddY(grid, galaxyPositions, distance);
-
-        var pairs = GenerateUniquePairs(galaxyPositions);
-
-        pairs
-            .Sum(x => Math.Abs(x.Pos1.Item1 - x.Pos2.Item1) + Math.Abs(x.Pos1.Item2 - x.Pos2.Item2))
-            .Should()
-            .Be(504715068438);
     }
 
     private static List<(long, long)> FindGalaxyPositions(Grid<char> universe)
