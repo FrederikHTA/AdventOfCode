@@ -83,32 +83,18 @@ static class Day11
 
     private static List<(long, long)> FindGalaxyPositions(Grid<char> universe)
     {
-        var galaxyPositions = new List<(long, long)>();
-        for (var row = 0; row < universe.Data.Count; row++)
-        {
-            for (var col = 0; col < universe.Data[0].Count; col++)
-            {
-                if (universe.Data[row][col] == '#')
-                {
-                    galaxyPositions.Add((row, col));
-                }
-            }
-        }
-
-        return galaxyPositions;
+        return universe.Data
+            .SelectMany((row, rowIndex) =>
+                row.Select((cell, colIndex) => (cell, rowIndex, colIndex)))
+            .Where(item => item.cell == '#')
+            .Select(item => ((long)item.rowIndex, (long)item.colIndex))
+            .ToList();
     }
 
     private static List<((long, long) Pos1, (long, long) Pos2)> GenerateUniquePairs(List<(long, long)> galaxyPositions)
     {
-        var pairs = new List<((long, long) Pos1, (long, long) Pos2)>();
-        for (var i = 0; i < galaxyPositions.Count - 1; i++)
-        {
-            for (var j = i + 1; j < galaxyPositions.Count; j++)
-            {
-                pairs.Add((galaxyPositions[i], galaxyPositions[j]));
-            }
-        }
-
-        return pairs;
+        return galaxyPositions
+            .SelectMany((pos1, i) => galaxyPositions.Skip(i + 1).Select(pos2 => (pos1, pos2)))
+            .ToList(); 
     }
 }
