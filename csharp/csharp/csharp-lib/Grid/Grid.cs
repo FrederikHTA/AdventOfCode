@@ -29,6 +29,21 @@ public class Grid<T>(List<List<T>> data)
         return new Grid<T>(newData);
     }
     
+    public Grid<T> Rotate()
+    {
+        var newData = new List<List<T>>();
+        for (var i = 0; i < Width; i++)
+        {
+            newData.Add([]);
+            for (var j = 0; j < Height; j++)
+            {
+                newData[i].Add(Data[Height - j - 1][i]);
+            }
+        }
+
+        return new Grid<T>(newData);
+    }
+    
     public void Visualize()
     {
         for (var i = 0; i < Height; i++)
