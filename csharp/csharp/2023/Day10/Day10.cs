@@ -19,6 +19,15 @@ static class Day10
         var visited = new HashSet<Pos> { startPos };
         var queue = new Queue<Pos>();
 
+        AddStartPositionNodes(startPos, grid, queue);
+        FindLoop(queue, visited, grid);
+
+        var length = visited.Count / 2;
+        length.Should().Be(6931);
+    }
+
+    private static void AddStartPositionNodes(Pos startPos, Grid<char> grid, Queue<Pos> queue)
+    {
         var adjacent = startPos.GetAxisOffsets().ToList();
         if (grid.ContainsPos(adjacent[0]) && grid.Get(adjacent[0]) is '|' or '7' or 'F')
             queue.Enqueue(adjacent[0]);
@@ -28,11 +37,6 @@ static class Day10
             queue.Enqueue(adjacent[2]);
         if (grid.ContainsPos(adjacent[3]) && grid.Get(adjacent[3]) is '|' or 'L' or 'J')
             queue.Enqueue(adjacent[3]);
-
-        FindLoop(queue, visited, grid);
-
-        var length = visited.Count / 2;
-        length.Should().Be(6931);
     }
 
     private static void FindLoop(Queue<Pos> queue, HashSet<Pos> visited, Grid<char> grid)
