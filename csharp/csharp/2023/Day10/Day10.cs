@@ -16,64 +16,56 @@ static class Day10
             .First(x => x.Item2 != -1);
 
         var startPos = new Pos(x, y);
-        var posSet = new HashSet<Pos> { startPos };
+        var visited = new HashSet<Pos> { startPos };
+        var queue = new Queue<Pos>();
 
-        while (true)
-        {
-            var currentChar = grid.Get(startPos);
-            var north = startPos + new Pos(-1, 0);
-            if (!posSet.Contains(north) && grid.ContainsPos(north))
-            {
-                var northChar = grid.Get(north);
-                if (northChar is '|' or '7' or 'F' && currentChar is '|' or 'L' or 'J' or 'S')
-                {
-                    posSet.Add(north);
-                    startPos = north;
-                    continue;
-                }
-            }
+        var adjacent = startPos.GetAxisOffsets().ToList();
+        if (grid.ContainsPos(adjacent[0]) && grid.Get(adjacent[0]) is '|' or '7' or 'F')
+            queue.Enqueue(adjacent[0]);
+        if (grid.ContainsPos(adjacent[1]) && grid.Get(adjacent[1]) is '-' or 'L' or 'F')
+            queue.Enqueue(adjacent[1]);
+        if (grid.ContainsPos(adjacent[2]) && grid.Get(adjacent[2]) is '-' or 'J' or '7')
+            queue.Enqueue(adjacent[2]);
+        if (grid.ContainsPos(adjacent[3]) && grid.Get(adjacent[3]) is '|' or 'L' or 'J')
+            queue.Enqueue(adjacent[3]);
 
-            var west = startPos + new Pos(0, -1);
-            if (!posSet.Contains(west) && grid.ContainsPos(west))
-            {
-                var westChar = grid.Get(west);
-                if (westChar is '-' or 'L' or 'F' && currentChar is '-' or '7' or 'J' or 'S')
-                {
-                    posSet.Add(west);
-                    startPos = west;
-                    continue;
-                }
-            }
+        FindLoop(queue, visited, grid);
 
-            var east = startPos + new Pos(0, 1);
-            if (!posSet.Contains(east) && grid.ContainsPos(east))
-            {
-                var eastChar = grid.Get(east);
-                if (eastChar is '-' or '7' or 'J' && currentChar is '-' or 'L' or 'F' or 'S')
-                {
-                    posSet.Add(east);
-                    startPos = east;
-                    continue;
-                }
-            }
-
-            var south = startPos + new Pos(1, 0);
-            if (!posSet.Contains(south) && grid.ContainsPos(south))
-            {
-                var southChar = grid.Get(south);
-                if (southChar is '|' or 'J' or 'L' && currentChar is '|' or '7' or 'F' or 'S')
-                {
-                    posSet.Add(south);
-                    startPos = south;
-                    continue;
-                }
-            }
-
-            break;
-        }
-
-        var length = posSet.Count / 2;
+        var length = visited.Count / 2;
         length.Should().Be(6931);
+    }
+
+    private static void FindLoop(Queue<Pos> queue, HashSet<Pos> visited, Grid<char> grid)
+    {
+        while (queue.Count != 0)
+        {
+            var currentPos = queue.Peek();
+            if (visited.Contains(currentPos))
+            {
+                queue.Dequeue();
+                continue;
+            }
+
+            var currentChar = grid.Get(currentPos);
+            var toAdd = currentChar switch
+            {
+                '|' => (currentPos + new Pos(1, 0), currentPos + new Pos(-1, 0)),
+                '-' => (currentPos + new Pos(0, 1), currentPos + new Pos(0, -1)),
+                'L' => (currentPos + new Pos(0, 1), currentPos + new Pos(-1, 0)),
+                'J' => (currentPos + new Pos(0, -1), currentPos + new Pos(-1, 0)),
+                '7' => (currentPos + new Pos(0, -1), currentPos + new Pos(1, 0)),
+                'F' => (currentPos + new Pos(0, 1), currentPos + new Pos(1, 0)),
+                _ => throw new Exception()
+            };
+
+            if (!visited.Contains(toAdd.Item1))
+                queue.Enqueue(toAdd.Item1);
+            if (!visited.Contains(toAdd.Item2))
+                queue.Enqueue(toAdd.Item2);
+
+            visited.Add(currentPos);
+            queue.Dequeue();
+        }
     }
 
     public static void Part2()
