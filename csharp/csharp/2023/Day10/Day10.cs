@@ -74,5 +74,52 @@ static class Day10
 
     public static void Part2()
     {
+        // todo
+        var input = Utilities.GetLines("/2023/Day10/TestData3.txt");
+        var grid = new Grid<char>(input.Select(x => x.ToCharArray()).ToArray());
+        var (x, y) = grid.Data
+            .Select((x, i) => (i, x.IndexOf('S')))
+            .First(x => x.Item2 != -1);
+
+        var startPos = new Pos(x, y);
+        var visited = new HashSet<Pos> { startPos };
+        var queue = new Queue<Pos>();
+
+        AddStartPositionNodes(startPos, grid, queue);
+        FindLoop(queue, visited, grid);
+        var minX = visited.Min(x => x.X);
+        var minY = visited.Min(x => x.Y);
+        var maxX = visited.Max(x => x.X);
+        var maxY = visited.Max(x => x.Y);
+
+        for (var xPos = 0; xPos < grid.Height; xPos++)
+        {
+            for (var yPos = 0; yPos < grid.Width; yPos++)
+            {
+               // if(xPos < minX || xPos > maxX || yPos < minY || yPos > maxY)
+               //     grid.Data[xPos][yPos] = '\'';
+               if (visited.Contains(new Pos(xPos, yPos)))
+                   grid.Data[xPos][yPos] = 'O';
+            }   
+        }
+        
+
+        var points = 0;
+        for (var xPos = 0; xPos < grid.Height; xPos++)
+        {
+            var isInsideLoop = false;
+            for (var yPos = 0; yPos < grid.Width; yPos++)
+            {
+                if (grid.Data[xPos][yPos] == 'O')
+                    isInsideLoop = !isInsideLoop;
+                if (grid.Data[xPos][yPos] == '.' && isInsideLoop)
+                {
+                    points++;
+                    grid.Data[xPos][yPos] = 'X';
+                }
+            }   
+        }
+        grid.Visualize();
+        Console.WriteLine(points);
     }
 }
