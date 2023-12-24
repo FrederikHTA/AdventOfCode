@@ -36,10 +36,10 @@ public record Pos(int X, int Y)
 
     private static readonly IEnumerable<Pos> AxisOffsets = new List<Pos>
     {
-        new(0, 1),
         new(-1, 0),
-        new(1, 0),
         new(0, -1),
+        new(0, 1),
+        new(1, 0),
     };
 
     private static readonly IEnumerable<Pos> DiagonalOffsets = new List<Pos>

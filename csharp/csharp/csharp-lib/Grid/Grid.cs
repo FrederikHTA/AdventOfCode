@@ -1,8 +1,8 @@
 namespace csharp.csharp_lib.Grid;
 
-public class Grid<T>(List<List<T>> data)
+public class Grid<T>(IEnumerable<IEnumerable<T>> data)
 {
-    public List<List<T>> Data { get; } = data;
+    public List<List<T>> Data { get; } = data.Select(x => x.ToList()).ToList();
 
     public T Get(Pos.Pos pos)
     {
@@ -50,11 +50,11 @@ public class Grid<T>(List<List<T>> data)
         {
             for (var j = 0; j < Width; j++)
             {
-                Console.Write(data[i][j]);
+                Console.Write(Data[i][j]);
             }
             Console.WriteLine();
         }
-
+        Console.WriteLine("----------------------");
     }
 
     public int Width => Data[0].Count;
