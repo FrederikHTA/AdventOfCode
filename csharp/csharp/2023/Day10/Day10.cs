@@ -26,6 +26,124 @@ static class Day10
         length.Should().Be(6931);
     }
 
+    public static void Part2()
+    {
+        var input = Utilities.GetLines("/2023/Day10/Data.txt");
+        var grid = new Grid<char>(input.Select(x => x.ToCharArray()).ToArray());
+        var (x, y) = grid.Data
+            .Select((x, i) => (i, x.IndexOf('S')))
+            .First(x => x.Item2 != -1);
+
+        var startPos = new Pos(x, y);
+        var visited = new HashSet<Pos> { startPos };
+        var queue = new Queue<Pos>();
+
+        AddStartPositionNodes(startPos, grid, queue);
+        FindLoop(queue, visited, grid);
+
+        SetStartingCharacter(grid, startPos);
+        var points = 0;
+        for (var xPos = 0; xPos < grid.Height; xPos++)
+        {
+            var isInside = false;
+            var directionChar = ' ';
+            for (var yPos = 0; yPos < grid.Width; yPos++)
+            {
+                var currentPos = new Pos(xPos, yPos);
+                var currentTile = grid.Get(currentPos);
+                // inside pipe
+                if (visited.Contains(currentPos))
+                {
+                    switch (currentTile)
+                    {
+                        case '|':
+                            isInside = !isInside;
+                            break;
+                        case 'F' or 'L':
+                            directionChar = currentTile;
+                            break;
+                        case 'J':
+                        {
+                            if (directionChar == 'F')
+                            {
+                                isInside = !isInside;
+                            }
+
+                            directionChar = ' ';
+                            break;
+                        }
+                        case '7':
+                        {
+                            if (directionChar == 'L')
+                            {
+                                isInside = !isInside;
+                            }
+
+                            directionChar = ' ';
+                            break;
+                        }
+                    }
+                }
+                else // not inside visited
+                {
+                    if (isInside)
+                    {
+                        points++;
+                    }
+                }
+            }
+        }
+
+        points.Should().Be(357);
+    }
+
+    private static void SetStartingCharacter(Grid<char> grid, Pos startPos)
+    {
+        var adjacent = startPos.GetAxisOffsets().ToList();
+        var isNorth = false;
+        var isWest = false;
+        var isEast = false;
+        var isSouth = false;
+
+        if (grid.Get(adjacent[0]) is '|' or '7' or 'F')
+        {
+            isNorth = true;
+        }
+        else if (grid.Get(adjacent[1]) is '-' or 'L' or 'F')
+        {
+            isWest = true;
+        }
+        else if (grid.Get(adjacent[2]) is '-' or 'J' or '7')
+        {
+            isEast = true;
+        }
+        else if (grid.Get(adjacent[3]) is '|' or 'L' or 'J')
+        {
+            isSouth = true;
+        }
+
+        if (isNorth)
+        {
+            if (isWest)
+                grid.Set(startPos, 'J');
+            if (isEast)
+                grid.Set(startPos, 'L');
+            if (isSouth)
+                grid.Set(startPos, '|');
+        }
+        else if (isWest)
+        {
+            if (isEast)
+                grid.Set(startPos, '-');
+            if (isSouth)
+                grid.Set(startPos, '7');
+        }
+        else
+        {
+            grid.Set(startPos, 'F');
+        }
+    }
+
     private static void AddStartPositionNodes(Pos startPos, Grid<char> grid, Queue<Pos> queue)
     {
         var adjacent = startPos.GetAxisOffsets().ToList();
@@ -70,73 +188,5 @@ static class Day10
             visited.Add(currentPos);
             queue.Dequeue();
         }
-    }
-
-    public static void Part2()
-    {
-        var input = Utilities.GetLines("/2023/Day10/Data.txt");
-        var grid = new Grid<char>(input.Select(x => x.ToCharArray()).ToArray());
-        var (x, y) = grid.Data
-            .Select((x, i) => (i, x.IndexOf('S')))
-            .First(x => x.Item2 != -1);
-
-        var startPos = new Pos(x, y);
-        var visited = new HashSet<Pos> { startPos };
-        var queue = new Queue<Pos>();
-
-        AddStartPositionNodes(startPos, grid, queue);
-        FindLoop(queue, visited, grid);
-
-        grid.Set(startPos, 'F');
-        var points = 0;
-        for (var xPos = 0; xPos < grid.Height; xPos++)
-        {
-            var isInside = false;
-            var isInsideVisited = false;
-            var directionChar = ' ';
-            for (var yPos = 0; yPos < grid.Width; yPos++)
-            {
-                var currentPos = new Pos(xPos, yPos);
-                var currentTile = grid.Get(currentPos);
-                // inside pipe
-                if (visited.Contains(currentPos))
-                {
-                   if (currentTile == '|')
-                   {
-                       isInside = !isInside;
-                   }
-                   else if (currentTile is 'F' or 'L')
-                   {
-                       directionChar = currentTile;
-                   }
-                   else if (currentTile == 'J')
-                   {
-                       if (directionChar == 'F')
-                       {
-                           isInside = !isInside;
-                       }
-                       directionChar = ' ';
-                   }    
-                   else if (currentTile == '7')
-                   {
-                       if (directionChar == 'L')
-                       {
-                           isInside = !isInside;
-                       }
-                       directionChar = ' ';
-                   }
-                }
-                else // not inside visited
-                {
-                    if (isInside) 
-                    {
-                        points++;
-                    } 
-                }
-            }   
-        }
-        
-        grid.Visualize();
-        Console.WriteLine(points);
     }
 }
