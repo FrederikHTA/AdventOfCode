@@ -74,8 +74,7 @@ static class Day10
 
     public static void Part2()
     {
-        // todo
-        var input = Utilities.GetLines("/2023/Day10/TestData3.txt");
+        var input = Utilities.GetLines("/2023/Day10/Data.txt");
         var grid = new Grid<char>(input.Select(x => x.ToCharArray()).ToArray());
         var (x, y) = grid.Data
             .Select((x, i) => (i, x.IndexOf('S')))
@@ -87,38 +86,56 @@ static class Day10
 
         AddStartPositionNodes(startPos, grid, queue);
         FindLoop(queue, visited, grid);
-        var minX = visited.Min(x => x.X);
-        var minY = visited.Min(x => x.Y);
-        var maxX = visited.Max(x => x.X);
-        var maxY = visited.Max(x => x.Y);
 
-        for (var xPos = 0; xPos < grid.Height; xPos++)
-        {
-            for (var yPos = 0; yPos < grid.Width; yPos++)
-            {
-               // if(xPos < minX || xPos > maxX || yPos < minY || yPos > maxY)
-               //     grid.Data[xPos][yPos] = '\'';
-               if (visited.Contains(new Pos(xPos, yPos)))
-                   grid.Data[xPos][yPos] = 'O';
-            }   
-        }
-        
-
+        grid.Set(startPos, 'F');
         var points = 0;
         for (var xPos = 0; xPos < grid.Height; xPos++)
         {
-            var isInsideLoop = false;
+            var isInside = false;
+            var isInsideVisited = false;
+            var directionChar = ' ';
             for (var yPos = 0; yPos < grid.Width; yPos++)
             {
-                if (grid.Data[xPos][yPos] == 'O')
-                    isInsideLoop = !isInsideLoop;
-                if (grid.Data[xPos][yPos] == '.' && isInsideLoop)
+                var currentPos = new Pos(xPos, yPos);
+                var currentTile = grid.Get(currentPos);
+                // inside pipe
+                if (visited.Contains(currentPos))
                 {
-                    points++;
-                    grid.Data[xPos][yPos] = 'X';
+                   if (currentTile == '|')
+                   {
+                       isInside = !isInside;
+                   }
+                   else if (currentTile is 'F' or 'L')
+                   {
+                       directionChar = currentTile;
+                   }
+                   else if (currentTile == 'J')
+                   {
+                       if (directionChar == 'F')
+                       {
+                           isInside = !isInside;
+                       }
+                       directionChar = ' ';
+                   }    
+                   else if (currentTile == '7')
+                   {
+                       if (directionChar == 'L')
+                       {
+                           isInside = !isInside;
+                       }
+                       directionChar = ' ';
+                   }
+                }
+                else // not inside visited
+                {
+                    if (isInside) 
+                    {
+                        points++;
+                    } 
                 }
             }   
         }
+        
         grid.Visualize();
         Console.WriteLine(points);
     }

@@ -8,6 +8,11 @@ public class Grid<T>(IEnumerable<IEnumerable<T>> data)
     {
         return Data[pos.X][pos.Y];
     }
+    
+    public void Set(Pos.Pos pos, T value)
+    {
+        Data[pos.X][pos.Y] = value;
+    }
 
     public bool ContainsPos(Pos.Pos pos)
     {
