@@ -49,7 +49,7 @@ static class Day14
             .Should()
             .Be(102829);
     }
-
+    
     private static void MoveRocks(Grid<char> grid, Pos direction)
     {
         for (var i = 0; i < grid.Height; i++)
