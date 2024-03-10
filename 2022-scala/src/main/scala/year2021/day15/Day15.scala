@@ -1,10 +1,10 @@
 package year2021.day15
 
-import lib.Graph.{Dijkstra, GraphSearch, TargetNode}
-import lib.Grid
-import lib.GridImplicits._
-import lib.Pos.Pos
-import lib.StringImplicits._
+import scalalib.Graph.{Dijkstra, GraphSearch, TargetNode}
+import scalalib.Grid
+import scalalib.GridImplicits._
+import scalalib.Pos.Pos
+import scalalib.StringImplicits._
 
 import scala.io.Source
 

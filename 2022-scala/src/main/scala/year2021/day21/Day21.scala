@@ -1,7 +1,7 @@
 package year2021.day21
 
 import scala.annotation.tailrec
-import lib.LazyListImplicits._
+import scalalib.LazyListImplicits._
 
 import scala.collection.mutable
 

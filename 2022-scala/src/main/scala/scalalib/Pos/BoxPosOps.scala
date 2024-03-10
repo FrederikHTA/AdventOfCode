@@ -1,4 +1,4 @@
-package scala-lib.Pos
+package scalalib.Pos
 
 trait BoxPosOps[A <: BoxPosOps[A]] extends PosOps[A] {
   def <=(that: A): Boolean

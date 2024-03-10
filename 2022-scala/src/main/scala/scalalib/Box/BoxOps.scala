@@ -1,6 +1,6 @@
-package scala-lib.Box
+package scalalib.Box
 
-import scala-lib.Pos.BoxPosOps
+import scalalib.Pos.BoxPosOps
 
 trait BoxOps[A <: BoxPosOps[A], B <: BoxOps[A, B]] {
   val min: A

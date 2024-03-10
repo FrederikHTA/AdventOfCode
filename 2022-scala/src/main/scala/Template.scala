@@ -15,7 +15,7 @@ object Template {
   def main(args: Array[String]): Unit = {
     val input = Source
       .fromInputStream(getClass.getResourceAsStream("data.txt"))
-      .mkString
+      .toString
       .trim
 
     val parsedInput = parseInput(input)

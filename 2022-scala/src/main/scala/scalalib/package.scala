@@ -1,3 +1,3 @@
-package object scala-lib {
+package object scalalib {
   type Grid[A] = Vector[Vector[A]]
 }

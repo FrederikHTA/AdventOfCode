@@ -1,4 +1,4 @@
-package scala-lib.Pos
+package scalalib.Pos
 
 final case class Pos(x: Int, y: Int) extends BoxPosOps[Pos] {
   def +(that: Pos): Pos =

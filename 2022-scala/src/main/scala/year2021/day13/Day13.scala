@@ -1,11 +1,11 @@
 package year2021.day13
 
-import lib.Grid
+import scalalib.Grid
 
 import scala.io.Source
 import scala.util.matching.Regex
-import lib.GridImplicits._
-import lib.Pos.Pos
+import scalalib.GridImplicits._
+import scalalib.Pos.Pos
 
 sealed trait Fold {
   def apply(positions: Set[Pos]): Set[Pos]

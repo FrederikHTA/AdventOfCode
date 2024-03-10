@@ -1,6 +1,6 @@
-package scala-lib
+package scalalib
 
-import scala-lib.Pos.Pos
+import scalalib.Pos.Pos
 
 object GridImplicits {
   extension[A] (grid: Grid[A]) {

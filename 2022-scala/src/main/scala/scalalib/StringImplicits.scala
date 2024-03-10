@@ -1,4 +1,4 @@
-package scala-lib
+package scalalib
 
 object StringImplicits {
   extension (binary: String) {

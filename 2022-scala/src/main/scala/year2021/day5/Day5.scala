@@ -1,7 +1,7 @@
 package year2021.day5
 
-import lib.IntegerImplicits._
-import lib.Pos.Pos
+import scalalib.IntegerImplicits._
+import scalalib.Pos.Pos
 
 import scala.io.Source
 

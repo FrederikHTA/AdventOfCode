@@ -1,7 +1,7 @@
 package year2021.day16
 
 import scala.io.Source
-import lib.StringImplicits._
+import scalalib.StringImplicits._
 
 sealed trait Packet {
   def packetVersion: BigInt

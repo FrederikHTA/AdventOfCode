@@ -1,4 +1,4 @@
-package scala-lib
+package scalalib
 
 object IntegerImplicits {
   extension (start: Int) {

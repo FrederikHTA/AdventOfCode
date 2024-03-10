@@ -1,6 +1,6 @@
 package year2022.day4
 
-import lib.Pos.Pos
+import scalalib.Pos.Pos
 import year2021.day15.Day15.getClass
 import year2022.day2.Day2.{parseInput, part1}
 

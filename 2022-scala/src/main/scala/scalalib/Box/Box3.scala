@@ -1,6 +1,6 @@
-package scala-lib.Box
+package scalalib.Box
 
-import scala-lib.Pos.Pos3
+import scalalib.Pos.Pos3
 
 final case class Box3(min: Pos3, max: Pos3) extends BoxOps[Pos3, Box3] {
   override def factory: BoxFactory[Pos3, Box3] = Box3

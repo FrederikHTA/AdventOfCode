@@ -1,4 +1,4 @@
-package scala-lib.Pos
+package scalalib.Pos
 
 trait PosOps[A <: PosOps[A]] {
   def +(that: A): A

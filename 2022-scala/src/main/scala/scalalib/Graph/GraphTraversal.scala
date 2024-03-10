@@ -1,4 +1,4 @@
-package scala-lib.Graph
+package scalalib.Graph
 
 trait GraphTraversal[A] {
   val startNode: A

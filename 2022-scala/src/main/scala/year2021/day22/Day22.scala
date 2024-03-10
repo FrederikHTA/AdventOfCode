@@ -1,7 +1,7 @@
 package year2021.day22
 
-import lib.Box.Box3
-import lib.Pos.Pos3
+import scalalib.Box.Box3
+import scalalib.Pos.Pos3
 
 import scala.io.Source
 import scala.util.matching.Regex
@@ -49,7 +49,7 @@ object Day22 {
     } yield (x, y, z)
 
     println(boxes)
-    val slider = boxes.sliding(2,1).toSeq
+    val slider = boxes.sliding(2, 1).toSeq
 
     //    val filteredSteps = steps.filter(boxRegion contains _.box)
     //    filteredSteps.foldLeft(Set.empty)(runStep).size
@@ -61,14 +61,16 @@ object Day22 {
   // TODO: Run all steps for each sub box, returning number of turned on positions
   // TODO: sum sub box results??
 
-  val regexPattern: Regex = """(on|off) x=(-?\d+)\.\.(-?\d+),y=(-?\d+)\.\.(-?\d+),z=(-?\d+)\.\.(-?\d+)""".r
+  val regexPattern: Regex =
+    """(on|off) x=(-?\d+)\.\.(-?\d+),y=(-?\d+)\.\.(-?\d+),z=(-?\d+)\.\.(-?\d+)""".r
 
   def parseInput(input: String): Seq[RebootStep] =
     input.linesIterator.map(parseLine).toSeq
 
   def parseLine(input: String): RebootStep = input match {
     case regexPattern(action, xMin, xMax, yMin, yMax, zMin, zMax) =>
-      RebootStep(action == "on",
+      RebootStep(
+        action == "on",
         Box3(
           Pos3(xMin.toInt, yMin.toInt, zMin.toInt),
           Pos3(xMax.toInt, yMax.toInt, zMax.toInt)
@@ -87,7 +89,7 @@ object Day22 {
       .mkString
       .trim
 
-    //    assert(part1(parseInput(data)) == 601104)
-    println(part2(parseInput(data)))
+    assert(part1(parseInput(data)) == 601104)
+//    println(part2(parseInput(data)))
   }
 }

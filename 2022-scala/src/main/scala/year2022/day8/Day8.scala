@@ -1,7 +1,7 @@
 package year2022.day8
 
-import lib.Grid
-import lib.Pos.Pos
+import scalalib.Grid
+import scalalib.Pos.Pos
 import year2021.day15.Day15.getClass
 import year2022.day2.Day2.{parseInput, part1}
 

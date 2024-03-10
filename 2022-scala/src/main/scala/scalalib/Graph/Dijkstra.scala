@@ -1,8 +1,8 @@
-package scala-lib.Graph
+package scalalib.Graph
 
-import scala-lib.Grid
-import scala-lib.GridImplicits._
-import scala-lib.Pos.Pos
+import scalalib.Grid
+import scalalib.GridImplicits._
+import scalalib.Pos.Pos
 
 import scala.collection.mutable
 

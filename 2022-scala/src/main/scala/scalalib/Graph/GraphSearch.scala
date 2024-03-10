@@ -1,4 +1,4 @@
-package scala-lib.Graph
+package scalalib.Graph
 
 trait GraphSearch[A] extends GraphTraversal[A] {
   //def isTargetNode(node: A): Boolean

@@ -1,8 +1,8 @@
 package year2021.day11
 
-import lib._
-import lib.GridImplicits._
-import lib.Pos.Pos
+import scalalib._
+import scalalib.GridImplicits._
+import scalalib.Pos.Pos
 
 import scala.annotation.tailrec
 import scala.io.Source

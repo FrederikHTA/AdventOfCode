@@ -1,4 +1,4 @@
-package scala-lib
+package scalalib
 
 object LazyListImplicits {
   extension[A] (list: LazyList[A]) {
