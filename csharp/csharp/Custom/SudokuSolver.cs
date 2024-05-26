@@ -1,10 +1,10 @@
-namespace csharp.Custom.Sudoku_Solver;
+namespace csharp.Custom;
 
 public static class SudokuSolver
 {
     public static void SolveSudoku()
     {
-        var sudoku = new[,]
+        char[,] sudoku = new[,]
         {
             { '.', '.', '3', '.', '5', '.', '.', '4', '.' },
             { '.', '.', '.', '8', '2', '.', '.', '.', '7' },
@@ -19,15 +19,15 @@ public static class SudokuSolver
 
         while (NoOfEmptyCells(sudoku) > 0)
         {
-            for (var column = 0; column < 9; column++)
+            for (int column = 0; column < 9; column++)
             {
-                for (var row = 0; row < 9; row++)
+                for (int row = 0; row < 9; row++)
                 {
                     if (sudoku[column, row] != '.')
                     {
                         continue;
                     }
-                    
+
                     var possibleValues = GetPossibleValues(sudoku, column, row);
                     if (possibleValues.Count == 1)
                     {
@@ -35,51 +35,51 @@ public static class SudokuSolver
                     }
                 }
             }
-            
+
             VisualizeSudoku(sudoku);
         }
-        
+
         VisualizeSudoku(sudoku);
-        
+
         Console.WriteLine("Done!");
     }
 
     private static void VisualizeSudoku(char[,] sudoku)
     {
-        for (var i = 0; i < 9; i++)
+        for (int i = 0; i < 9; i++)
         {
-            for (var j = 0; j < 9; j++)
+            for (int j = 0; j < 9; j++)
             {
                 Console.Write(sudoku[i, j] + " ");
             }
 
             Console.WriteLine();
         }
-        
+
         Console.WriteLine("--------------------------------------------------");
     }
 
     private static List<char> GetPossibleValues(char[,] sudoku, int column, int row)
     {
         var possibleValues = new List<char> { '1', '2', '3', '4', '5', '6', '7', '8', '9' };
-        for (var index = 0; index < 9; index++)
+        for (int index = 0; index < 9; index++)
         {
             if (sudoku[column, index] != '.')
             {
                 possibleValues.Remove(sudoku[column, index]);
             }
-            
+
             if (sudoku[index, row] != '.')
             {
                 possibleValues.Remove(sudoku[index, row]);
             }
         }
 
-        var boxStartRow = column - column % 3;
-        var boxStartCol = row - row % 3;
-        for (var k = boxStartRow; k < boxStartRow + 3; k++)
+        int boxStartRow = column - column % 3;
+        int boxStartCol = row - row % 3;
+        for (int k = boxStartRow; k < boxStartRow + 3; k++)
         {
-            for (var l = boxStartCol; l < boxStartCol + 3; l++)
+            for (int l = boxStartCol; l < boxStartCol + 3; l++)
             {
                 if (sudoku[k, l] != '.')
                 {
@@ -93,10 +93,10 @@ public static class SudokuSolver
 
     private static int NoOfEmptyCells(char[,] sudoku)
     {
-        var count = 0;
-        for (var i = 0; i < 9; i++)
+        int count = 0;
+        for (int i = 0; i < 9; i++)
         {
-            for (var j = 0; j < 9; j++)
+            for (int j = 0; j < 9; j++)
             {
                 if (sudoku[i, j] == '.')
                 {
