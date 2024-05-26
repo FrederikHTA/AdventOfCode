@@ -62,7 +62,7 @@ public class Troels1
             }
         }
         watch.Stop();
-        Console.WriteLine($"String with max replacements: {maxReplacementsString}, runTime: {watch.ElapsedMilliseconds}");
+        Console.WriteLine($"String with max replacements: {maxReplacementsString}, runTime: {watch.Elapsed}");
     }
 
     public static void Troels1SolutionWithPreOptimizations()
@@ -125,6 +125,6 @@ public class Troels1
         }
 
         watch.Stop();
-        Console.WriteLine($"String with max replacements: {maxReplacementsString}, runTime: {watch.ElapsedMilliseconds}");
+        Console.WriteLine($"String with max replacements: {maxReplacementsString}, runTime: {watch.Elapsed}");
     }
 }
