@@ -2,6 +2,8 @@
 
 public class Troels2
 {
+    // Actual Solution: use a Topologically sorted graph, which finds
+    // cycles automatically and orders the tasks during creation of the graph
     /***
      * Input:
      * - [TaskId, Dependencies] list
