@@ -14,7 +14,7 @@ let parseInput filePath =
         int parts[0], int parts[1])
 
 let part1 =
-    let intNumbers = parseInput "/2024/Day1/Data.txt"
+    let intNumbers = parseInput "2024/Day1/Data.txt"
 
     let left = intNumbers |> Seq.map fst |> Seq.sort
     let right = intNumbers |> Seq.map snd |> Seq.sort
@@ -25,7 +25,7 @@ let part1 =
     assert (result = 3246517)
 
 let part2 =
-    let intNumbers = parseInput "/2024/Day1/Data.txt"
+    let intNumbers = parseInput "2024/Day1/Data.txt"
 
     let left = intNumbers |> Seq.map fst |> Seq.sort
 
