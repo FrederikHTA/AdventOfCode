@@ -1,7 +1,8 @@
 ﻿module fsharp._2024.Day1.Day1
 
-open System
 open System.IO
+open System
+open Xunit
 
 let getFileLines filePath =
     let fullPath = Path.Combine(Directory.GetCurrentDirectory(), filePath)
@@ -13,7 +14,8 @@ let parseInput filePath =
         let parts = line.Split("   ")
         int parts[0], int parts[1])
 
-let part1 =
+[<Fact>]
+let ``part1`` () =
     let intNumbers = parseInput "2024/Day1/Data.txt"
 
     let left = intNumbers |> Seq.map fst |> Seq.sort
@@ -24,7 +26,8 @@ let part1 =
 
     assert (result = 3246517)
 
-let part2 =
+[<Fact>]
+let ``part2`` () =
     let intNumbers = parseInput "2024/Day1/Data.txt"
 
     let left = intNumbers |> Seq.map fst |> Seq.sort
@@ -37,6 +40,3 @@ let part2 =
         |> Seq.sumBy (fun x -> x * countDict[x])
 
     assert (result = 29379307)
-
-part1
-part2

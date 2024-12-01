@@ -2,7 +2,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "csharp", "csharp\csharp.csproj", "{BD6AA0EF-37EA-4AC8-BFD6-170436C1555B}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "fsharp", "fsharp\fsharp.fsproj", "{CBE22066-197E-4A71-9ADB-C4B0045F24E9}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "fsharp", "fsharp\fsharp.fsproj", "{84F2FACC-128A-450C-B446-C5B2576A040D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -14,9 +14,9 @@ Global
 		{BD6AA0EF-37EA-4AC8-BFD6-170436C1555B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BD6AA0EF-37EA-4AC8-BFD6-170436C1555B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BD6AA0EF-37EA-4AC8-BFD6-170436C1555B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CBE22066-197E-4A71-9ADB-C4B0045F24E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CBE22066-197E-4A71-9ADB-C4B0045F24E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CBE22066-197E-4A71-9ADB-C4B0045F24E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CBE22066-197E-4A71-9ADB-C4B0045F24E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{84F2FACC-128A-450C-B446-C5B2576A040D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84F2FACC-128A-450C-B446-C5B2576A040D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84F2FACC-128A-450C-B446-C5B2576A040D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84F2FACC-128A-450C-B446-C5B2576A040D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
