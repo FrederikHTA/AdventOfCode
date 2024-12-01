@@ -24,7 +24,10 @@ static class Day1
         var data = input.Select(x => x.Split("   ")).Select(x => (int.Parse(x[0]), int.Parse(x[1]))).ToList();
         var left = data.Select(x => x.Item1).Order().ToList();
         var countDict = data.Select(x => x.Item2).GroupBy(x => x).ToDictionary(x => x.Key, x => x.Count());
-        var leftSum = left.Where(x => countDict.ContainsKey(x)).Select(x => x * countDict[x]).ToList();
+        var leftSum = left
+            .Where(x => countDict.ContainsKey(x))
+            .Select(x => x * countDict[x])
+            .ToList();
         var sum = leftSum.Sum();
         sum.Should().Be(29379307);
     }
