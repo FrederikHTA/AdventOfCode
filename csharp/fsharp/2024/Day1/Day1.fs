@@ -3,10 +3,8 @@
 open System.IO
 open System
 open Xunit
+open fsharp.FileUtility
 
-let getFileLines filePath =
-    let fullPath = Path.Combine(Directory.GetCurrentDirectory(), filePath)
-    File.ReadLines(fullPath)
 
 let parseInput filePath =
     getFileLines filePath

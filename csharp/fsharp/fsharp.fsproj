@@ -7,6 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <Compile Include="FileUtility.fs" />
         <Compile Include="2024\Day1\Day1.fs" />
         <Content Include="2024\Day1\TestData.txt">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -14,6 +15,13 @@
         <Content Include="2024\Day1\Data.txt">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
+        <Content Include="2024\Day2\TestData.txt">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Include="2024\Day2\Data.txt">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Compile Include="2024\Day2\Day2.fs" />
         <Compile Include="Program.fs" />
     </ItemGroup>
 
