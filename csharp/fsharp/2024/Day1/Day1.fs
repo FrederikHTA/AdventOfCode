@@ -3,38 +3,39 @@
 open System.IO
 open System
 open Xunit
-open fsharp.FileUtility
+open Faqt
 
 
 let parseInput filePath =
-    getFileLines filePath
+    File.ReadLines filePath
     |> Seq.map (fun line ->
-        let parts = line.Split("   ")
-        int parts[0], int parts[1])
+        match line.Split("   ") with
+        | [| a; b |] -> (int a, int b)
+        | _ -> failwith "Invalid input")
+    |> Array.ofSeq
 
 [<Fact>]
 let ``part1`` () =
-    let intNumbers = parseInput "2024/Day1/Data.txt"
+    let left, right = parseInput "2024/Day1/Data.txt" |> Array.unzip
 
-    let left = intNumbers |> Seq.map fst |> Seq.sort
-    let right = intNumbers |> Seq.map snd |> Seq.sort
+    let left = left |> Seq.sort
+    let right = right |> Seq.sort
 
-    let result =
-        Seq.zip left right |> Seq.map (fun (x, y) -> Math.Abs(x - y)) |> Seq.sum
+    let sum =
+        left |> Seq.zip right |> Seq.map (fun (x, y) -> Math.Abs(x - y)) |> Seq.sum
 
-    assert (result = 3246517)
+    sum.Should().Be(3246517)
 
 [<Fact>]
 let ``part2`` () =
-    let intNumbers = parseInput "2024/Day1/Data.txt"
+    let numbers = parseInput "2024/Day1/Data.txt"
 
-    let left = intNumbers |> Seq.map fst |> Seq.sort
+    let left = numbers |> Seq.map fst |> Seq.sort
+    let countDict = numbers |> Seq.countBy snd |> Map.ofSeq
 
-    let countDict = intNumbers |> Seq.countBy snd |> Map.ofSeq
-
-    let result =
+    let sum =
         left
         |> Seq.filter countDict.ContainsKey
         |> Seq.sumBy (fun x -> x * countDict[x])
 
-    assert (result = 29379307)
+    sum.Should().Be(29379307)

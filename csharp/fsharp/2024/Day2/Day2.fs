@@ -3,7 +3,6 @@
 open System.IO
 open System
 open Xunit
-open fsharp.FileUtility
 open Faqt
 
 [<RequireQualifiedAccess>]
@@ -12,7 +11,7 @@ type Direction =
     | Decreasing
 
 let parseInput filePath =
-    getFileLines filePath
+    File.ReadLines filePath
     |> Seq.map (fun line -> line.Split(" ") |> Array.map int)
     |> Array.ofSeq
 
@@ -51,4 +50,4 @@ let ``part2`` () =
         |> Array.filter (fun row -> row |> Array.exists id)
         |> Array.length
 
-    safeLines.Should().Be(4)
+    safeLines.Should().Be(430)
