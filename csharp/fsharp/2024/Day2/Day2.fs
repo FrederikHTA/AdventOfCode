@@ -22,14 +22,14 @@ let isSafe (line: int array) =
         else
             Direction.Decreasing
 
-    let isWithin3Diff =
+    let directionDiffFunc =
         match direction with
         | Direction.Increasing -> fun a b -> b - a > 0 && b - a <= 3
         | Direction.Decreasing -> fun a b -> a - b > 0 && a - b <= 3
 
     line
     |> Array.pairwise
-    |> Array.forall (fun (a, b) -> not (a = b) && isWithin3Diff a b)
+    |> Array.forall (fun (a, b) -> not (a = b) && directionDiffFunc a b)
 
 [<Fact>]
 let ``part1`` () =
