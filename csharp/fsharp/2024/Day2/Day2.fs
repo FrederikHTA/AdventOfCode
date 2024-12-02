@@ -4,6 +4,7 @@ open System.IO
 open System
 open Xunit
 open fsharp.FileUtility
+open Faqt
 
 [<RequireQualifiedAccess>]
 type Direction =
@@ -36,11 +37,11 @@ let ``part1`` () =
     let safeLines =
         parseInput "2024/Day2/Data.txt" |> Array.filter isSafe |> Array.length
 
-    assert (safeLines = 379)
+    safeLines.Should().Be(379)
 
 [<Fact>]
 let ``part2`` () =
-    let result =
+    let safeLines =
         parseInput "2024/Day2/Data.txt"
         |> Array.map (fun row ->
             row
@@ -50,4 +51,4 @@ let ``part2`` () =
         |> Array.filter (fun row -> row |> Array.exists id)
         |> Array.length
 
-    assert (result = 4)
+    safeLines.Should().Be(4)
