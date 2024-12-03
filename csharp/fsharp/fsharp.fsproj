@@ -21,7 +21,7 @@
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
         <Compile Include="2024\Day2\Day2.fs" />
-        <Compile Include="2024\Day3\Day2.fs" />
+        <Compile Include="2024\Day3\Day3.fs" />
         <Content Include="2024\Day3\TestData.txt">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
