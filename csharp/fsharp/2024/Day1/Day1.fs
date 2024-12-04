@@ -5,7 +5,6 @@ open System
 open Xunit
 open Faqt
 
-
 let parseInput filePath =
     File.ReadLines filePath
     |> Seq.map (fun line ->

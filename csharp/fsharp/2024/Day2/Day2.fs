@@ -1,9 +1,9 @@
 ﻿module fsharp._2024.Day2.Day2
 
 open System.IO
-open System
 open Xunit
 open Faqt
+open fsharp.Extensions
 
 [<RequireQualifiedAccess>]
 type Direction =
@@ -15,7 +15,7 @@ let parseInput filePath =
     |> Seq.map (fun line -> line.Split(" ") |> Array.map int)
     |> Array.ofSeq
 
-let isSafe (line: int array) =
+let isSafe (line: Array<int>) =
     let direction =
         if line[0] < line[1] then
             Direction.Increasing

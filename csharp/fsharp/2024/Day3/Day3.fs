@@ -1,12 +1,9 @@
 ﻿module fsharp._2024.Day3.Day3
 
 open System.IO
-open System
 open System.Text.RegularExpressions
 open Xunit
 open Faqt
-
-let parseInput (filePath: string) : string = File.ReadAllText filePath
 
 let extractMultiples (matches : seq<Match>) =
     matches
@@ -16,14 +13,14 @@ let extractMultiples (matches : seq<Match>) =
 
 [<Fact>]
 let ``part1`` () =
-    let lines = parseInput "2024/Day3/Data.txt"
+    let lines = File.ReadAllText "2024/Day3/Data.txt"
     let regex = Regex("""mul\((\d+),(\d+)\)""")
     let res = extractMultiples (regex.Matches lines)
     res.Should().Be(184122457)
 
 [<Fact>]
 let ``part2`` () =
-    let lines = parseInput "2024/Day3/Data.txt"
+    let lines = File.ReadAllText "2024/Day3/Data.txt"
     let regex = Regex("""mul\((\d+),(\d+)\)|do\(\)|don't\(\)""")
 
     let mutable flag = true
