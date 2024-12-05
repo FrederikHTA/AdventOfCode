@@ -77,7 +77,7 @@ let ``part2`` () =
                         0
                 else
                     0)
-            |> Seq.sum)
+            |> Array.sum)
         |> Array.sum
 
     res.Should().Be(1888)
