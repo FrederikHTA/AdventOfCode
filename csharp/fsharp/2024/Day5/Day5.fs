@@ -3,37 +3,15 @@
 open System.IO
 open Xunit
 open Faqt
+open fsharp
 open fsharp.Extensions
 
 let getPageOrderingRules (lines: Array<string>) =
-    lines[0]
-    |> fun x ->
-        x.Split "\r\n"
-        |> Array.map (fun x -> x.Split "|" |> fun y -> int y[0], int y[1])
-        |> Array.groupBy fst
-        |> Array.map (fun (k, v) -> (k, v |> Array.map snd))
-        |> Map.ofArray
+    lines[0] |> fun x -> x.Split "\r\n" |> Array.map (fun x -> x |> toTuple '|' int)
 
 let getUpdates (lines: Array<string>) =
     lines[1]
     |> fun x -> x.Split "\r\n" |> Array.map (fun x -> x.Split "," |> Array.map int)
-
-let isRowSorted (row: Array<int>) (pageOrderingRules: Map<int, Array<int>>) : bool =
-    let mutable isSorted = true
-
-    for i in 0 .. row.Length - 1 do
-        if (i = 0) then
-            ()
-        else
-            let currentEntry = row[i]
-            let prevElements = row.[.. i - 1]
-            let rules = pageOrderingRules.TryFind currentEntry |> Option.defaultValue [||]
-            let isEqualLength = rules |> Array.except prevElements |> _.Length = rules.Length
-
-            if not isEqualLength then
-                isSorted <- false
-
-    isSorted
 
 let sortRow (row: Array<int>) (pageOrderingRules: Map<int, Array<int>>) : Array<int> =
     let mutable isSorted = false
@@ -60,35 +38,47 @@ let sortRow (row: Array<int>) (pageOrderingRules: Map<int, Array<int>>) : Array<
 
     row
 
+let pairs (arr: int array) =
+    [| for i in 0 .. arr.Length - 1 do
+           for j in i + 1 .. arr.Length - 1 do
+               yield (arr[i], arr[j]) |]
 
-let median (row: Array<int>) = row[row.Length / 2]
-
-// MEGET grimt men det virker :)))))
-// det bør kunne gøres drastisk simplere men idc
 [<Fact>]
 let ``part1`` () =
     let lines = File.ReadAllText "2024/Day5/Data.txt" |> fun x -> x.Split "\r\n\r\n"
     let pageOrderingRules = getPageOrderingRules lines
     let updates = getUpdates lines
 
-    let sum =
-        updates
-        |> Array.filter (fun row -> isRowSorted row pageOrderingRules)
-        |> Array.sumBy median
+    let inverseLookup = pageOrderingRules |> Seq.map (fun (a, b) -> (b, a)) |> Set
 
-    sum.Should().Be(4185)
+    let isOrdered (updates: int array) =
+        updates |> pairs |> Array.exists inverseLookup.Contains |> not
+
+    let result = updates |> Seq.filter isOrdered |> Seq.sumBy Array.median
+
+    result.Should().Be(4185)
 
 [<Fact>]
 let ``part2`` () =
     let lines = File.ReadAllText "2024/Day5/Data.txt" |> fun x -> x.Split "\r\n\r\n"
-
     let pageOrderingRules = getPageOrderingRules lines
     let updates = getUpdates lines
 
+    let inverseLookup = pageOrderingRules |> Seq.map (fun (a, b) -> (b, a)) |> Set
+
+    let isOrdered (updates: int array) =
+        updates |> pairs |> Array.exists inverseLookup.Contains |> not
+
     let sum =
         updates
-        |> Array.filter (fun row -> isRowSorted row pageOrderingRules |> not)
-        |> Array.map (fun row -> sortRow row pageOrderingRules )
-        |> Array.sumBy median
+        |> Array.filter (fun x -> x |> isOrdered |> not)
+        |> Array.map (fun row ->
+            let pageOrderingMap =
+                pageOrderingRules
+                |> Array.groupBy fst
+                |> Array.map (fun (k, v) -> (k, v |> Array.map snd))
+                |> Map.ofArray
+            sortRow row pageOrderingMap)
+        |> Array.sumBy Array.median
 
     sum.Should().Be(4480)
