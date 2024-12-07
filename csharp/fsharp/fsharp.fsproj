@@ -36,6 +36,16 @@
         <Content Include="2024\Day4\TestData.txt">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
+        <Compile Include="2024\Day5\Day5.fs" />
+        <Content Include="2024\Day5\Data.txt">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Include="2024\Day5\TestData.txt">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Include="2024\Day5\TestData2.txt">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
         <Compile Include="2024\Day6\Day6.fs" />
         <Content Include="2024\Day6\Data.txt">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
