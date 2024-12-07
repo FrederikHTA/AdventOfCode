@@ -43,6 +43,7 @@ let pairs (arr: int array) =
            for j in i + 1 .. arr.Length - 1 do
                yield (arr[i], arr[j]) |]
 
+// refactored solution inspired by https://github.com/exynoxx
 [<Fact>]
 let ``part1`` () =
     let lines = File.ReadAllText "2024/Day5/Data.txt" |> fun x -> x.Split "\r\n\r\n"
@@ -58,6 +59,7 @@ let ``part1`` () =
 
     result.Should().Be(4185)
 
+// sortWith doesnt work and i dont know why, so i do it manually....
 [<Fact>]
 let ``part2`` () =
     let lines = File.ReadAllText "2024/Day5/Data.txt" |> fun x -> x.Split "\r\n\r\n"
