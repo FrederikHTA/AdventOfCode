@@ -23,23 +23,16 @@ module Direction =
         | Direction.Down -> Direction.Left
         | Direction.Left -> Direction.Up
 
-let safeAt (input: Array<Array<char>>) (row: int) (col: int) =
-    if row >= 0 && row < input.Length && col >= 0 && col < input[row].Length then
-        input[row].[col]
-    else
-        ' '
-
-let isOutsideOfBounds (input: Array<Array<char>>) (row: int) (col: int) : bool =
-    let h = input.Length
-    let w = input[0].Length
-    row < 0 || row > h - 1 || col < 0 || col > w - 1
-
 let move (pos: Pos) (direction: Direction) : Pos =
     match direction with
-    | Direction.Up -> { X = pos.X - 1; Y = pos.Y }
-    | Direction.Right -> { X = pos.X; Y = pos.Y + 1 }
-    | Direction.Down -> { X = pos.X + 1; Y = pos.Y }
-    | Direction.Left -> { X = pos.X; Y = pos.Y - 1 }
+    | Direction.Up ->
+        pos + Pos.create -1 0
+    | Direction.Right ->
+        pos + Pos.create 0 1
+    | Direction.Down ->
+        pos + Pos.create 1 0
+    | Direction.Left ->
+        pos + Pos.create 0 -1
 
 [<Fact>]
 let ``part1`` () =

@@ -1,19 +1,20 @@
 ﻿module fsharp.Pos
 
-type Pos = { X: int; Y: int }
+type Pos =
+    { X: int
+      Y: int }
+
+    // Operator overloads
+    static member (+)(p1: Pos, p2: Pos) = { X = p1.X + p2.X; Y = p1.Y + p2.Y }
+    static member (-)(p1: Pos, p2: Pos) : Pos = { X = p1.X - p2.X; Y = p1.Y - p2.Y }
+    static member (*)(p1: Pos, p2: Pos) : Pos = { X = p1.X * p2.X; Y = p1.Y * p2.Y }
+    static member (<=)(p1: Pos, p2: Pos) : bool = p1.X <= p2.X && p1.Y <= p2.Y
+    static member (>=)(p1: Pos, p2: Pos) : bool = p1.X >= p2.X && p1.Y >= p2.Y
 
 module Pos =
+    let create (x: int) (y: int) : Pos = { X = x; Y = y }
     // Manhattan Distance
     let manhattanDistance (p1: Pos) (p2: Pos) : int = abs (p1.X - p2.X) + abs (p1.Y - p2.Y)
-
-    // Operators for adding, subtracting, and multiplying positions
-    let (+) (p1: Pos) (p2: Pos) : Pos = { X = p1.X + p2.X; Y = p1.Y + p2.Y }
-    let (-) (p1: Pos) (p2: Pos) : Pos = { X = p1.X - p2.X; Y = p1.Y - p2.Y }
-    let (*) (p1: Pos) (p2: Pos) : Pos = { X = p1.X * p2.X; Y = p1.Y * p2.Y }
-
-    // Comparison operators for <= and >=
-    let (<=) (p1: Pos) (p2: Pos) : bool = p1.X <= p2.X && p1.Y <= p2.Y
-    let (>=) (p1: Pos) (p2: Pos) : bool = p1.X >= p2.X && p1.Y >= p2.Y
 
     // Axis Offsets
     let axisOffsets: List<Pos> =
@@ -21,7 +22,9 @@ module Pos =
 
     // Diagonal Offsets
     let diagonalOffsets: List<Pos> =
-        [ { X = -1; Y = 1 }; { X = 1; Y = 1 }; { X = -1; Y = -1 }; { X = 1; Y = -1 } ]
+        [ { X = -1; Y = -1 }; { X = -1; Y = 1 }; { X = 1; Y = -1 }; { X = 1; Y = 1 } ]
+
+    let allOffsets = diagonalOffsets |> List.append axisOffsets
 
     // Get Axis Offsets
     let getAxisOffsets (pos: Pos) : List<Pos> =

@@ -42,11 +42,7 @@ let ``part1`` () =
 let ``part2`` () =
     let safeLines =
         parseInput "2024/Day2/Data.txt"
-        |> Array.map (fun row ->
-            row
-            |> Array.mapi (fun i _ ->
-                let rowIter = row |> Array.removeAt i
-                rowIter |> isSafe))
+        |> Array.map (fun row -> row |> Array.mapi (fun i _ -> row |> Array.removeAt i |> isSafe))
         |> Array.filter (fun row -> row |> Array.exists id)
         |> Array.length
 
