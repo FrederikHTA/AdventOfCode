@@ -7,7 +7,8 @@ open fsharp
 open fsharp.Extensions
 
 let getPageOrderingRules (lines: Array<string>) =
-    lines[0] |> fun x -> x.Split "\r\n" |> Array.map (fun x -> x |> toTuple '|' int)
+    lines[0]
+    |> fun x -> x.Split "\r\n" |> Array.map (fun x -> x |> String.toTuple '|' int)
 
 let getUpdates (lines: Array<string>) =
     lines[1]
@@ -38,11 +39,6 @@ let sortRow (row: Array<int>) (pageOrderingRules: Map<int, Array<int>>) : Array<
 
     row
 
-let pairs (arr: int array) =
-    [| for i in 0 .. arr.Length - 1 do
-           for j in i + 1 .. arr.Length - 1 do
-               yield (arr[i], arr[j]) |]
-
 // refactored solution inspired by https://github.com/exynoxx
 [<Fact>]
 let ``part1`` () =
@@ -53,7 +49,7 @@ let ``part1`` () =
     let inverseLookup = pageOrderingRules |> Seq.map (fun (a, b) -> (b, a)) |> Set
 
     let isOrdered (updates: int array) =
-        updates |> pairs |> Array.exists inverseLookup.Contains |> not
+        updates |> Array.allPairs |> Array.exists inverseLookup.Contains |> not
 
     let result = updates |> Seq.filter isOrdered |> Seq.sumBy Array.median
 
@@ -69,7 +65,7 @@ let ``part2`` () =
     let inverseLookup = pageOrderingRules |> Seq.map (fun (a, b) -> (b, a)) |> Set
 
     let isOrdered (updates: int array) =
-        updates |> pairs |> Array.exists inverseLookup.Contains |> not
+        updates |> Array.allPairs |> Array.exists inverseLookup.Contains |> not
 
     let sum =
         updates
@@ -80,6 +76,7 @@ let ``part2`` () =
                 |> Array.groupBy fst
                 |> Array.map (fun (k, v) -> (k, v |> Array.map snd))
                 |> Map.ofArray
+
             sortRow row pageOrderingMap)
         |> Array.sumBy Array.median
 

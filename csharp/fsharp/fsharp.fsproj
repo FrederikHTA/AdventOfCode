@@ -8,6 +8,8 @@
 
     <ItemGroup>
         <Compile Include="Extensions.fs" />
+        <Compile Include="Pos.fs" />
+        <Compile Include="Grid.fs" />
         <Content Include="2024\Day1\TestData.txt">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
