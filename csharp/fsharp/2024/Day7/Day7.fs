@@ -16,10 +16,8 @@ let readInput (path: string): Array<float * Array<float>> =
         let right = split.[1].Trim().Split(" ") |> Array.map float
         (left, right))
     
-[<Fact>]
-let ``part1`` () =
-    let lines = readInput "2024/Day7/Data.txt"
-    let mutable results = []
+let solve (supportsOr: bool) (lines: Array<float * Array<float>>) : float list =
+    let mutable equationsThatMatchTarget = []
 
     for target, operators in lines do
         let mutable rowResult = []
@@ -28,61 +26,40 @@ let ``part1`` () =
             if rowResult.IsEmpty then
                 rowResult <- [ operator ]
             else
-                let mutable resultsToAdd = []
+                let mutable operatorResults = []
 
                 for result in rowResult do
                     let add = operator + result
                     let mul = operator * result
 
                     if add <= target then
-                        resultsToAdd <- add :: resultsToAdd
+                        operatorResults <- add :: operatorResults
 
                     if mul <= target then
-                        resultsToAdd <- mul :: resultsToAdd
+                        operatorResults <- mul :: operatorResults
+                        
+                    if supportsOr then
+                        let concat = (string result + string operator) |> float
+                        if concat <= target then
+                            operatorResults <- concat :: operatorResults
+                    else ()
 
-                rowResult <- resultsToAdd
+                rowResult <- operatorResults
 
         let isMatch = rowResult |> List.tryFind (fun x -> x = target)
 
         if isMatch.IsSome then
-            results <- isMatch.Value :: results
-            
-    results |> List.sum |> float32 |> _.Should().Be(1708857123053f)
-
+            equationsThatMatchTarget <- isMatch.Value :: equationsThatMatchTarget
+    equationsThatMatchTarget 
+    
+[<Fact>]
+let ``part1`` () =
+    let lines = readInput "2024/Day7/Data.txt"
+    let equationsThatMatchTarget = lines |> solve false
+    equationsThatMatchTarget |> List.sum |> float32 |> _.Should().Be(1708857123053f)
 
 [<Fact>]
 let ``part2`` () =
     let lines = readInput "2024/Day7/Data.txt"
-    let mutable results = []
-
-    for target, operators in lines do
-        let mutable rowResult = []
-
-        for operator in operators do
-            if rowResult.IsEmpty then
-                rowResult <- [ operator ]
-            else
-                let mutable resultsToAdd = []
-
-                for result in rowResult do
-                    let add = operator + result
-                    let mul = operator * result
-                    let concat = (string result + string operator) |> float
-
-                    if add <= target then
-                        resultsToAdd <- add :: resultsToAdd
-
-                    if mul <= target then
-                        resultsToAdd <- mul :: resultsToAdd
-                        
-                    if concat <= target then
-                        resultsToAdd <- concat :: resultsToAdd
-
-                rowResult <- resultsToAdd
-
-        let isMatch = rowResult |> List.tryFind (fun x -> x = target)
-
-        if isMatch.IsSome then
-            results <- isMatch.Value :: results
-            
-    results |> List.sum |> float32 |> _.Should().Be(189207836795655f)
+    let equationsThatMatchTarget = lines |> solve true
+    equationsThatMatchTarget |> List.sum |> float32 |> _.Should().Be(189207836795655f)
