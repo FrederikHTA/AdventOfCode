@@ -16,7 +16,8 @@ let readInput (path: string): Array<float * Array<float>> =
         let right = split.[1].Trim().Split(" ") |> Array.map float
         (left, right))
     
-let solve (supportsOr: bool) (lines: Array<float * Array<float>>) : float list =
+// TODO FTA: Refactor this garbonzo and use a recursive function
+let solve (supportsOr: bool) (lines: Array<float * Array<float>>) : List<float> =
     let mutable equationsThatMatchTarget = []
 
     for target, operators in lines do
@@ -39,7 +40,7 @@ let solve (supportsOr: bool) (lines: Array<float * Array<float>>) : float list =
                         operatorResults <- mul :: operatorResults
                         
                     if supportsOr then
-                        let concat = (string result + string operator) |> float
+                        let concat = $"{result}{operator}" |> float
                         if concat <= target then
                             operatorResults <- concat :: operatorResults
                     else ()
