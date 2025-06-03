@@ -8,16 +8,17 @@ open fsharp.Extensions
 open fsharp.Pos
 open fsharp.Grid
 
-let readInput (path: string): Array<float * Array<float>> =
+let readInput (path : string) : Array<float * Array<float>> =
     File.ReadAllLines path
     |> Array.map (fun x ->
-        let split = x.Split(":")
+        let split = x.Split (":")
         let left = float split.[0]
-        let right = split.[1].Trim().Split(" ") |> Array.map float
-        (left, right))
-    
+        let right = split.[1].Trim().Split (" ") |> Array.map float
+        (left, right)
+    )
+
 // TODO FTA: Refactor this garbonzo and use a recursive function
-let solve (supportsOr: bool) (lines: Array<float * Array<float>>) : List<float> =
+let solve (supportsOr : bool) (lines : Array<float * Array<float>>) : List<float> =
     let mutable equationsThatMatchTarget = []
 
     for target, operators in lines do
@@ -38,12 +39,14 @@ let solve (supportsOr: bool) (lines: Array<float * Array<float>>) : List<float> 
 
                     if mul <= target then
                         operatorResults <- mul :: operatorResults
-                        
+
                     if supportsOr then
                         let concat = $"{result}{operator}" |> float
+
                         if concat <= target then
                             operatorResults <- concat :: operatorResults
-                    else ()
+                    else
+                        ()
 
                 rowResult <- operatorResults
 
@@ -51,8 +54,9 @@ let solve (supportsOr: bool) (lines: Array<float * Array<float>>) : List<float> 
 
         if isMatch.IsSome then
             equationsThatMatchTarget <- isMatch.Value :: equationsThatMatchTarget
-    equationsThatMatchTarget 
-    
+
+    equationsThatMatchTarget
+
 [<Fact>]
 let ``part1`` () =
     let lines = readInput "2024/Day7/Data.txt"

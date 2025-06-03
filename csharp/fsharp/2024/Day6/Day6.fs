@@ -16,30 +16,23 @@ type Direction =
     | Right
 
 module Direction =
-    let next (direction: Direction) =
+    let next (direction : Direction) =
         match direction with
         | Direction.Up -> Direction.Right
         | Direction.Right -> Direction.Down
         | Direction.Down -> Direction.Left
         | Direction.Left -> Direction.Up
 
-let move (pos: Pos) (direction: Direction) : Pos =
+let move (pos : Pos) (direction : Direction) : Pos =
     match direction with
-    | Direction.Up ->
-        pos + Pos.create -1 0
-    | Direction.Right ->
-        pos + Pos.create 0 1
-    | Direction.Down ->
-        pos + Pos.create 1 0
-    | Direction.Left ->
-        pos + Pos.create 0 -1
+    | Direction.Up -> pos + Pos.create -1 0
+    | Direction.Right -> pos + Pos.create 0 1
+    | Direction.Down -> pos + Pos.create 1 0
+    | Direction.Left -> pos + Pos.create 0 -1
 
 [<Fact>]
 let ``part1`` () =
-    let lines =
-        File.ReadAllLines "2024/Day6/Data.txt"
-        |> Array.map _.ToCharArray()
-        |> Grid.create
+    let lines = File.ReadAllLines "2024/Day6/Data.txt" |> Array.map _.ToCharArray() |> Grid.create
 
     let mutable currentPos = lines |> Grid.getPosOf '^'
     let mutable visitedPositions = Set.singleton currentPos
@@ -57,7 +50,7 @@ let ``part1`` () =
         | _ when lines |> Grid.containsPos nextPos |> not -> continueLooping <- false
         | _ -> currentPos <- nextPos
 
-    visitedPositions.Count.Should().Be(4374)
+    visitedPositions.Count.Should().Be (4374)
 
 [<Fact>]
 let ``part2`` () =

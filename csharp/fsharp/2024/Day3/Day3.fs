@@ -6,33 +6,35 @@ open Xunit
 open Faqt
 
 let extractMultiples (matches : seq<Match>) =
-    matches
-    |> Seq.cast<Match>
-    |> Seq.map (fun m -> int m.Groups.[1].Value * int m.Groups.[2].Value)
-    |> Seq.sum
+    matches |> Seq.cast<Match> |> Seq.map (fun m -> int m.Groups.[1].Value * int m.Groups.[2].Value) |> Seq.sum
 
 [<Fact>]
 let ``part1`` () =
     let lines = File.ReadAllText "2024/Day3/Data.txt"
-    let regex = Regex("""mul\((\d+),(\d+)\)""")
+    let regex = Regex ("""mul\((\d+),(\d+)\)""")
     let res = extractMultiples (regex.Matches lines)
-    res.Should().Be(184122457)
+    res.Should().Be (184122457)
 
 [<Fact>]
 let ``part2`` () =
     let lines = File.ReadAllText "2024/Day3/Data.txt"
-    let regex = Regex("""mul\((\d+),(\d+)\)|do\(\)|don't\(\)""")
+    let regex = Regex ("""mul\((\d+),(\d+)\)|do\(\)|don't\(\)""")
 
     let mutable flag = true
+
     let filtered =
-        regex.Matches(lines)
+        regex.Matches (lines)
         |> Seq.cast<Match>
         |> Seq.filter (fun m ->
             match m.Value with
-            | "do()" -> flag <- true; false
-            | "don't()" -> flag <- false; false
-            | _ -> flag)
+            | "do()" ->
+                flag <- true
+                false
+            | "don't()" ->
+                flag <- false
+                false
+            | _ -> flag
+        )
 
     let res = extractMultiples filtered
-    res.Should().Be(107862689)
-
+    res.Should().Be (107862689)
