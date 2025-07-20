@@ -1,13 +1,9 @@
-﻿module fsharp.Extensions
+﻿[<AutoOpen>]
+module fsharp.Extensions
 
 open System
 
-[<AutoOpen>]
 type Array<'T> = Microsoft.FSharp.Core.array<'T>
-
-let convertTuple<'T, 'U> (convert : 'T -> 'U) (input : 'T * 'T) : 'U * 'U =
-    let a, b = input
-    (convert a, convert b)
 
 module Array =
     let median (row : Array<'T>) =
@@ -24,3 +20,8 @@ module String =
         match input.Split (sep, StringSplitOptions.RemoveEmptyEntries) with
         | [| a ; b |] -> (convert a, convert b)
         | _ -> failwith $"Invalid tuple format: {input}"
+
+
+let convertTuple<'T, 'U> (convert : 'T -> 'U) (input : 'T * 'T) : 'U * 'U =
+    let a, b = input
+    (convert a, convert b)

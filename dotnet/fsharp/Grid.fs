@@ -1,6 +1,5 @@
 ﻿module fsharp.Grid
 
-open fsharp.Extensions
 open fsharp.Pos
 
 module Grid =

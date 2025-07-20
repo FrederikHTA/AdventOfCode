@@ -4,7 +4,6 @@ type Pos = {
     X : int
     Y : int
 } with
-
     // Operator overloads
     static member (+) (p1 : Pos, p2 : Pos) = {
         X = p1.X + p2.X

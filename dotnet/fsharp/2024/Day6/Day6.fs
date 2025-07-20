@@ -3,8 +3,6 @@
 open System.IO
 open Xunit
 open Faqt
-open fsharp
-open fsharp.Extensions
 open fsharp.Pos
 open fsharp.Grid
 

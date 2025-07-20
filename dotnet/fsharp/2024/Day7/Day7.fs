@@ -4,9 +4,6 @@ open System.IO
 open Xunit
 open Faqt
 open fsharp
-open fsharp.Extensions
-open fsharp.Pos
-open fsharp.Grid
 
 let readInput (path : string) : Array<float * Array<float>> =
     File.ReadAllLines path

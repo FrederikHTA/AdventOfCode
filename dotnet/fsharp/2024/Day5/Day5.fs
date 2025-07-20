@@ -4,7 +4,6 @@ open System.IO
 open Xunit
 open Faqt
 open fsharp
-open fsharp.Extensions
 
 let getPageOrderingRules (lines : Array<string>) =
     lines[0] |> fun x -> x.Split "\r\n" |> Array.map (fun x -> x |> String.toTuple '|' int)
