@@ -47,10 +47,10 @@ let solve (supportsOr : bool) (lines : Array<float * Array<float>>) : List<float
 
                 rowResult <- operatorResults
 
-        let isMatch = rowResult |> List.tryFind (fun x -> x = target)
+        rowResult
+        |> List.tryFind (fun x -> x = target)
+        |> Option.iter (fun x -> equationsThatMatchTarget <- x :: equationsThatMatchTarget)
 
-        if isMatch.IsSome then
-            equationsThatMatchTarget <- isMatch.Value :: equationsThatMatchTarget
 
     equationsThatMatchTarget
 
