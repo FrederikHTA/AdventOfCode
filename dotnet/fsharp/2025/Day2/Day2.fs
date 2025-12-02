@@ -1,19 +1,17 @@
 ﻿module fsharp._2025.Day2.Day2
 
 open System.IO
-open System
-open System.Text.RegularExpressions
 open Xunit
 
-let extractMultiples (matches : seq<Match>) =
-    matches
-    |> Seq.cast<Match>
-    |> Seq.map (fun m -> int m.Groups.[1].Value * int m.Groups.[2].Value)
-    |> Seq.sum
-
 let parseInput filePath =
-    let lines = File.ReadLines filePath
-    lines |> Seq.map (fun line -> (line[0], int line[1..])) |> Seq.toArray
+    let lines = File.ReadAllText filePath
+
+    lines.Split ','
+    |> Seq.map (fun s ->
+        let split = s.Split '-'
+        (int split[0], int split[1])
+    )
+    |> Array.ofSeq
 
 [<Fact>]
 let ``part1`` () =
