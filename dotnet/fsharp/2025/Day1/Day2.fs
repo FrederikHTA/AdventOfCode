@@ -1,7 +1,6 @@
-﻿module fsharp._2025.Day1.Day1
+﻿module fsharp._2025.Day1.Day2
 
 open System.IO
-open System
 open System.Text.RegularExpressions
 open Xunit
 open Faqt
