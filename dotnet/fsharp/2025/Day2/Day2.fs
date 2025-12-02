@@ -5,6 +5,12 @@ open System
 open System.Text.RegularExpressions
 open Xunit
 
+let extractMultiples (matches : seq<Match>) =
+    matches
+    |> Seq.cast<Match>
+    |> Seq.map (fun m -> int m.Groups.[1].Value * int m.Groups.[2].Value)
+    |> Seq.sum
+
 let parseInput filePath =
     let lines = File.ReadLines filePath
     lines |> Seq.map (fun line -> (line[0], int line[1..])) |> Seq.toArray

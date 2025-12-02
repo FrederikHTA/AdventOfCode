@@ -1,15 +1,8 @@
 ﻿module fsharp._2025.Day1.Day1
 
 open System.IO
-open System.Text.RegularExpressions
 open Xunit
 open Faqt
-
-let extractMultiples (matches : seq<Match>) =
-    matches
-    |> Seq.cast<Match>
-    |> Seq.map (fun m -> int m.Groups.[1].Value * int m.Groups.[2].Value)
-    |> Seq.sum
 
 let parseInput filePath =
     let lines = File.ReadLines filePath
@@ -67,4 +60,4 @@ let ``part2`` () =
             )
             (50, 0)
 
-    counter.Should().Be (5820)
+    counter.Should().Be 5820
