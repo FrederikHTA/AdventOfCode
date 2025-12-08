@@ -26,7 +26,7 @@ let parseIdRange (s : string) =
 let parseIds (s : string) =
     s.Trim().Split "\n" |> Array.map bigint.Parse
 
-let parseInput filePath =
+let parseInput (filePath : string) : IdRange array * BigInteger array =
     let lines = File.ReadAllText filePath
     let split = lines.Trim().Split "\n\n"
 
@@ -34,10 +34,9 @@ let parseInput filePath =
     | [| ranges ; ids |] -> parseIdRange ranges, parseIds ids
     | _ -> failwith "Invalid input"
 
-// all of this could propably be done with regex but whatever
 [<Fact>]
 let ``part1`` () =
-    let idRanges, ids = parseInput "2025/Day5/Data.txt"
+    let idRanges, ids = parseInput "2025/Day5/TestData.txt"
 
     ids
     |> Array.filter (fun id ->

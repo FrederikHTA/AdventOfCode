@@ -83,6 +83,13 @@
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
         <Compile Include="2025\Day5\Day5.fs" />
+        <Content Include="2025\Day6\TestData.txt">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Include="2025\Day6\Data.txt">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Compile Include="2025\Day6\Day6.fs" />
         <Compile Include="Program.fs" />
         <Content Include=".editorconfig" />
     </ItemGroup>
