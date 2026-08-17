@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 namespace csharp.Custom;
 
-public class Troels1
+public class ReplacementGraph
 {
     /***
      * Input:
@@ -15,7 +15,7 @@ public class Troels1
      * - in "ab", {"a" -> "b", "b" -> "c"}
      * - out: "cc"
      */
-    public static void Troels1SolutionWithPreOptimizations()
+    public static void Solution()
     {
         var watch = new Stopwatch();
         watch.Start();

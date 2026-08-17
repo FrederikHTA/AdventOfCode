@@ -1,6 +1,6 @@
 ﻿namespace csharp.Custom;
 
-public class Troels2
+public class TopologicalSort
 {
     // Actual Solution: use a Topologically sorted graph, which finds
     // cycles automatically and orders the tasks during creation of the graph
@@ -23,7 +23,7 @@ public class Troels2
      * - Execute(c)
      * - Execute(d)
      */
-    public static void TopologicalSort()
+    public static void Solution()
     {
         /*
          * Assumptions:
