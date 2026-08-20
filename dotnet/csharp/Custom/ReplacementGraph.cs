@@ -34,7 +34,7 @@ public class ReplacementGraph
             { "foo", "bar" }
         };
 
-        foreach (KeyValuePair<string, string> replacement in replacements)
+        foreach (var replacement in replacements)
         {
             var newValue = replacement.Key;
             while (replacements.TryGetValue(newValue, out var value))
