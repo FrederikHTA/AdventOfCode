@@ -1,4 +1,4 @@
-﻿namespace csharp.Custom;
+﻿namespace csharp.LeetCode;
 
 public class TwoSum
 {

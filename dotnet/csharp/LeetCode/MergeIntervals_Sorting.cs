@@ -1,6 +1,4 @@
-﻿using ConsoleApp1;
-
-namespace ConsoleApp1;
+﻿namespace csharp.LeetCode;
 
 public class Sorting_MergeIntervals
 {

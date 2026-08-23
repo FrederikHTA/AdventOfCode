@@ -1,4 +1,4 @@
-﻿namespace ConsoleApp1
+﻿namespace csharp.LeetCode
 {
     // Input
     // ["TimeMap", "set", "get", "get", "set", "get", "get"]

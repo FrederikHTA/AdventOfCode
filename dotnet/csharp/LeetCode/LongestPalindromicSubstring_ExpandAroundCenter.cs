@@ -1,4 +1,4 @@
-﻿namespace ConsoleApp1;
+﻿namespace csharp.LeetCode;
 
 public class LongestPalindromicSubstring
 {

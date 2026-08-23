@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace csharp.Custom;
+namespace csharp.LeetCode;
 
 public delegate void TreeVisitor<T>(T nodeData);
 public class Tree<T>

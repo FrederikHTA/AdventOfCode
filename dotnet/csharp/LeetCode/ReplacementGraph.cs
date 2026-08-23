@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
-namespace csharp.Custom;
+
+namespace csharp.LeetCode;
 
 public class ReplacementGraph
 {
