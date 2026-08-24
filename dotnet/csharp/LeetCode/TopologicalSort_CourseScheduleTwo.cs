@@ -43,7 +43,10 @@ public class TopologicalSort_CourseScheduleTwo
             foreach (var dependent in adjacency[currentCourse])
             {
                 inDegree[dependent]--;
-                if (inDegree[dependent] == 0) queue.Enqueue(dependent);
+                if (inDegree[dependent] == 0)
+                {
+                    queue.Enqueue(dependent);
+                }
             }
         }
 
