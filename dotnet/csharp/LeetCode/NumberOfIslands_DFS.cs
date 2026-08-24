@@ -1,4 +1,6 @@
-﻿namespace csharp.LeetCode;
+﻿using FluentAssertions.Data;
+
+namespace csharp.LeetCode;
 
 public static class Dfs_NumberOfIslands
 {
@@ -35,7 +37,7 @@ public static class Dfs_NumberOfIslands
 
                 foreach (var (nr, nc) in GetAdjacent(r, c))
                 {
-                    if (nr < 0 || nr >= rows || nc < 0 || nc >= cols) continue;
+                    if (!IsWithinBounds(nr, nc)) continue;
                     if (grid[nr][nc] != '1') continue;
 
                     grid[nr][nc] = '0';
@@ -44,6 +46,11 @@ public static class Dfs_NumberOfIslands
             }
         }
 
+        bool IsWithinBounds(int nr, int nc)
+        {
+            return nr < 0 || nr >= rows || nc < 0 || nc >= cols;    
+        }
+        
         static List<(int r, int c)> GetAdjacent(int r, int c)
         {
             return
