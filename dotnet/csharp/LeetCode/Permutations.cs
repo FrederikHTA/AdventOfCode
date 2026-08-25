@@ -59,4 +59,27 @@ public class Permutations
             path.RemoveAt(path.Count - 1);
         }
     }
+
+    private static IList<IList<int>> PermuteSwap(int[] nums)
+    {
+        var result = new List<IList<int>>();
+        BacktrackSwap(nums, 0, result);
+        return result;
+    }
+
+    private static void BacktrackSwap(int[] nums, int start, List<IList<int>> result)
+    {
+        if (start == nums.Length)
+        {
+            result.Add(new List<int>(nums));
+            return;
+        }
+
+        for (var i = start; i < nums.Length; i++)
+        {
+            (nums[start], nums[i]) = (nums[i], nums[start]);
+            BacktrackSwap(nums, start + 1, result);
+            (nums[start], nums[i]) = (nums[i], nums[start]); // swap back
+        }
+    }
 }
