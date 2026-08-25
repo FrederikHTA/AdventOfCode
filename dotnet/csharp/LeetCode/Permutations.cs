@@ -23,17 +23,6 @@ public class Permutations
 
     private static IList<IList<int>> Permute(int[] nums)
     {
-        if (nums.Length == 0) return [];
-        if (nums.Length == 1) return [nums];
-        if (nums.Length == 2)
-        {
-            return
-            [
-                nums,
-                [.. nums.Reverse()]
-            ];
-        }
-
         var result = new List<IList<int>>();
         var path = new List<int>();
         var used = new HashSet<int>();

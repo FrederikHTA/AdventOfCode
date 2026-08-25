@@ -30,7 +30,7 @@ public class MinimumNumberOfFrogsCroaking
                     return -1;
                 // c
                 case 0:
-                    maxFrogs = Math.Max(maxFrogs, croakCounts[0]);
+                    maxFrogs = Math.Max(maxFrogs, croakCounts[i]);
                     break;
                 // k
                 case 4:

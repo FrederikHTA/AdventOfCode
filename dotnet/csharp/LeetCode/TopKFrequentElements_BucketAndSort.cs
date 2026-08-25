@@ -27,20 +27,15 @@ public static class Heap_TopKFrequentElements
         var frequency = new Dictionary<int, int>();
         foreach (var num in nums)
         {
-            if (!frequency.ContainsKey(num))
-            {
-                frequency[num] = 0;
-            }
+            frequency.TryAdd(num, 0);
             frequency[num]++;
         }
 
         // Bucket index = frequency, value = list of numbers with that frequency
         var buckets = new List<int>[nums.Length + 1];
-        foreach (var pair in frequency)
+        foreach (var (key, count) in frequency)
         {
-            var count = pair.Value;
-            buckets[count] ??= [];
-            buckets[count].Add(pair.Key);
+            buckets[count].Add(key);
         }
 
         var result = new List<int>(k);

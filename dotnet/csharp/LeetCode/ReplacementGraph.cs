@@ -46,27 +46,16 @@ public class ReplacementGraph
         }
 
         var maxReplacementsString = "";
-        foreach (string s in input)
+        foreach (var s in input)
         {
             var replacementCount = 0;
             var tempString = "";
-            foreach (char character in s)
+            foreach (var character in s)
             {
                 var currentReplacement = character.ToString();
-                replacements.TryGetValue(currentReplacement, out string? value);
-                if (value is not null)
-                {
-                    replacementCount++;
-                    currentReplacement = value;
-                }
+                currentReplacement = Replace(replacements, currentReplacement, ref replacementCount);
                 tempString += currentReplacement;
-
-                replacements.TryGetValue(tempString, out string? value2);
-                if (value2 is not null)
-                {
-                    replacementCount++;
-                    tempString = value2;
-                }
+                tempString = Replace(replacements, tempString, ref replacementCount);
             }
 
             if (replacementCount > maxReplacementsString.Length)
@@ -77,5 +66,17 @@ public class ReplacementGraph
 
         watch.Stop();
         Console.WriteLine($"String with max replacements: {maxReplacementsString}, runTime: {watch.Elapsed}");
+    }
+
+    private static string Replace(Dictionary<string, string> replacements, string temp, ref int replacementCount)
+    {
+        replacements.TryGetValue(temp, out var value);
+        if (value is not null)
+        {
+            replacementCount++;
+            temp = value;
+        }
+
+        return temp;
     }
 }

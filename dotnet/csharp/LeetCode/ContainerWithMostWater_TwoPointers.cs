@@ -15,7 +15,7 @@ public class TwoPointer_MostWater
             var area = (right - left) * Math.Min(leftHeight, rightHeight);
             if (area > maxArea)
             {
-                maxArea = Math.Max(maxArea, area);
+                maxArea = area;
             }
 
             if (leftHeight < rightHeight)
