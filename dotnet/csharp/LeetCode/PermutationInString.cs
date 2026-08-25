@@ -17,8 +17,6 @@ public class PermutationInString
         Console.WriteLine(result);
     }
 
-    // Same sliding-window idea as CheckInclusion, but grouping counts by
-    // Dictionary<char,int> instead of int[26] indexed by (c - 'a').
     private static bool CheckInclusionReadable(string s1, string s2)
     {
         if (s1.Length > s2.Length) return false;
