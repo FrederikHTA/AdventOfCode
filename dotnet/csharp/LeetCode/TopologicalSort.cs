@@ -1,4 +1,6 @@
-﻿namespace csharp.LeetCode;
+﻿using System.Runtime.InteropServices.JavaScript;
+
+namespace csharp.LeetCode;
 
 public class TopologicalSort
 {
@@ -41,68 +43,58 @@ public class TopologicalSort
             ['d'] = ['a', 'c']
         };
 
-        // adjacency[dependency] = tasks that depend on it (outgoing edges)
-        // Time O(n + e): visits every task once and every edge once
-        // Space O(n + e): worst case one adjacency entry per node, one dependent per edge
         var adjacency = new Dictionary<char, HashSet<char>>();
-        foreach (var (node, dependencies) in graph)
+        var inDegree = new Dictionary<char, int>();
+
+        foreach (var (course, dependencies) in graph)
         {
             foreach (var dependency in dependencies)
             {
-                if (adjacency.TryGetValue(dependency, out var dependents))
+                if (!adjacency.TryGetValue(dependency, out _))
                 {
-                    dependents.Add(node);
-                    continue;
+                    adjacency[dependency] = [];
                 }
-
-                adjacency.Add(dependency, [node]);
+                adjacency[dependency].Add(course);
+                inDegree[course] = inDegree.GetValueOrDefault(course) + 1;
             }
         }
 
-        // Time O(n) to scan tasks for the initial no-dependency set
-        // Space O(n) worst case (every task starts with zero dependencies)
-        var resultOrder = new Queue<char>();
-        var taskQueue = new Queue<char>();
-        foreach (var (node, dependencies) in graph)
+        var queue = new Queue<char>();
+        var resolved = new List<char>();
+        foreach (var node in graph)
         {
-            if (dependencies.Count == 0)
+            if (node.Value.Count == 0)
             {
-                taskQueue.Enqueue(node);
+                queue.Enqueue(node.Key);
             }
         }
 
-        // Kahn's core: each task is dequeued once (O(n)) and each edge is
-        // traversed/removed once (O(e)), HashSet.Remove being O(1) average
-        // Time O(n + e), Space O(n) for the queue and result (already counted above)
-        while (taskQueue.Count > 0)
+        while (queue.Count > 0)
         {
-            var current = taskQueue.Dequeue();
-            resultOrder.Enqueue(current);
+            var current = queue.Dequeue();
+            resolved.Add(current);
 
-            if (!adjacency.TryGetValue(current, out var dependents))
+            if (!adjacency.TryGetValue(current, out var adjacents))
             {
                 continue;
             }
-
-            foreach (var dependent in dependents)
+            
+            foreach (var adjacent in adjacents)
             {
-                var deps = graph[dependent];
-                deps.Remove(current);
-                if (deps.Count == 0)
+                inDegree[adjacent]--;
+                if (inDegree[adjacent] == 0)
                 {
-                    taskQueue.Enqueue(dependent);
+                    queue.Enqueue(adjacent);
                 }
             }
         }
 
-        // Time O(n) to check every task's remaining dependency set, Space O(1)
-        if (graph.Any(x => x.Value.Count > 0))
+        if (inDegree.Count == 0)
         {
-            throw new Exception("Cycle detected in graph");
+            throw new Exception("Cycle Detected");
         }
 
-        // Time O(n) to print each resolved task, Space O(1) extra
-        foreach (var c in resultOrder)
+        foreach (var c in resolved)
         {
             Console.WriteLine($"Execute({c})");
         }

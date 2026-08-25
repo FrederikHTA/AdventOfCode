@@ -8,10 +8,10 @@ public class TopologicalSort_CourseSchedule
 
     public static bool CanFinish(int numCourses, int[][] prerequisites)
     {
-        var graph = new List<List<int>>();
+        var adjacency = new List<List<int>>();
         for (var i = 0; i < numCourses; i++)
         {
-            graph.Add([]);
+            adjacency.Add([]);
         }
 
         var inDegree = new int[numCourses];
@@ -19,8 +19,8 @@ public class TopologicalSort_CourseSchedule
         foreach (var p in prerequisites)
         {
             var course = p[0];
-            var prerequisite = p[1];
-            graph[prerequisite].Add(course);
+            var dependency = p[1];
+            adjacency[dependency].Add(course);
             inDegree[course]++;
         }
 
@@ -39,12 +39,12 @@ public class TopologicalSort_CourseSchedule
             var course = queue.Dequeue();
             resolved++;
 
-            foreach (var element in graph[course])
+            foreach (var dependency in adjacency[course])
             {
-                inDegree[element]--;
-                if (inDegree[element] == 0)
+                inDegree[dependency]--;
+                if (inDegree[dependency] == 0)
                 {
-                    queue.Enqueue(element);
+                    queue.Enqueue(dependency);
                 }
             }
         }
