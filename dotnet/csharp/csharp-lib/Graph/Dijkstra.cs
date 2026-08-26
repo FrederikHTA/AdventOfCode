@@ -32,18 +32,19 @@ public static class Dijkstra
             //for all edges from v to w in G.adjacentEdges(v) do
             pos.GetAxisOffsets().ForEach(neighbour =>
             {
+                if (neighbour.X < 0 || neighbour.X >= mapHeight || neighbour.Y < 0 || neighbour.Y >= mapWidth) 
+                    return;
+                
                 //if w is not labeled as explored then
                 //label w as explored
-                if (neighbour.X >= 0 && neighbour.X < mapHeight && neighbour.Y >= 0 && neighbour.Y < mapWidth)
-                {
-                    //w.parent := v - define the child node and the current node as its parent
-                    var parentNode = heightmap[pos.X, pos.Y];
-                    var childNode = heightmap[neighbour.X, neighbour.Y];
+                
+                //w.parent := v - define the child node and the current node as its parent
+                var parentNode = heightmap[pos.X, pos.Y];
+                var childNode = heightmap[neighbour.X, neighbour.Y];
 
-                    //Q.enqueue(w)
-                    if (childNode - parentNode <= 1)
-                        queue.Enqueue((new Pos.Pos(neighbour.X, neighbour.Y), step + 1));
-                }
+                //Q.enqueue(w)
+                if (childNode - parentNode <= 1)
+                    queue.Enqueue((new Pos.Pos(neighbour.X, neighbour.Y), step + 1));
             });
         }
 
