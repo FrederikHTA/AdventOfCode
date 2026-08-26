@@ -1,6 +1,6 @@
 ﻿using FluentAssertions;
 
-namespace csharp.LeetCode;
+namespace csharp.LeetCode.Misc;
 
 public class UberPart1
 {

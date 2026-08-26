@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace csharp.LeetCode;
+namespace csharp.LeetCode.Backtracking;
 
 public class LetterCombinationsOfAPhoneNumber
 {

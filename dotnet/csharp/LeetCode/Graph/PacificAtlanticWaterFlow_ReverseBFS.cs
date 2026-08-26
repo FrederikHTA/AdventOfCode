@@ -1,4 +1,4 @@
-﻿namespace csharp.LeetCode;
+﻿namespace csharp.LeetCode.Graph;
 
 public static class ReverseBfs_PacificAtlantic
 {

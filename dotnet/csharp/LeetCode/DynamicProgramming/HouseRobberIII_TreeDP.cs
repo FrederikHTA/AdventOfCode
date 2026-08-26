@@ -1,4 +1,4 @@
-﻿namespace csharp.LeetCode;
+﻿namespace csharp.LeetCode.DynamicProgramming;
 
 public static class Dynamic_HouseRobber
 {

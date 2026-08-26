@@ -1,4 +1,4 @@
-namespace csharp.LeetCode;
+namespace csharp.LeetCode.DesignDataStructures;
 
 public class CacheWithTimeLimit
 {

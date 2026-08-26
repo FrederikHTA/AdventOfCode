@@ -1,4 +1,4 @@
-﻿namespace csharp.LeetCode;
+﻿namespace csharp.LeetCode.TwoPointersAndSlidingWindow;
 
 public static class SlidingWindow_LongestSubstringWithoutRepeat
 {

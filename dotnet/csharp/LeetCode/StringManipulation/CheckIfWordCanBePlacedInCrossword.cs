@@ -1,6 +1,4 @@
-﻿using FluentAssertions;
-
-namespace csharp.LeetCode;
+﻿namespace csharp.LeetCode.StringManipulation;
 
 public class CheckIfWordCanBePlacedInCrossword
 {

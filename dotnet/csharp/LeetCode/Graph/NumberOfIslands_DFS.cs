@@ -1,6 +1,4 @@
-﻿using FluentAssertions.Data;
-
-namespace csharp.LeetCode;
+﻿namespace csharp.LeetCode.Graph;
 
 public static class Dfs_NumberOfIslands
 {

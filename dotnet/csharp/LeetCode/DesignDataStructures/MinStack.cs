@@ -1,6 +1,4 @@
-﻿using System.Text;
-
-namespace csharp.LeetCode;
+﻿namespace csharp.LeetCode.DesignDataStructures;
 public class MinStack {
     // https://leetcode.com/problems/min-stack/
 

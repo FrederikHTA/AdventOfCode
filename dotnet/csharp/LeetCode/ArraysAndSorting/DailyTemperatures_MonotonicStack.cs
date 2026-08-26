@@ -1,4 +1,4 @@
-﻿namespace csharp.LeetCode;
+﻿namespace csharp.LeetCode.ArraysAndSorting;
 
 public static class MonotonicStack_DailyTemperatures
 {

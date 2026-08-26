@@ -1,7 +1,6 @@
 using System.Text;
-using csharp.csharp_lib;
 
-namespace csharp.LeetCode;
+namespace csharp.LeetCode.Backtracking;
 
 static class GenerateParentheses
 {

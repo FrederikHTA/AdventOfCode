@@ -1,6 +1,4 @@
-﻿using System.Runtime.InteropServices.JavaScript;
-
-namespace csharp.LeetCode;
+﻿namespace csharp.LeetCode.Graph;
 
 public class TopologicalSort
 {

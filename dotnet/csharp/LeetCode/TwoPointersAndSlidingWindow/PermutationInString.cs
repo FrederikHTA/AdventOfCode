@@ -1,6 +1,4 @@
-﻿using System.Text;
-
-namespace csharp.LeetCode;
+﻿namespace csharp.LeetCode.TwoPointersAndSlidingWindow;
 
 public class PermutationInString
 {

@@ -1,4 +1,4 @@
-﻿namespace csharp.LeetCode;
+﻿namespace csharp.LeetCode.Tree;
 
 public static class MinMaxDepthOfBinaryTree
 {

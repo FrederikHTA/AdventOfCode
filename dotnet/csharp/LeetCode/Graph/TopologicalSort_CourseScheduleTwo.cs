@@ -1,4 +1,4 @@
-﻿namespace csharp.LeetCode;
+﻿namespace csharp.LeetCode.Graph;
 
 public class TopologicalSort_CourseScheduleTwo
 {

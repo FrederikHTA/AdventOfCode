@@ -1,4 +1,4 @@
-﻿namespace csharp.LeetCode;
+﻿namespace csharp.LeetCode.TwoPointersAndSlidingWindow;
 
 public class TwoPointer_MostWater
 {
