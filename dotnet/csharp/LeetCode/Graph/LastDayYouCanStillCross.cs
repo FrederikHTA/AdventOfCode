@@ -22,19 +22,21 @@ public class LastDayYouCanStillCross
 
     private static int LatestDayToCross(int row, int col, int[][] cells)
     {
-        var cellsTuples = cells.Select(x => (x[0] - 1, x[1] - 1)).ToList();
-        if (row <= 0 || col <= 0 || cellsTuples.Count != row * col) return -1;
-        var floodIndex = new Dictionary<(int, int), int>(cellsTuples.Count);
-        for (var i = 0; i < cellsTuples.Count; i++) floodIndex[cellsTuples[i]] = i;
+        var zeroIndexedCells = cells.Select(x => (x[0] - 1, x[1] - 1)).ToList();
+        if (row <= 0 || col <= 0 || zeroIndexedCells.Count != row * col) return -1;
+        
+        // dict to quickly lookup whether a cell is flooded or not based on day
+        var floodIndex = new Dictionary<(int, int), int>(zeroIndexedCells.Count);
+        for (var i = 0; i < zeroIndexedCells.Count; i++) floodIndex[zeroIndexedCells[i]] = i;
 
         var maxDay = -1;
         var left = 0;
-        var right = cellsTuples.Count;
+        var right = zeroIndexedCells.Count;
         var day = (int)Math.Floor((double)right / 2);
 
         while (right - left > 1)
         {
-            var hasPath = Bfs(cellsTuples, floodIndex, day, row, col);
+            var hasPath = Bfs(zeroIndexedCells, floodIndex, day, row, col);
             if (hasPath)
             {
                 maxDay = Math.Max(day, maxDay);
