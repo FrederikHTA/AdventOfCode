@@ -71,12 +71,13 @@ public class ReplacementGraph
     private static string Replace(Dictionary<string, string> replacements, string temp, ref int replacementCount)
     {
         replacements.TryGetValue(temp, out var value);
-        if (value is not null)
+        if (value is null)
         {
-            replacementCount++;
-            temp = value;
+            return temp;
         }
-
+        
+        replacementCount++;
+        temp = value;
         return temp;
     }
 }
