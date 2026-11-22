@@ -11,7 +11,7 @@ type Direction byte
 
 const (
 	Left  Direction = 'L'
-	Right           = 'R'
+	Right Direction = 'R'
 )
 
 type Move struct {
